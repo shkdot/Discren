@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg: #f4f0e8;
+    --paper: #fbfaf6;
+    --ink: #181715;
+    --muted: #6e6a63;
+    --line: #d9d2c6;
+    --dark: #1b1a18;
+    --accent: #c85d2f;
+    --accent-dark: #9e4522;
+    --radius: 22px;
+    --max: 1180px;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', Inter, system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Manrope', 'DM Sans', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+  }
+}
+
+/* Custom Utilities based on DISCREN Design Reference */
+.bg-discren-bg { background-color: var(--bg); }
+.bg-discren-paper { background-color: var(--paper); }
+.bg-discren-dark { background-color: var(--dark); }
+.bg-discren-accent { background-color: var(--accent); }
+
+.text-discren-ink { color: var(--ink); }
+.text-discren-muted { color: var(--muted); }
+.text-discren-accent { color: var(--accent); }
+
+.border-discren-line { border-color: var(--line); }
+
+/* Custom Container */
+.container-custom {
+  width: min(var(--max), calc(100% - 40px));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 620px) {
+  .container-custom {
+    width: min(calc(100% - 28px), var(--max));
+  }
+}
+
+/* Lenis smooth scrolling helpers */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+/* Focus styles for accessibility */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

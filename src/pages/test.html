@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DISCREN — Hero Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      background-color: #f4f0e8;
+      color: #181715;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container-custom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ===== HERO SECTION ===== */
+    .hero {
+      position: relative;
+      padding: 4rem 0;
+      background-color: #f4f0e8;
+      border-bottom: 1px solid rgba(217, 210, 198, 0.6);
+      overflow: hidden;
+      min-height: 640px;
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        padding: 6rem 0 5rem;
+      }
+    }
+
+    /* Background image layers */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-bg-blur {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: blur(28px);
+      opacity: 0.5;
+      -webkit-mask-image: linear-gradient(to right, black 0%, black 35%, transparent 65%);
+      mask-image: linear-gradient(to right, black 0%, black 35%, transparent 65%);
+    }
+
+    .hero-bg-sharp {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      width: 72%;
+      object-fit: cover;
+      -webkit-mask-image: linear-gradient(to left, black 0%, black 55%, transparent 92%);
+      mask-image: linear-gradient(to left, black 0%, black 55%, transparent 92%);
+    }
+
+    @media (min-width: 768px) {
+      .hero-bg-sharp {
+        width: 65%;
+      }
+    }
+
+    .hero-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, #f4f0e8 0%, rgba(244, 240, 232, 0.6) 50%, transparent 100%);
+    }
+
+    /* Hero content */
+    .hero-content {
+      max-width: 680px;
+    }
+
+    .hero-kicker {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      font-weight: 800;
+      color: #c85d2f;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title {
+      font-size: clamp(40px, 6.5vw, 82px);
+      line-height: 0.94;
+      letter-spacing: -0.065em;
+      font-weight: 900;
+      color: #181715;
+      margin-bottom: 1.75rem;
+    }
+
+    .hero-title .accent {
+      color: #c85d2f;
+    }
+
+    .hero-paragraph {
+      max-width: 560px;
+      font-size: 17px;
+      line-height: 1.5;
+      color: #3d3a35;
+      margin-bottom: 2.25rem;
+      font-weight: 500;
+    }
+
+    @media (min-width: 768px) {
+      .hero-paragraph {
+        font-size: 19px;
+      }
+    }
+
+    /* Buttons */
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.875rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.875rem 1.75rem;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 9999px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background-color: #1b1a18;
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background-color: #c85d2f;
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: #181715;
+      border: 1.5px solid #181715;
+    }
+
+    .btn-secondary:hover {
+      border-color: #c85d2f;
+      color: #c85d2f;
+    }
+
+    /* Meta items */
+    .hero-meta {
+      padding-top: 1.5rem;
+      border-top: 1px solid #d9d2c6;
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 2rem;
+      row-gap: 0.75rem;
+      color: #4a463f;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hero-meta-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: #c85d2f;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    
+    <!-- Background Image Composition -->
+    <div class="hero-bg">
+      <!-- Layer 1: Blurred image — suppressed feel on the left -->
+      <img 
+        src="./public/images/home-hero-image.jpg" 
+        alt=""
+        aria-hidden="true"
+        class="hero-bg-blur"
+      />
+      <!-- Layer 2: Sharp image — main focus on the right -->
+      <img 
+        src="./public/images/home-hero-image.png" 
+        alt=""
+        aria-hidden="true"
+        class="hero-bg-sharp"
+      />
+      <!-- Soft gradient overlay on the left for text readability -->
+      <div class="hero-bg-overlay"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="container-custom">
+      <div class="hero-content">
+        <div class="hero-kicker">
+          B2B APPAREL PRINTING · JOGESHWARI WEST, MUMBAI
+        </div>
+        <h1 class="hero-title">
+          Printing Built Around the <span class="accent">Garment.</span>
+        </h1>
+        <p class="hero-paragraph">
+          We help clothing brands and garment businesses turn their designs into production-ready prints — choosing the right printing approach for the garment, the artwork and the result you want to achieve.
+        </p>
+        <div class="hero-buttons">
+          <a href="/contact" class="btn btn-primary">
+            Discuss Your Requirement
+          </a>
+          <a href="/work" class="btn btn-secondary">
+            View Our Work
+          </a>
+        </div>
+        <div class="hero-meta">
+          <div class="hero-meta-item">
+            <span class="hero-meta-dot"></span>
+            <span>14+ years of printing experience</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-dot"></span>
+            <span>MOQ from ~50 pieces</span>
+          </div>
+          <div class="hero-meta-item">
+            <span class="hero-meta-dot"></span>
+            <span>Bulk orders up to 1,000+ pieces</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
