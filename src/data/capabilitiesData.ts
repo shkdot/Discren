@@ -30,7 +30,7 @@ export const capabilitiesData: CapabilityItem[] = [
       "Fabric type influences ink formulation selection"
     ],
     suitableFabrics: ["100% Cotton", "Cotton-Poly Blends", "Fleece", "French Terry"],
-    image: "/images/screen_print.png",
+    image: "/images/screen_print.webp",
     badge: "Core Service"
   },
   {
@@ -51,7 +51,7 @@ export const capabilitiesData: CapabilityItem[] = [
       "Excellent for artwork with numerous color transitions"
     ],
     suitableFabrics: ["Cotton", "Polyester", "Nylon Blends", "Canvas"],
-    image: "/images/screen_print.png",
+    image: "/images/screen_print.webp",
     badge: "Flexible"
   },
   {
@@ -72,7 +72,7 @@ export const capabilitiesData: CapabilityItem[] = [
       "Requires precise cure timing to ensure consistent elevation"
     ],
     suitableFabrics: ["Heavy Cotton", "French Terry", "Fleece", "Sweatshirt Knit"],
-    image: "/images/puff_print.png",
+    image: "/images/puff_print.webp",
     badge: "Specialty Finish"
   },
   {
@@ -93,7 +93,7 @@ export const capabilitiesData: CapabilityItem[] = [
       "Best suited for solid graphic elements rather than thin gradients"
     ],
     suitableFabrics: ["Heavy Cotton", "Pique Cotton", "Dense Fleece", "Blend Knits"],
-    image: "/images/high_density.png",
+    image: "/images/high_density.webp",
     badge: "3D Relief"
   },
   {
@@ -114,7 +114,7 @@ export const capabilitiesData: CapabilityItem[] = [
       "Enables higher production throughput on flat printing tables"
     ],
     suitableFabrics: ["All Cut Knit Fabric Panels", "Woven Panels", "Denim Panels"],
-    image: "/images/cut_panel.png",
+    image: "/images/cut_panel.webp",
     badge: "Garment Job-Work"
   },
   {
@@ -135,7 +135,7 @@ export const capabilitiesData: CapabilityItem[] = [
       "Proper garment pallet loading ensures registration consistency"
     ],
     suitableFabrics: ["Finished Cotton Tees", "Finished Hoodies", "Blank Sweatshirts"],
-    image: "/images/home-hero-image.png",
+    image: "/images/home-hero-image.webp",
     badge: "Ready-Made"
   }
 ];

@@ -14,6 +14,7 @@ import { Process } from './pages/Process';
 import { FAQ } from './pages/FAQ';
 import { Contact } from './pages/Contact';
 import { PrivacyPolicy } from './pages/PrivacyPolicy';
+import { Terms } from './pages/Terms';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<Terms />} />
               <Route path="*" element={<Home />} />
             </Routes>
           </main>

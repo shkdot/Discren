@@ -4,6 +4,17 @@ import { PageHero } from '../components/PageHero';
 import { CTASection } from '../components/CTASection';
 import { ShieldCheck, Lock, Eye, FileText, Database, Cookie, ExternalLink, UserCheck } from 'lucide-react';
 
+/** Anchors for the on-page navigation; must match the section ids below. */
+const policySections = [
+  { id: 'policy-1', num: '01', title: 'Information We May Collect' },
+  { id: 'policy-2', num: '02', title: 'How We Use Your Information' },
+  { id: 'policy-3', num: '03', title: 'Sharing of Your Information' },
+  { id: 'policy-4', num: '04', title: 'Data Security & Retention' },
+  { id: 'policy-5', num: '05', title: 'Cookies & Website Technology' },
+  { id: 'policy-6', num: '06', title: 'Third-Party Links & Services' },
+  { id: 'policy-7', num: '07', title: 'Your Privacy Rights & Contact' },
+];
+
 export const PrivacyPolicy: React.FC = () => {
   return (
     <>
@@ -19,8 +30,36 @@ export const PrivacyPolicy: React.FC = () => {
       />
 
       <section className="py-16 md:py-24 bg-[#f4f0e8]">
-        <div className="container-custom max-w-[920px]">
-          <div className="bg-[#fbfaf6] border border-[#d9d2c6] rounded-[28px] p-8 md:p-14 shadow-xs space-y-12">
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-[0.36fr_1fr] gap-10 lg:gap-14 items-start">
+
+            {/* On-page navigation — anchors scroll smoothly via globals.css */}
+            <aside className="lg:sticky lg:top-28">
+              <div className="text-[11px] tracking-[0.14em] uppercase text-[#c85d2f] font-extrabold mb-4">
+                On This Page
+              </div>
+              <nav className="flex lg:flex-col gap-1 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 -mx-1 px-1">
+                {policySections.map((s) => (
+                  <a
+                    key={s.id}
+                    href={`#${s.id}`}
+                    className="flex items-start gap-3 rounded-[12px] px-3 py-2.5 whitespace-nowrap lg:whitespace-normal text-[14px] font-semibold leading-snug text-[#5f5951] hover:bg-[#fbfaf6] hover:text-[#181715] transition-colors"
+                  >
+                    <span className="text-[11px] font-extrabold tracking-wider text-[#c85d2f] pt-0.5 shrink-0">{s.num}</span>
+                    <span>{s.title}</span>
+                  </a>
+                ))}
+              </nav>
+
+              <div className="hidden lg:block mt-6 pt-5 border-t border-[#d9d2c6]">
+                <span className="block text-[10.5px] uppercase tracking-[0.14em] font-extrabold text-[#6e6a63] mb-1.5">
+                  Last Updated
+                </span>
+                <span className="text-[15px] font-extrabold text-[#181715]">2026</span>
+              </div>
+            </aside>
+
+            <div className="bg-[#fbfaf6] border border-[#d9d2c6] rounded-[28px] p-7 md:p-12 space-y-12">
             
             {/* Header statement */}
             <div className="pb-8 border-b border-[#d9d2c6]">
@@ -40,7 +79,7 @@ export const PrivacyPolicy: React.FC = () => {
             </div>
 
             {/* Section 1: Information We May Collect */}
-            <div className="space-y-4">
+            <div id="policy-1" className="space-y-4 scroll-mt-28">
               <div className="flex items-center gap-3 text-[#181715]">
                 <div className="p-2.5 rounded-xl bg-[#f4f0e8] text-[#c85d2f]">
                   <FileText className="w-5 h-5" />
@@ -76,7 +115,7 @@ export const PrivacyPolicy: React.FC = () => {
             </div>
 
             {/* Section 2: How We Use Your Information */}
-            <div className="space-y-4 pt-6 border-t border-[#d9d2c6]">
+            <div id="policy-2" className="space-y-4 pt-6 border-t border-[#d9d2c6] scroll-mt-28">
               <div className="flex items-center gap-3 text-[#181715]">
                 <div className="p-2.5 rounded-xl bg-[#f4f0e8] text-[#c85d2f]">
                   <Eye className="w-5 h-5" />
@@ -117,7 +156,7 @@ export const PrivacyPolicy: React.FC = () => {
             </div>
 
             {/* Section 3: Sharing of Your Information */}
-            <div className="space-y-4 pt-6 border-t border-[#d9d2c6]">
+            <div id="policy-3" className="space-y-4 pt-6 border-t border-[#d9d2c6] scroll-mt-28">
               <div className="flex items-center gap-3 text-[#181715]">
                 <div className="p-2.5 rounded-xl bg-[#f4f0e8] text-[#c85d2f]">
                   <Lock className="w-5 h-5" />
@@ -146,7 +185,7 @@ export const PrivacyPolicy: React.FC = () => {
             </div>
 
             {/* Section 4: Data Security & Retention */}
-            <div className="space-y-4 pt-6 border-t border-[#d9d2c6]">
+            <div id="policy-4" className="space-y-4 pt-6 border-t border-[#d9d2c6] scroll-mt-28">
               <div className="flex items-center gap-3 text-[#181715]">
                 <div className="p-2.5 rounded-xl bg-[#f4f0e8] text-[#c85d2f]">
                   <Database className="w-5 h-5" />
@@ -164,7 +203,7 @@ export const PrivacyPolicy: React.FC = () => {
             </div>
 
             {/* Section 5: Cookies & Website Technology */}
-            <div className="space-y-4 pt-6 border-t border-[#d9d2c6]">
+            <div id="policy-5" className="space-y-4 pt-6 border-t border-[#d9d2c6] scroll-mt-28">
               <div className="flex items-center gap-3 text-[#181715]">
                 <div className="p-2.5 rounded-xl bg-[#f4f0e8] text-[#c85d2f]">
                   <Cookie className="w-5 h-5" />
@@ -179,7 +218,7 @@ export const PrivacyPolicy: React.FC = () => {
             </div>
 
             {/* Section 6: Third-Party Links & Services */}
-            <div className="space-y-4 pt-6 border-t border-[#d9d2c6]">
+            <div id="policy-6" className="space-y-4 pt-6 border-t border-[#d9d2c6] scroll-mt-28">
               <div className="flex items-center gap-3 text-[#181715]">
                 <div className="p-2.5 rounded-xl bg-[#f4f0e8] text-[#c85d2f]">
                   <ExternalLink className="w-5 h-5" />
@@ -194,7 +233,7 @@ export const PrivacyPolicy: React.FC = () => {
             </div>
 
             {/* Section 7: Your Privacy Rights & Choices */}
-            <div className="space-y-4 pt-6 border-t border-[#d9d2c6]">
+            <div id="policy-7" className="space-y-4 pt-6 border-t border-[#d9d2c6] scroll-mt-28">
               <div className="flex items-center gap-3 text-[#181715]">
                 <div className="p-2.5 rounded-xl bg-[#f4f0e8] text-[#c85d2f]">
                   <UserCheck className="w-5 h-5" />
@@ -208,6 +247,7 @@ export const PrivacyPolicy: React.FC = () => {
               </p>
             </div>
 
+          </div>
           </div>
         </div>
       </section>

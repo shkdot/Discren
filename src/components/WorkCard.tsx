@@ -9,9 +9,18 @@ interface WorkCardProps {
 
 export const WorkCard: React.FC<WorkCardProps> = ({ item, onOpenLightbox }) => {
   return (
-    <article 
+    <article
+      role="button"
+      tabIndex={0}
+      aria-label={`View production details for ${item.title}`}
       onClick={() => onOpenLightbox(item)}
-      className="bg-[#fbfaf6] border border-[#d9d2c6] rounded-[22px] overflow-hidden group cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:border-[#aaa195] hover:shadow-md flex flex-col"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onOpenLightbox(item);
+        }
+      }}
+      className="bg-[#fbfaf6] border border-[#d9d2c6] rounded-[22px] overflow-hidden group cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:border-[#aaa195] hover:shadow-md flex flex-col focus-visible:outline-2 focus-visible:outline-offset-2"
     >
       <div className="relative aspect-[4/3] bg-[#292722] overflow-hidden">
         <img 

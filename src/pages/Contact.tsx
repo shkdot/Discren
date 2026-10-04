@@ -4,20 +4,43 @@ import { PageHero } from '../components/PageHero';
 import { ContactForm } from '../components/ContactForm';
 import { CTASection } from '../components/CTASection';
 import { companyData } from '../data/companyData';
-import { MapPin, Phone, Mail, MessageSquare, Clock, ArrowRight, CheckCircle2, FileText, Search, Cpu, FlaskConical, ShieldCheck, HelpCircle } from 'lucide-react';
+import { MapPin, Phone, Mail, MessageSquare } from 'lucide-react';
 import { InstagramIcon } from '../components/Icons';
+
+/** What happens after an enquiry is submitted. */
+const nextSteps = [
+  { title: 'We Review Your Requirement', text: 'We look at the garment, quantity, artwork, printing method and desired result to understand the job.' },
+  { title: 'We Discuss the Printing Approach', text: 'If you know your method, we work with that. If unsure, we discuss suitable options based on fabric and desired finish.' },
+  { title: 'We Clarify the Details', text: 'We discuss artwork, colours, placement, garment condition, quantities and other production details properly.' },
+  { title: 'Sampling When Required', text: 'For unfamiliar fabrics or new requirements, a paid sample can be produced before bulk production.' },
+  { title: 'Quotation & Confirmation', text: 'We discuss applicable pricing, production timeline and terms. Production moves forward after order confirmation.' },
+  { title: 'Production Execution', text: 'The approved requirement moves into production, continuously observed so issues can be addressed as they arise.' },
+];
+
+/** Details that speed up a quote — mirrors the client checklist on the Process page. */
+const enquiryHelper = [
+  { title: 'Garment', text: 'What are you printing on? T-shirts, polos, hoodies, shirts, sportswear, uniforms or another garment.' },
+  { title: 'Quantity', text: 'Approximate number of pieces you need printed (e.g. ~50, 100, 500, 1,000+ pieces).' },
+  { title: 'Artwork', text: 'Share the design you\'re planning to print, along with any relevant colour or placement details.' },
+  { title: 'Printing Requirement', text: 'Tell us the method or finish you have in mind — screen printing, puff, high-density or DTF — or ask for guidance.' },
+  { title: 'Timeline', text: 'Mention when you need production completed, particularly for collection launches or deadlines.' },
+  { title: 'Anything Specific', text: 'Include any details that affect the job, such as cut panels, finished garments, or fabric composition.' },
+];
+
+const experienceLabel = companyData.experienceYears.toUpperCase();
+const heroEyebrow = `${experienceLabel} OF APPAREL PRINTING EXPERIENCE · ${companyData.area.toUpperCase()}, ${companyData.city.toUpperCase()}`;
 
 export const Contact: React.FC = () => {
   return (
     <>
       <SEO
         title="Contact Us & Request a Quote — DISCREN Apparel Printing"
-        description="Contact DISCREN in Jogeshwari West, Mumbai. Request a quote or discuss your bulk garment job-work requirement with 25+ years of apparel printing experience."
+        description="Contact DISCREN in Jogeshwari West, Mumbai. Request a quote or discuss your bulk garment job-work requirement with a B2B apparel printing partner."
       />
 
       {/* Hero Section */}
       <PageHero
-        eyebrow="25+ YEARS OF APPAREL PRINTING EXPERIENCE · JOGESHWARI WEST, MUMBAI"
+        eyebrow={heroEyebrow}
         title="Let's Talk About Your Printing Requirement."
         subtitle="Planning a new apparel collection, producing garments for your business, or looking for a printing partner for your next bulk order? Tell us what you're producing, how many pieces you need, what garment you're working with and what you want the finished print to look like."
       >
@@ -145,140 +168,89 @@ export const Contact: React.FC = () => {
                 </div>
               </div>
 
-              {/* Checklist Card */}
+              {/* Checklist Card — condensed; the full detail lives in the enquiry helper below */}
               <div className="bg-[#1b1a18] text-white rounded-[24px] p-7 space-y-3">
                 <div className="flex items-center gap-2 text-[#e37b4f] font-extrabold text-[12px] uppercase tracking-wider">
-                  <CheckCircle2 className="w-4 h-4" />
                   <span>Before You Contact Us</span>
                 </div>
-                <h4 className="text-[17px] font-extrabold">Having basic details ready helps:</h4>
                 <p className="text-[13px] text-[#d1ccc4] leading-relaxed">
-                  <strong>Garment · Quantity · Artwork · Printing Method / Finish · Required Timeline</strong>
+                  Having <strong className="text-white">garment, quantity, artwork, printing method, finish and timeline</strong> ready helps us quote faster.
                 </p>
                 <p className="text-[12px] text-[#a8a39a]">
-                  You don't need to know everything in advance. Share what you have, and we'll discuss the remaining details with you.
+                  You don't need to know everything in advance — share what you have and we'll discuss the rest.
                 </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Section: What Happens After You Contact Us */}
-          <div className="mb-20 pt-16 border-t border-[#d9d2c6]">
-            <div className="max-w-[720px] mb-12">
-              <div className="text-[11px] tracking-[0.14em] uppercase text-[#c85d2f] font-extrabold mb-3">
-                WHAT HAPPENS AFTER YOU CONTACT US
-              </div>
-              <h2 className="text-[34px] md:text-[46px] leading-[1.0] tracking-[-0.05em] font-extrabold text-[#181715] mb-4">
-                From Enquiry to a Clear Production Plan.
-              </h2>
-              <p className="text-[16px] text-[#6e6a63] leading-relaxed">
-                Once you send us your requirement, we first look at the details you've provided and understand what you're trying to produce.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-[#fbfaf6] border border-[#d9d2c6] rounded-[22px] p-7">
-                <span className="text-[12px] font-extrabold text-[#c85d2f] uppercase tracking-wider block mb-2">01</span>
-                <h3 className="text-[20px] font-extrabold text-[#181715] mb-2">We Review Your Requirement</h3>
-                <p className="text-[14px] text-[#6e6a63] leading-relaxed">
-                  We look at the garment, quantity, artwork, printing method and desired result to understand the job.
-                </p>
-              </div>
-
-              <div className="bg-[#fbfaf6] border border-[#d9d2c6] rounded-[22px] p-7">
-                <span className="text-[12px] font-extrabold text-[#c85d2f] uppercase tracking-wider block mb-2">02</span>
-                <h3 className="text-[20px] font-extrabold text-[#181715] mb-2">We Discuss the Printing Approach</h3>
-                <p className="text-[14px] text-[#6e6a63] leading-relaxed">
-                  If you know your method, we work with that. If unsure, we discuss suitable options based on fabric and desired finish.
-                </p>
-              </div>
-
-              <div className="bg-[#fbfaf6] border border-[#d9d2c6] rounded-[22px] p-7">
-                <span className="text-[12px] font-extrabold text-[#c85d2f] uppercase tracking-wider block mb-2">03</span>
-                <h3 className="text-[20px] font-extrabold text-[#181715] mb-2">We Clarify the Details</h3>
-                <p className="text-[14px] text-[#6e6a63] leading-relaxed">
-                  We discuss artwork, colours, placement, garment condition, quantities and other production details properly.
-                </p>
-              </div>
-
-              <div className="bg-[#fbfaf6] border border-[#d9d2c6] rounded-[22px] p-7">
-                <span className="text-[12px] font-extrabold text-[#c85d2f] uppercase tracking-wider block mb-2">04</span>
-                <h3 className="text-[20px] font-extrabold text-[#181715] mb-2">Sampling When Required</h3>
-                <p className="text-[14px] text-[#6e6a63] leading-relaxed">
-                  For unfamiliar fabrics or new requirements, a paid sample can be produced before bulk production.
-                </p>
-              </div>
-
-              <div className="bg-[#fbfaf6] border border-[#d9d2c6] rounded-[22px] p-7">
-                <span className="text-[12px] font-extrabold text-[#c85d2f] uppercase tracking-wider block mb-2">05</span>
-                <h3 className="text-[20px] font-extrabold text-[#181715] mb-2">Quotation & Confirmation</h3>
-                <p className="text-[14px] text-[#6e6a63] leading-relaxed">
-                  We discuss applicable pricing, production timeline and terms. Production moves forward after order confirmation.
-                </p>
-              </div>
-
-              <div className="bg-[#fbfaf6] border border-[#d9d2c6] rounded-[22px] p-7">
-                <span className="text-[12px] font-extrabold text-[#c85d2f] uppercase tracking-wider block mb-2">06</span>
-                <h3 className="text-[20px] font-extrabold text-[#181715] mb-2">Production Execution</h3>
-                <p className="text-[14px] text-[#6e6a63] leading-relaxed">
-                  The approved requirement moves into production, continuously observed so issues can be addressed as they arise.
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* Section: Make Your Enquiry Easier */}
-          <div className="pt-16 border-t border-[#d9d2c6]">
-            <div className="max-w-[720px] mb-12">
-              <div className="text-[11px] tracking-[0.14em] uppercase text-[#c85d2f] font-extrabold mb-3">
-                ENQUIRY HELPER
-              </div>
-              <h2 className="text-[34px] md:text-[46px] leading-[1.0] tracking-[-0.05em] font-extrabold text-[#181715] mb-4">
-                Make Your Enquiry Easier.
-              </h2>
-              <p className="text-[16px] text-[#6e6a63] leading-relaxed">
-                You don't need to have every production detail finalized before contacting us. However, having the following information ready can help us understand your requirement more quickly.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="bg-[#fbfaf6] border border-[#d9d2c6] rounded-[20px] p-6">
-                <h4 className="font-extrabold text-[#181715] text-[16px] mb-2">01 — Garment</h4>
-                <p className="text-[13px] text-[#6e6a63]">What are you printing on? T-shirts, polos, hoodies, shirts, sportswear, uniforms or another garment.</p>
-              </div>
-
-              <div className="bg-[#fbfaf6] border border-[#d9d2c6] rounded-[20px] p-6">
-                <h4 className="font-extrabold text-[#181715] text-[16px] mb-2">02 — Quantity</h4>
-                <p className="text-[13px] text-[#6e6a63]">Approximate number of pieces you need printed (e.g. ~50, 100, 500, 1,000+ pieces).</p>
-              </div>
-
-              <div className="bg-[#fbfaf6] border border-[#d9d2c6] rounded-[20px] p-6">
-                <h4 className="font-extrabold text-[#181715] text-[16px] mb-2">03 — Artwork</h4>
-                <p className="text-[13px] text-[#6e6a63]">Share the design you're planning to print, along with any relevant colour or placement details.</p>
-              </div>
-
-              <div className="bg-[#fbfaf6] border border-[#d9d2c6] rounded-[20px] p-6">
-                <h4 className="font-extrabold text-[#181715] text-[16px] mb-2">04 — Printing Requirement</h4>
-                <p className="text-[13px] text-[#6e6a63]">Tell us the method or finish you have in mind — screen printing, puff, high-density or DTF — or ask for guidance.</p>
-              </div>
-
-              <div className="bg-[#fbfaf6] border border-[#d9d2c6] rounded-[20px] p-6">
-                <h4 className="font-extrabold text-[#181715] text-[16px] mb-2">05 — Timeline</h4>
-                <p className="text-[13px] text-[#6e6a63]">Mention when you need production completed, particularly for collection launches or deadlines.</p>
-              </div>
-
-              <div className="bg-[#fbfaf6] border border-[#d9d2c6] rounded-[20px] p-6">
-                <h4 className="font-extrabold text-[#181715] text-[16px] mb-2">06 — Anything Specific</h4>
-                <p className="text-[13px] text-[#6e6a63]">Include any details that affect the job, such as cut panels, finished garments, or fabric composition.</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Final CTA Banner */}
+      {/* 01 / WHAT HAPPENS NEXT — inverted band to break the cream */}
+      <section className="py-20 md:py-28 bg-[#1b1a18] text-white">
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16 items-start">
+            <div className="lg:sticky lg:top-28">
+              <div className="text-[11px] tracking-[0.14em] uppercase text-[#e37b4f] font-extrabold mb-3">
+                01 / WHAT HAPPENS NEXT
+              </div>
+              <h2 className="text-[clamp(28px,4vw,44px)] leading-[1.05] tracking-[-0.05em] font-extrabold mb-4">
+                From Enquiry to a Clear Production Plan.
+              </h2>
+              <p className="text-[16px] text-[#d1ccc4] leading-relaxed max-w-[440px]">
+                Once you send us your requirement, we first look at the details you've provided and understand what you're trying to produce.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-x-10 gap-y-9">
+              {nextSteps.map((step, i) => (
+                <div key={step.title} className="border-t border-white/15 pt-5">
+                  <span className="block text-[11px] font-extrabold tracking-[0.14em] text-[#e37b4f] mb-2.5">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <h3 className="text-[18px] tracking-[-0.03em] font-extrabold text-white mb-2 leading-snug">
+                    {step.title}
+                  </h3>
+                  <p className="text-[14px] text-[#a9a49b] leading-relaxed">{step.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+          {/* 02 / ENQUIRY HELPER — sand band, hairline list rather than another card grid */}
+      <section className="py-20 md:py-28 bg-[#e7dfd2] border-y border-[#c9c0b2]">
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16 items-start">
+            <div className="lg:sticky lg:top-28">
+              <div className="text-[11px] tracking-[0.14em] uppercase text-[#c85d2f] font-extrabold mb-3">
+                02 / ENQUIRY HELPER
+              </div>
+              <h2 className="text-[clamp(28px,4vw,44px)] leading-[1.05] tracking-[-0.05em] font-extrabold text-[#181715] mb-4">
+                Make Your Enquiry Easier.
+              </h2>
+              <p className="text-[16px] text-[#5f5951] leading-relaxed max-w-[440px]">
+                You don't need to have every production detail finalized before contacting us. Having the following ready helps us understand your requirement more quickly.
+              </p>
+            </div>
+
+            <div className="grid sm:grid-cols-2 gap-3">
+              {enquiryHelper.map((item, i) => (
+                <div key={item.title} className="rounded-[18px] bg-[#fbfaf6] border border-[#c9c0b2] p-6">
+                  <span className="block text-[11px] font-extrabold tracking-[0.14em] text-[#c85d2f] mb-2.5">
+                    {String(i + 1).padStart(2, '0')} — {item.title}
+                  </span>
+                  <p className="text-[13.5px] text-[#5f5951] leading-relaxed">{item.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+          {/* Final CTA Banner */}
       <CTASection
-        kicker="25+ YEARS OF APPAREL PRINTING EXPERIENCE · JOGESHWARI WEST, MUMBAI"
+        kicker={heroEyebrow}
         title="Ready to Discuss Your Requirement?"
         description="Whether you're planning a new clothing collection, producing garments in bulk or looking for a printing partner for your business, start by telling us what you need."
       />
