@@ -13,129 +13,150 @@ export interface CapabilityItem {
 
 export const capabilitiesData: CapabilityItem[] = [
   {
-    id: "screen-printing",
+    id: "plastisol-printing",
     num: "01",
-    title: "Screen Printing",
-    shortDesc: "Experience across different screen-printing requirements for apparel production.",
-    fullDesc: "Screen printing remains the industry standard for bulk apparel production. We offer plastisol, water-based, and discharge screen printing tailored to fabric composition, vibrancy requirements, and garment durability.",
+    title: "Plastisol Printing",
+    shortDesc: "Industry-standard durable screen printing for vivid colors, solid opacity, and long-lasting prints.",
+    fullDesc: "Plastisol printing is the benchmark for commercial bulk apparel job-work. Formulated with high-grade PVC resin suspended in plasticizer, it cures under controlled flash heat to deliver intense color opacity, exceptional wash fastness, and sharp vector graphics.",
     useCases: [
-      "Bulk apparel runs (50 to 1,000+ pieces)",
-      "Brand merchandise & streetwear collections",
-      "Heavyweight cotton t-shirts & hoodies",
-      "Vector artwork with solid color separation"
+      "Bulk streetwear & merchandise production (50 to 1,000+ pcs)",
+      "High-contrast solid color graphics & brand logos",
+      "Heavyweight cotton t-shirts, hoodies, and fleece",
+      "Multi-color vector artwork requiring consistent Pantone matching"
     ],
     considerations: [
-      "Requires screen preparation per color in the design",
-      "Most cost-effective for medium to large production quantities",
-      "Fabric type influences ink formulation selection"
+      "Requires screen exposure preparation per color channel",
+      "Creates a slight tactile ink layer on the garment surface",
+      "Ideal cost-per-unit ratio for medium to large production runs"
     ],
     suitableFabrics: ["100% Cotton", "Cotton-Poly Blends", "Fleece", "French Terry"],
-    image: "/images/screen_print.webp",
-    badge: "Core Service"
+    image: "/images/home-plastisole.webp",
+    badge: "Core Classic"
   },
   {
-    id: "dtf-printing",
+    id: "water-based-printing",
     num: "02",
-    title: "DTF Printing",
-    shortDesc: "A flexible printing option for designs and production requirements that call for it.",
-    fullDesc: "Direct-to-Film (DTF) printing enables full-color detail, smooth gradients, and fine photographic elements without full screen setup fees. Ideal for multi-color complex graphics across varied placement points.",
+    title: "Water-Based Printing",
+    shortDesc: "Ultra-soft hand-feel printing where ink absorbs into fabric for lightweight, breathable apparel.",
+    fullDesc: "Water-based printing uses water-soluble pigments that penetrate directly into fabric fibers rather than sitting on top. This results in a virtually weightless, ultra-soft print finish with maximum breathability, perfect for high-end retail clothing lines.",
     useCases: [
-      "Multi-color artwork with photorealistic details & gradients",
-      "Intricate sleeve, neck label, and pocket prints",
-      "Smaller batch sampling and short-run production",
-      "Synthetic or technical fabric blends"
+      "Soft-touch fashion t-shirts & oversized streetwear",
+      "Large-area front and back panel prints",
+      "Lightweight summer garments & activewear knits",
+      "Vintage, muted, or washed aesthetic brand designs"
     ],
     considerations: [
-      "Film transfer finish provides clean edge definition",
-      "Heat press application conditions must match fabric tolerance",
-      "Excellent for artwork with numerous color transitions"
+      "Performs best on light-colored natural fibers",
+      "Requires careful flash curing to prevent moisture evaporation issues",
+      "Yields a smooth zero-ink feel after first wash"
     ],
-    suitableFabrics: ["Cotton", "Polyester", "Nylon Blends", "Canvas"],
-    image: "/images/screen_print.webp",
-    badge: "Flexible"
+    suitableFabrics: ["100% Combed Cotton", "Organic Cotton", "Bamboo Knits", "Rayon Blends"],
+    image: "/images/home-water-based.webp",
+    badge: "Soft Hand-Feel"
   },
   {
-    id: "puff-printing",
+    id: "discharge-printing",
     num: "03",
-    title: "Puff Printing",
-    shortDesc: "A raised, dimensional effect for designs that need more visual and tactile presence.",
-    fullDesc: "Puff printing utilizes specialized foaming ink additives that expand under heat curing to create a soft, 3D raised print effect. Adds distinct tactile texture and visual depth to brand typography and logos.",
+    title: "Discharge Printing",
+    shortDesc: "Specialized ink system that removes dark fabric dye to create vibrant prints with zero ink weight.",
+    fullDesc: "Discharge printing combines a discharge agent with water-based pigments to bleach away reactive dyes in dark 100% cotton garments while replacing them with fresh color pigments. The result is a vibrant, soft print without stiff ink buildup.",
     useCases: [
-      "Streetwear hoodies & oversized tees",
-      "Bold typographic logos and brand emblems",
-      "Statement chest prints & back graphic accents",
-      "Tactile brand signature details"
+      "Dark charcoal, black, and navy cotton apparel",
+      "Oversized back graphics on heavyweight hoodies",
+      "High-end streetwear brands requiring no heavy print feel",
+      "Full-front panel prints prior to garment assembly"
     ],
     considerations: [
-      "Works best with bold, thick linework and graphic shapes",
-      "Very fine hairline details may fuse during heat expansion",
-      "Requires precise cure timing to ensure consistent elevation"
+      "Requires 100% cotton reactive-dyed fabric for optimal discharge reaction",
+      "Fabrics containing synthetic fibers may produce slightly muted tones",
+      "Cured prints become soft and weightless after initial wash"
     ],
-    suitableFabrics: ["Heavy Cotton", "French Terry", "Fleece", "Sweatshirt Knit"],
-    image: "/images/puff_print.webp",
-    badge: "Specialty Finish"
+    suitableFabrics: ["100% Reactive-Dyed Cotton", "Heavyweight Cotton Knits"],
+    image: "/images/home-discharge.webp",
+    badge: "Zero-Feel on Dark"
   },
   {
     id: "high-density",
     num: "04",
-    title: "High-Density",
-    shortDesc: "A pronounced dimensional finish for designs requiring additional depth and structure.",
-    fullDesc: "High-density printing applies multiple layers of specialized thick ink through high-gauge stencils to build clean, sharp, square-edged 3D dimensional prints with distinct structural relief.",
+    title: "High-Density (HD) Printing",
+    shortDesc: "Pronounced 3D dimensional printing with sharp 90-degree square edges for elevated structural relief.",
+    fullDesc: "High-density (HD) printing applies specialized thick silicone or HD plastisol inks through thick high-gauge capillary stencils over multi-pass print cycles. This creates crisp, elevated 3D logos with sharp 90-degree square edges.",
     useCases: [
-      "Luxury apparel & high-end streetwear branding",
-      "Structured geometric logos & typography",
-      "Chest emblems and sleeve badges",
-      "Premium garment collections requiring elevated finishes"
+      "Luxury apparel & high-end streetwear chest emblems",
+      "Geometric brand typography & architectural logos",
+      "Structured sleeve badges & back collar accents",
+      "Premium garment collections requiring heavy 3D presence"
     ],
     considerations: [
-      "Produces sharp 90-degree crisp raised edges unlike rounded puff print",
+      "Produces sharp square vertical edges unlike rounded puff print",
       "Requires specialized screen preparation and multi-pass curing",
-      "Best suited for solid graphic elements rather than thin gradients"
+      "Best suited for solid vector shapes rather than thin gradients"
     ],
-    suitableFabrics: ["Heavy Cotton", "Pique Cotton", "Dense Fleece", "Blend Knits"],
-    image: "/images/high_density.webp",
+    suitableFabrics: ["Heavy Cotton", "Pique Cotton", "Dense Fleece", "Sweatshirt Knits"],
+    image: "/images/home-hd.webp",
     badge: "3D Relief"
   },
   {
-    id: "cut-panel-printing",
+    id: "puff-printing",
     num: "05",
-    title: "Cut Panel Printing",
-    shortDesc: "Individual garment panels printed before stitching and garment assembly.",
-    fullDesc: "Cut panel printing involves printing directly onto flat cut pieces of fabric before they are stitched into finished garments. This allows edge-to-edge prints, seam-spanning graphics, and precise layout alignment without distortion.",
+    title: "Puff Printing",
+    shortDesc: "Raised 3D tactile foam print effect expanding under heat curing for bold typography & emblems.",
+    fullDesc: "Puff printing utilizes specialized heat-expanding micro-foam additives mixed into plastisol ink. Under oven curing, the print swells upward into a smooth, rounded 3D raised surface that adds tactile warmth and dimension to garment graphics.",
     useCases: [
-      "Over-the-seam prints & wide back graphics",
-      "Full-front panel graphics",
-      "Sleeve and shoulder panel prints",
-      "Garment manufacturer job-work prior to assembly"
+      "Streetwear hoodies, crewnecks & oversized tees",
+      "Bold typographic brand logos and arch lettering",
+      "Tactile chest logos & statement back graphic accents",
+      "Vintage 90s style puffed apparel prints"
     ],
     considerations: [
-      "Panels must be flat, unstitched, and cut accurately",
-      "Facilitates seamless printing near pocket edges and armholes",
-      "Enables higher production throughput on flat printing tables"
+      "Works best with bold, clean linework and thick graphic shapes",
+      "Hairline details may expand together during heat swelling",
+      "Requires precise temperature curing for uniform elevation"
     ],
-    suitableFabrics: ["All Cut Knit Fabric Panels", "Woven Panels", "Denim Panels"],
-    image: "/images/cut_panel.webp",
-    badge: "Garment Job-Work"
+    suitableFabrics: ["Heavy Cotton", "French Terry", "Fleece", "Sweatshirt Knit"],
+    image: "/images/home-puff.webp",
+    badge: "Specialty 3D"
   },
   {
-    id: "finished-garments",
+    id: "metallic-foil-printing",
     num: "06",
-    title: "Finished Garments",
-    shortDesc: "Printing directly on ready-made garments, including finished T-shirts and apparel.",
-    fullDesc: "Printing on pre-stitched, finished clothing items such as ready tees, hoodies, and sweatshirts. We utilize specialized platens and positioning jigs to ensure clean placement across varied garment sizes.",
+    title: "Metallic / Foil Printing",
+    shortDesc: "High-luster metallic inks and foil transfer applications delivering reflective metallic accents.",
+    fullDesc: "Metallic and foil printing uses ultra-fine metallic flake inks (gold, silver, bronze, gunmetal) or heat-applied reflective foils to add intense mirror-like shine and metallic luster to brand artwork.",
     useCases: [
-      "Ready-made blank t-shirts & oversized tees",
-      "Finished hoodies, sweatshirts & zip jackets",
-      "Tote bags and fabric accessories",
-      "Restocking active clothing line runs"
+      "Luxury fashion labels & limited-edition drops",
+      "Gold, silver, or bronze chest logos & crests",
+      "Event merchandise & statement streetwear graphics",
+      "High-luster trim details & brand signature accents"
     ],
     considerations: [
-      "Garments must be laid flat without bulk around seams",
-      "Platen size determines maximum print dimensions on stitched garments",
-      "Proper garment pallet loading ensures registration consistency"
+      "Foil transfer requires a clear adhesive base print and heat press bonding",
+      "Gentle washing recommended to maintain maximum metallic reflection",
+      "Adds premium reflective appeal to dark apparel"
     ],
-    suitableFabrics: ["Finished Cotton Tees", "Finished Hoodies", "Blank Sweatshirts"],
-    image: "/images/home-hero-image.webp",
-    badge: "Ready-Made"
+    suitableFabrics: ["Cotton", "Cotton-Poly Blends", "Fleece", "Blends"],
+    image: "/images/home-metallic-foil.webp",
+    badge: "High-Luster"
+  },
+  {
+    id: "reflective-glow-printing",
+    num: "07",
+    title: "Glow in the Dark / Reflective",
+    shortDesc: "Photo-luminescent and high-visibility glass-bead reflective inks that glow or flash under light.",
+    fullDesc: "Reflective and glow-in-the-dark printing incorporates photo-luminescent phosphors that absorb light and glow in darkness, or micro-glass bead reflective compounds that illuminate brilliantly when hit by direct headlight or flash camera light.",
+    useCases: [
+      "High-visibility streetwear & techwear collections",
+      "Glow-in-the-dark graphic prints & nighttime events",
+      "Flash-reflective chest, sleeve, and back branding",
+      "Safety-inspired apparel & active nightwear"
+    ],
+    considerations: [
+      "Photo-luminescent inks charge under ambient light to emit green/blue glow",
+      "Reflective inks bounce direct light beams back to the camera or viewer",
+      "Requires precise mesh selection to allow glass beads or glow particles to pass"
+    ],
+    suitableFabrics: ["Cotton", "Polyester", "Fleece", "Technical Blends"],
+    image: "/images/home-glow-in-the-dark.webp",
+    badge: "Photo-Active"
   }
 ];

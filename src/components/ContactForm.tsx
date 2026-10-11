@@ -1,6 +1,7 @@
 import React, { useState, FormEvent } from 'react';
 import { Button } from './Button';
 import { Send, CheckCircle2, AlertCircle } from 'lucide-react';
+import { companyData } from '../data/companyData';
 
 interface FormData {
   name: string;
@@ -36,6 +37,8 @@ export const ContactForm: React.FC = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  /** How the enquiry was delivered — drives the confirmation copy. */
+  const [sentVia, setSentVia] = useState<'endpoint' | 'mail' | null>(null);
 
   const validate = (): boolean => {
     const newErrors: FormErrors = {};
@@ -58,17 +61,60 @@ export const ContactForm: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  /**
+   * Deliver the enquiry.
+   *
+   * This is a static SPA with no backend, so mail is relayed through a form
+   * endpoint (Formspree / Web3Forms / Getform all accept the same JSON POST)
+   * supplied via VITE_FORM_ENDPOINT. If no endpoint is configured, or the
+   * request fails, we fall back to the visitor's mail client so a lead is
+   * never silently discarded.
+   */
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
+    const enquiry = { ...formData };
+    const endpoint = import.meta.env.VITE_FORM_ENDPOINT;
 
-    // Simulate clean frontend submission transition
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 600);
+    if (endpoint) {
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(enquiry),
+        });
+        if (!res.ok) throw new Error(`Endpoint responded ${res.status}`);
+        setSentVia('endpoint');
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+        return;
+      } catch (err) {
+        console.error('Form endpoint failed — falling back to mail client.', err);
+      }
+    }
+
+    const body = [
+      `Name: ${enquiry.name}`,
+      `Company: ${enquiry.company || 'N/A'}`,
+      `Phone: ${enquiry.phone}`,
+      `Email: ${enquiry.email}`,
+      `Printing Method: ${enquiry.printingMethod}`,
+      `Approx Quantity: ${enquiry.quantity}`,
+      `Garment Format: ${enquiry.garmentType}`,
+      '',
+      'Requirement:',
+      enquiry.message || 'N/A',
+    ].join('\n');
+
+    window.location.href = `${companyData.emailHref}?subject=${encodeURIComponent(
+      `New B2B Enquiry — ${enquiry.company || enquiry.name}`
+    )}&body=${encodeURIComponent(body)}`;
+
+    setSentVia('mail');
+    setIsSubmitting(false);
+    setIsSubmitted(true);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -106,14 +152,26 @@ export const ContactForm: React.FC = () => {
           </div>
         </div>
 
-        <p className="text-[13px] text-[#6e6a63] mb-6">
-          * Note: This frontend submission state is ready for connection to your production API, Formspree, or backend webhook.
-        </p>
+        {sentVia === 'endpoint' ? (
+          <p className="text-[13px] text-[#6e6a63] mb-6">
+            * Your enquiry has been emailed to our production team. We typically respond within one business day.
+          </p>
+        ) : (
+          <p className="text-[13px] text-[#6e6a63] mb-6">
+            * Your email app should now be open with this enquiry pre-filled. Please press send. If nothing
+            opened, email us directly at{' '}
+            <a href={companyData.emailHref} className="font-extrabold text-[#c85d2f] hover:underline">
+              {companyData.emailPlaceholder}
+            </a>
+            .
+          </p>
+        )}
 
         <Button 
           variant="secondary" 
           onClick={() => {
             setIsSubmitted(false);
+            setSentVia(null);
             setFormData({
               name: '',
               company: '',
@@ -233,10 +291,13 @@ export const ContactForm: React.FC = () => {
             onChange={handleChange}
             className="w-full px-4 py-3 bg-[#f4f0e8] border border-[#d9d2c6] rounded-[14px] text-[15px] text-[#181715] focus:outline-none focus:border-[#c85d2f] transition-colors cursor-pointer"
           >
-            <option value="Screen Printing">Screen Printing</option>
-            <option value="DTF Printing">DTF Printing</option>
-            <option value="Puff Printing">3D Puff Printing</option>
-            <option value="High-Density">High-Density Silicone</option>
+            <option value="Plastisol Printing">Plastisol Printing</option>
+            <option value="Water-Based Printing">Water-Based Printing</option>
+            <option value="Discharge Printing">Discharge Printing</option>
+            <option value="High-Density">High-Density (HD) Printing</option>
+            <option value="Puff Printing">Puff Printing</option>
+            <option value="Metallic / Foil Printing">Metallic / Foil Printing</option>
+            <option value="Reflective / Glow Printing">Glow in the Dark / Reflective</option>
             <option value="Cut Panel Printing">Cut Panel Printing (Unstitched)</option>
             <option value="Finished Garments">Finished Garments</option>
             <option value="Need Recommendation">Need Method Recommendation</option>

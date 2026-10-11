@@ -13,7 +13,9 @@ export interface CompanyInfo {
   advancePayment: string;
   balancePayment: string;
   phonePlaceholder: string;
+  phoneHref: string;
   emailPlaceholder: string;
+  emailHref: string;
   whatsappPlaceholder: string;
   instagramPlaceholder: string;
   googleMapsPlaceholder: string;
@@ -33,9 +35,11 @@ export const companyData: CompanyInfo = {
   samplingTime: "3–5 working days",
   advancePayment: "50% advance",
   balancePayment: "50% before dispatch",
-  phonePlaceholder: "[TBC — Request via Form]",
-  emailPlaceholder: "[TBC — Request via Form]",
-  whatsappPlaceholder: "https://wa.me/?text=Hello%20DISCREN,%20I%20have%20an%20apparel%20printing%20requirement.",
+  phonePlaceholder: "+91 99876 35634",
+  phoneHref: "tel:+919987635634",
+  emailPlaceholder: "info.discren@gmail.com",
+  emailHref: "mailto:info.discren@gmail.com",
+  whatsappPlaceholder: "https://wa.me/919987635634?text=Hello%20DISCREN%2C%20I%20have%20an%20apparel%20printing%20requirement.",
   instagramPlaceholder: "https://instagram.com",
   googleMapsPlaceholder: "https://maps.google.com/?q=Jogeshwari+West+Mumbai",
 };

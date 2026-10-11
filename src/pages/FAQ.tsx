@@ -40,11 +40,26 @@ export const FAQ: React.FC = () => {
     { label: 'Based in', value: `${companyData.area}, ${companyData.city}` },
   ];
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqData.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer,
+      },
+    })),
+  };
+
   return (
     <>
       <SEO
-        title="FAQ — DISCREN Apparel Printing"
-        description="Frequently asked questions about DISCREN B2B apparel printing in Mumbai. MOQs, printing methods, cut panel job-work, sampling, turnaround, and commercial terms."
+        title="Frequently Asked Questions — DISCREN Apparel Printing Mumbai"
+        description="Clear answers to B2B apparel printing questions: minimum order quantities (~50 pcs), bulk capacity (1,000+), the 7 printing methods, cut panels, sampling, and commercial terms in Jogeshwari West, Mumbai."
+        keywords="apparel printing FAQ Mumbai, screen printing MOQ, discharge printing cotton FAQ, puff print wash care, bulk t-shirt printing payment terms, sampling turnaround Jogeshwari"
+        schema={faqSchema}
       />
 
       <PageHero

@@ -22,7 +22,7 @@ const enquiryHelper = [
   { title: 'Garment', text: 'What are you printing on? T-shirts, polos, hoodies, shirts, sportswear, uniforms or another garment.' },
   { title: 'Quantity', text: 'Approximate number of pieces you need printed (e.g. ~50, 100, 500, 1,000+ pieces).' },
   { title: 'Artwork', text: 'Share the design you\'re planning to print, along with any relevant colour or placement details.' },
-  { title: 'Printing Requirement', text: 'Tell us the method or finish you have in mind — screen printing, puff, high-density or DTF — or ask for guidance.' },
+  { title: 'Printing Requirement', text: 'Tell us the method or finish you have in mind — plastisol, water-based, discharge, puff, high-density, metallic/foil, or reflective — or ask for guidance.' },
   { title: 'Timeline', text: 'Mention when you need production completed, particularly for collection launches or deadlines.' },
   { title: 'Anything Specific', text: 'Include any details that affect the job, such as cut panels, finished garments, or fabric composition.' },
 ];
@@ -31,11 +31,47 @@ const experienceLabel = companyData.experienceYears.toUpperCase();
 const heroEyebrow = `${experienceLabel} OF APPAREL PRINTING EXPERIENCE · ${companyData.area.toUpperCase()}, ${companyData.city.toUpperCase()}`;
 
 export const Contact: React.FC = () => {
+  const contactSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: 'Contact DISCREN Apparel Printing',
+    description: 'Direct contact details and quotation request channel for DISCREN B2B apparel printing in Jogeshwari West, Mumbai.',
+    mainEntity: {
+      '@type': 'LocalBusiness',
+      name: 'DISCREN',
+      telephone: '+919987635634',
+      email: 'info.discren@gmail.com',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Opposite Vijay Vishal Building, Jogeshwari West',
+        addressLocality: 'Mumbai',
+        addressRegion: 'Maharashtra',
+        postalCode: '400102',
+        addressCountry: 'IN',
+      },
+      geo: {
+        '@type': 'GeoCoordinates',
+        latitude: '19.1363',
+        longitude: '72.8468',
+      },
+      openingHoursSpecification: [
+        {
+          '@type': 'OpeningHoursSpecification',
+          dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+          opens: '09:00',
+          closes: '20:00',
+        },
+      ],
+    },
+  };
+
   return (
     <>
       <SEO
-        title="Contact Us & Request a Quote — DISCREN Apparel Printing"
-        description="Contact DISCREN in Jogeshwari West, Mumbai. Request a quote or discuss your bulk garment job-work requirement with a B2B apparel printing partner."
+        title="Contact & Request a Quote — DISCREN Apparel Printing Mumbai"
+        description="Connect with DISCREN in Jogeshwari West, Mumbai. Request quotes for B2B garment printing, submit tech packs, or consult on bulk orders (MOQ ~50 pcs) with experienced craftsmen."
+        keywords="contact DISCREN, apparel printing quote Mumbai, garment job work inquiry, screen printing factory Jogeshwari West, bulk t-shirt printer contact, fashion brand printing partner"
+        schema={contactSchema}
       />
 
       {/* Hero Section */}
@@ -141,7 +177,7 @@ export const Contact: React.FC = () => {
                     <Phone className="w-4 h-4 text-[#6e6a63]" />
                     <span>Phone</span>
                   </span>
-                  <span className="text-[13px] text-[#6e6a63] font-medium">{companyData.phonePlaceholder}</span>
+                  <a href={companyData.phoneHref} className="text-[13px] text-[#6e6a63] font-medium hover:text-[#c85d2f] hover:underline">{companyData.phonePlaceholder}</a>
                 </div>
 
                 <div className="pt-3 border-t border-[#d9d2c6] flex items-center justify-between">
@@ -149,7 +185,7 @@ export const Contact: React.FC = () => {
                     <Mail className="w-4 h-4 text-[#6e6a63]" />
                     <span>Email</span>
                   </span>
-                  <span className="text-[13px] text-[#6e6a63] font-medium">{companyData.emailPlaceholder}</span>
+                  <a href={companyData.emailHref} className="text-[13px] text-[#6e6a63] font-medium hover:text-[#c85d2f] hover:underline">{companyData.emailPlaceholder}</a>
                 </div>
 
                 <div className="pt-3 border-t border-[#d9d2c6] flex items-center justify-between">

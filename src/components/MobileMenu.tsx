@@ -32,6 +32,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
     { label: 'FAQ', path: '/faq' },
     { label: 'Contact', path: '/contact' },
     { label: 'Privacy Policy', path: '/privacy' },
+    { label: 'Terms & Conditions', path: '/terms' },
   ];
 
   return (

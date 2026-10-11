@@ -21,7 +21,7 @@ export const faqData: FAQItemData[] = [
   {
     id: "faq-3",
     question: "Which printing methods do you offer?",
-    answer: "We specialize in Screen Printing (plastisol, water-based, discharge), DTF (Direct-to-Film) Printing, 3D Puff Printing, High-Density silicone prints, Cut Panel Printing (unstitched fabric), and Finished Garment Printing.",
+    answer: "We specialize in Plastisol Printing, Water-Based Printing, Discharge Printing, High-Density (HD) Printing, Puff Printing, Metallic / Foil Printing, and Glow in the Dark / Reflective Printing across cut panels and finished garments.",
     category: "Capabilities & Fabric"
   },
   {

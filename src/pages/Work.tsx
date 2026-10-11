@@ -31,11 +31,28 @@ export const Work: React.FC = () => {
     { value: '1,000+', label: 'Batch capacity' },
   ];
 
+  const workSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'DISCREN Apparel Printing Portfolio & Production Gallery',
+    description: 'Visual portfolio of B2B garment printing projects executed in Jogeshwari West, Mumbai.',
+    hasPart: workData.map((item) => ({
+      '@type': 'CreativeWork',
+      name: item.title,
+      description: item.description,
+      genre: item.category,
+      material: item.fabric,
+      image: item.image,
+    })),
+  };
+
   return (
     <>
       <SEO
-        title="Our Work — DISCREN Apparel Printing"
-        description="Visual portfolio of DISCREN apparel printing work in Mumbai. Screen printing, puff, high-density, cut panel printing, and finished apparel."
+        title="Portfolio & Production Gallery — DISCREN Apparel Printing Mumbai"
+        description="Explore DISCREN's production portfolio of apparel printing in Mumbai. High-definition examples of plastisol, water-based, discharge, 3D puff, high-density, foil, and reflective prints."
+        keywords="apparel printing portfolio Mumbai, screen print samples, puff printing examples hoodie, high density print photos, discharge printing on black cotton, reflective t-shirt print gallery"
+        schema={workSchema}
       />
 
       <PageHero

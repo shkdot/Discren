@@ -1,7 +1,7 @@
 export interface WorkItem {
   id: string;
   title: string;
-  category: "Screen Printing" | "Puff & High-Density" | "Cut Panel" | "Finished Garments" | "Brand Apparel";
+  category: 'Plastisol Printing' | 'Water-Based Printing' | 'Discharge Printing' | 'High-Density Printing' | 'Puff Printing' | 'Metallic / Foil Printing' | 'Glow / Reflective Printing';
   technique: string;
   fabric: string;
   description: string;
@@ -15,101 +15,118 @@ export interface WorkItem {
   };
 }
 
+/** One gallery card per printing method, paired with its matching production image. */
 export const workData: WorkItem[] = [
   {
-    id: "work-1",
-    title: "Heavyweight Cotton Screen Print",
-    category: "Screen Printing",
-    technique: "Multi-color Screen Print",
-    fabric: "240 GSM French Terry Cotton",
-    description: "Crisp white & dark charcoal vector print on heavyweight street clothing fabric with soft-hand finish.",
-    format: "Finished T-Shirt",
-    image: "/images/screen_print.webp",
+    id: 'plastisol-print',
+    title: 'Plastisol Screen Print',
+    category: 'Plastisol Printing',
+    technique: 'Multi-Colour Plastisol Screen Print',
+    fabric: 'Heavyweight Cotton T-Shirt',
+    description: 'A vivid, opaque screen print built for sharp artwork, reliable colour and long-wearing bulk apparel production.',
+    format: 'Finished Garment',
+    image: '/images/home-plastisole.webp',
     details: {
-      inkType: "Water-based & Plastisol Blend",
-      placement: "Chest & Upper Back",
-      orderType: "Bulk Production Run",
-      finish: "Matte Soft-Hand"
-    }
+      inkType: 'High-Opacity Plastisol',
+      placement: 'Front Chest Print',
+      orderType: 'Bulk Production Run',
+      finish: 'Durable Matte Ink Layer',
+    },
   },
   {
-    id: "work-2",
-    title: "Tactile 3D Puff Print Graphic",
-    category: "Puff & High-Density",
-    technique: "Puff Printing",
-    fabric: "380 GSM Heavy Fleece Hoodie",
-    description: "Elevated 3D puff print lettering with uniform foam expansion and smooth tactile surface finish.",
-    format: "Hoodie Panel",
-    image: "/images/puff_print.webp",
+    id: 'water-based-print',
+    title: 'Water-Based Soft-Hand Print',
+    category: 'Water-Based Printing',
+    technique: 'Water-Based Pigment Print',
+    fabric: 'Combed Cotton Jersey',
+    description: 'Lightweight artwork absorbed into the fabric for a breathable, soft-touch result suited to premium apparel.',
+    format: 'Finished T-Shirt',
+    image: '/images/home-water-based.webp',
     details: {
-      inkType: "Expanding Puff Additive Plastisol",
-      placement: "Center Chest",
-      orderType: "Brand Collection Run",
-      finish: "3D Raised Matte"
-    }
+      inkType: 'Water-Based Pigment Ink',
+      placement: 'Full Front Graphic',
+      orderType: 'Brand Collection Run',
+      finish: 'Ultra-Soft Hand Feel',
+    },
   },
   {
-    id: "work-3",
-    title: "High-Density Dimensional Emblem",
-    category: "Puff & High-Density",
-    technique: "High-Density Silicone Print",
-    fabric: "280 GSM Pique Cotton",
-    description: "Sharp, 90-degree square-edged high-density print delivering structural relief and premium depth.",
-    format: "Polo Chest Panel",
-    image: "/images/high_density.webp",
+    id: 'discharge-print',
+    title: 'Discharge Print on Dark Cotton',
+    category: 'Discharge Printing',
+    technique: 'Discharge & Water-Based Print',
+    fabric: 'Reactive-Dyed Cotton',
+    description: 'A soft dark-garment print that removes the base dye before adding fresh colour, avoiding a heavy ink feel.',
+    format: 'Dark Apparel Panel',
+    image: '/images/home-discharge.webp',
     details: {
-      inkType: "High-Density Silicone Ink",
-      placement: "Left Chest Emblem",
-      orderType: "B2B Production",
-      finish: "Crisp Square Edge 3D"
-    }
+      inkType: 'Discharge Base & Pigment',
+      placement: 'Oversized Front Print',
+      orderType: 'Streetwear Production',
+      finish: 'Soft, Low-Weight Print',
+    },
   },
   {
-    id: "work-4",
-    title: "Unstitched Cut Panel Printing",
-    category: "Cut Panel",
-    technique: "Large Format Screen Print",
-    fabric: "Cut Cotton Jersey Panels",
-    description: "Edge-to-edge printing executed on unstitched cut fabric panels prior to garment assembly.",
-    format: "Unstitched Cut Panels",
-    image: "/images/cut_panel.webp",
+    id: 'high-density-print',
+    title: 'High-Density 3D Emblem',
+    category: 'High-Density Printing',
+    technique: 'High-Density Silicone Print',
+    fabric: 'Dense Pique Cotton',
+    description: 'Structured dimensional artwork with crisp square edges, designed to give logos a precise elevated profile.',
+    format: 'Polo Chest Panel',
+    image: '/images/home-hd.webp',
     details: {
-      inkType: "Discharge / Plastisol",
-      placement: "Full Front Panel",
-      orderType: "Garment Job-Work",
-      finish: "Flat Seam-Spanning Print"
-    }
+      inkType: 'High-Density Silicone Ink',
+      placement: 'Left Chest Emblem',
+      orderType: 'B2B Production',
+      finish: 'Crisp Square-Edge Relief',
+    },
   },
   {
-    id: "work-5",
-    title: "Finished Hoodie Graphic Placement",
-    category: "Finished Garments",
-    technique: "Plastisol & Puff Hybrid",
-    fabric: "Finished Oversized Hoodie",
-    description: "Direct printing on ready-made fleece hoodies utilizing specialized platens for sleeve & hood prints.",
-    format: "Finished Garment",
-    image: "/images/home-hero-image.webp",
+    id: 'puff-print',
+    title: 'Tactile Puff Print Graphic',
+    category: 'Puff Printing',
+    technique: 'Expanding Puff Print',
+    fabric: 'Heavy Fleece Hoodie',
+    description: 'Bold typography and graphics with a rounded 3D surface created through controlled heat expansion.',
+    format: 'Hoodie Panel',
+    image: '/images/home-puff.webp',
     details: {
-      inkType: "Hybrid Ink System",
-      placement: "Back & Sleeve Accent",
-      orderType: "Apparel Business Run",
-      finish: "Textured Multi-Depth"
-    }
+      inkType: 'Puff Additive Plastisol',
+      placement: 'Centre Chest Graphic',
+      orderType: 'Brand Collection Run',
+      finish: 'Raised Matte Surface',
+    },
   },
   {
-    id: "work-6",
-    title: "Streetwear Label Typography",
-    category: "Brand Apparel",
-    technique: "Screen Print & Heat Transfer",
-    fabric: "100% Combed Organic Cotton",
-    description: "Minimalist typography and interior neck brand label printing executed for apparel brand collection.",
-    format: "Finished Apparel",
-    image: "/images/screen_print.webp",
+    id: 'metallic-foil-print',
+    title: 'Metallic Foil Accent Print',
+    category: 'Metallic / Foil Printing',
+    technique: 'Metallic Ink & Foil Transfer',
+    fabric: 'Cotton Blend Apparel',
+    description: 'Reflective metallic detailing that gives logos and limited-edition graphics a high-lustre premium finish.',
+    format: 'Statement Graphic',
+    image: '/images/home-metallic-foil.webp',
     details: {
-      inkType: "Tagless Soft Ink",
-      placement: "Inner Neck & Left Chest",
-      orderType: "Repeat Production Run",
-      finish: "Ultra Soft Zero-Feel"
-    }
-  }
+      inkType: 'Metallic Ink / Heat Foil',
+      placement: 'Chest Logo Accent',
+      orderType: 'Limited Collection',
+      finish: 'Reflective High-Lustre',
+    },
+  },
+  {
+    id: 'glow-reflective-print',
+    title: 'Glow & Reflective Graphic',
+    category: 'Glow / Reflective Printing',
+    technique: 'Photo-Luminescent / Reflective Print',
+    fabric: 'Technical Cotton Blend',
+    description: 'A photo-active print treatment that glows after charging in light or flashes when hit by direct illumination.',
+    format: 'Techwear Graphic',
+    image: '/images/home-glow-in-the-dark.webp',
+    details: {
+      inkType: 'Glow Pigment / Glass-Bead Ink',
+      placement: 'Back & Sleeve Detail',
+      orderType: 'Specialty Production',
+      finish: 'Photo-Active Surface',
+    },
+  },
 ];

@@ -5,6 +5,7 @@ import { CTASection } from '../components/CTASection';
 import { Button } from '../components/Button';
 import { companyData } from '../data/companyData';
 import { Shield, Layers, Target, ArrowRight } from 'lucide-react';
+import Timeline from '../components/ui/timeline';
 
 const approach = [
   {
@@ -15,7 +16,7 @@ const approach = [
   {
     icon: Target,
     title: 'Artwork & Technique Alignment',
-    text: 'Design requirements determine whether plastisol, water-based, 3D puff, high-density silicone, or DTF delivers the desired hand-feel and visual sharpness.',
+    text: 'Design requirements determine whether plastisol, water-based, discharge, 3D puff, high-density silicone, metallic foil, or reflective inks deliver the desired hand-feel and visual sharpness.',
   },
   {
     icon: Shield,
@@ -48,11 +49,37 @@ export const About: React.FC = () => {
     { value: '3–5 days', label: 'Sample turnaround' },
   ];
 
+  const aboutSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    name: 'About DISCREN Apparel Printing',
+    description: 'B2B apparel printing and garment production job-work facility in Jogeshwari West, Mumbai with 14+ years operational heritage.',
+    mainEntity: {
+      '@type': 'LocalBusiness',
+      name: 'DISCREN',
+      foundingLocation: 'Jogeshwari West, Mumbai, Maharashtra, India',
+      description: 'Dedicated apparel printing partner for fashion labels, clothing brands, and garment manufacturers across India.',
+      knowsAbout: [
+        'Plastisol Screen Printing',
+        'Water-Based Pigment Printing',
+        'Discharge Printing',
+        'High-Density 3D Silicone Printing',
+        'Puff Printing',
+        'Metallic and Foil Screen Printing',
+        'Glow in the Dark and Reflective Printing',
+        'Cut Panel Apparel Job-Work',
+        'Bulk T-Shirt and Hoodie Printing'
+      ]
+    }
+  };
+
   return (
     <>
       <SEO
-        title="About DISCREN — B2B Apparel Printing"
-        description="Learn about DISCREN, a B2B apparel printing partner based in Jogeshwari West, Mumbai. Our production approach, fabric compatibility, and bulk job-work services."
+        title="About DISCREN — 14+ Years B2B Apparel Printing in Mumbai"
+        description="Learn about DISCREN, a B2B apparel printing partner based in Jogeshwari West, Mumbai. 14+ years of precision printing experience, fabric-first approach, and bulk job-work."
+        keywords="about DISCREN, apparel printing company Mumbai, garment job work Jogeshwari, screen printing factory Maharashtra, Farooqui Arts heritage, B2B clothing manufacturing Mumbai"
+        schema={aboutSchema}
       />
 
       {/* Page Hero */}
@@ -198,6 +225,36 @@ export const About: React.FC = () => {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* 04 / OUR STORY — Timeline scroll section */}
+      <section className="bg-[#f4f0e8]">
+        {/* Section header above the sticky scroll zone */}
+        <div className="container-custom pt-20 md:pt-28 pb-10 md:pb-14">
+          <div className="max-w-[660px]">
+            <div className="text-[11px] tracking-[0.14em] uppercase text-[#c85d2f] font-extrabold mb-3">
+              04 / OUR STORY
+            </div>
+            <h2 className="text-[clamp(30px,4.4vw,50px)] leading-[1.05] tracking-[-0.05em] font-extrabold text-[#181715] mb-4">
+              14 Years of Print Heritage.
+            </h2>
+            <p className="text-[16px] md:text-[17px] text-[#6e6a63] leading-relaxed max-w-[520px]">
+              From a single screen-printing press in Jogeshwari West to a structured B2B production partner — scroll through the milestones that shaped DISCREN.
+            </p>
+          </div>
+        </div>
+
+        <Timeline
+          title="Our Story"
+          periodLabel="2010 – 2024"
+          backgroundColor="#f4f0e8"
+          textColor="#181715"
+          mutedTextColor="#6e6a63"
+          activeColor="#c85d2f"
+          imageUrl="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80"
+          imageAlt="Screen printing studio — inks and garments on the press table"
+          duration={1.4}
+        />
       </section>
 
       {/* Final CTA */}

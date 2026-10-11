@@ -9,7 +9,7 @@ import { Plus, Minus, ArrowRight } from 'lucide-react';
 
 export const Capabilities: React.FC = () => {
   const { hash } = useLocation();
-  const [openId, setOpenId] = useState<string | null>('screen-printing');
+  const [openId, setOpenId] = useState<string | null>('plastisol-printing');
 
   // Shared scroll helper for deep links and index clicks.
   const scrollToCapability = useCallback((id: string) => {
@@ -33,11 +33,37 @@ export const Capabilities: React.FC = () => {
     requestAnimationFrame(() => scrollToCapability(id));
   };
 
+  const capabilitiesSchema = capabilitiesData.map((cap) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    serviceType: cap.title,
+    name: cap.title,
+    description: cap.description,
+    provider: {
+      '@type': 'LocalBusiness',
+      name: 'DISCREN',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Opposite Vijay Vishal Building, Jogeshwari West',
+        addressLocality: 'Mumbai',
+        addressRegion: 'Maharashtra',
+        postalCode: '400102',
+        addressCountry: 'IN',
+      },
+    },
+    areaServed: {
+      '@type': 'City',
+      name: 'Mumbai',
+    },
+  }));
+
   return (
     <>
       <SEO
-        title="Apparel Printing Capabilities — DISCREN"
-        description="Explore DISCREN printing capabilities: Screen printing, DTF, 3D puff, high-density silicone, cut panel printing, and finished garment printing in Mumbai."
+        title="Apparel Printing Capabilities — DISCREN Mumbai"
+        description="Discover DISCREN's 7 specialized apparel printing methods in Jogeshwari West, Mumbai: Plastisol, Water-Based, Discharge, High-Density HD, 3D Puff, Metallic Foil, and Reflective Printing."
+        keywords="apparel printing capabilities, plastisol printing, water based screen printing, discharge printing on dark fabrics, high density silicone printing, 3D puff printing hoodies, metallic foil printing garments, reflective ink printing Mumbai"
+        schema={capabilitiesSchema}
       />
 
       <PageHero

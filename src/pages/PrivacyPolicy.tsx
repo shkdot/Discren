@@ -16,11 +16,20 @@ const policySections = [
 ];
 
 export const PrivacyPolicy: React.FC = () => {
+  const privacySchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Privacy Policy — DISCREN Apparel Printing',
+    description: 'Privacy policy and data handling practices for DISCREN B2B apparel printing in Jogeshwari West, Mumbai.',
+  };
+
   return (
     <>
       <SEO
-        title="Privacy Policy — DISCREN Apparel Printing"
-        description="DISCREN Privacy Policy. Learn how we handle contact, business, and inquiry information for our B2B apparel printing services in Jogeshwari West, Mumbai."
+        title="Privacy Policy — DISCREN Apparel Printing Mumbai"
+        description="DISCREN Privacy Policy. Learn how we responsibly handle client inquiries, business details, tech packs, and communications for B2B apparel printing in Mumbai."
+        keywords="privacy policy DISCREN, apparel client confidentiality Mumbai, tech pack privacy garment manufacturer"
+        schema={privacySchema}
       />
 
       <PageHero

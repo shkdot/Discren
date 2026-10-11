@@ -16,11 +16,36 @@ const workflowStats = [
 ];
 
 export const Process: React.FC = () => {
+  const processSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: 'DISCREN 7-Stage B2B Apparel Printing Workflow',
+    description: 'The step-by-step production workflow used by DISCREN to execute apparel printing job-work for fashion labels and garment businesses in Mumbai.',
+    step: processData.map((stage, idx) => ({
+      '@type': 'HowToStep',
+      position: idx + 1,
+      name: stage.title,
+      text: stage.summary,
+      itemListElement: [
+        {
+          '@type': 'HowToDirection',
+          text: `Client provides: ${stage.youProvide}`,
+        },
+        {
+          '@type': 'HowToDirection',
+          text: `DISCREN handles: ${stage.weHandle}`,
+        },
+      ],
+    })),
+  };
+
   return (
     <>
       <SEO
-        title="Apparel Printing Process — DISCREN"
-        description="Understand the DISCREN 7-step B2B apparel printing process from artwork review and method selection to sampling, bulk production, and quality dispatch."
+        title="7-Stage Apparel Printing Production Process — DISCREN Mumbai"
+        description="From artwork review and technique selection to sampling, press setup, bulk printing, curing, and quality dispatch. Discover the DISCREN 7-step production workflow in Mumbai."
+        keywords="apparel printing process Mumbai, screen printing workflow, garment job work stages, fabric sampling process, bulk t-shirt printing steps, DISCREN production pipeline"
+        schema={processSchema}
       />
 
       <PageHero
@@ -45,10 +70,11 @@ export const Process: React.FC = () => {
         </dl>
       </PageHero>
 
-      {/* The workflow — inverted centerpiece so the stepper reads as the focal point */}
-      <section className="py-20 md:py-28 bg-[#1b1a18] text-white">
-        <div className="container-custom">
-          <div className="max-w-[660px] mb-14">
+      {/* The workflow — Kedeyo-style "What you get" horizontal sticky scroll */}
+      <section className="bg-[#1b1a18] text-white">
+        {/* Section header — sits above the sticky scroll zone in normal flow */}
+        <div className="container-custom pt-20 md:pt-28 pb-10 md:pb-14">
+          <div className="max-w-[660px]">
             <div className="text-[11px] tracking-[0.14em] uppercase text-[#e37b4f] font-extrabold mb-3">
               THE WORKFLOW
             </div>
@@ -56,12 +82,13 @@ export const Process: React.FC = () => {
               Seven Stages, No Guesswork.
             </h2>
             <p className="text-[16px] md:text-[17px] text-[#d1ccc4] leading-relaxed">
-              Select any stage to see exactly what happens, what you provide, and what our team handles.
+              Scroll through to see exactly what happens at each stage — and what our team handles.
             </p>
           </div>
-
-          <ProcessFlow />
         </div>
+
+        {/* ProcessFlow manages its own tall height + sticky viewport */}
+        <ProcessFlow />
       </section>
 
       {/* Client checklist — derived directly from each stage's clientTask */}
