@@ -36,6 +36,13 @@ const expertiseStages = [
   { num: '04', title: 'Process adjustment', text: 'If a result needs refining, we revisit the production variables and adjust the approach with purpose.', tags: ['Review', 'Refine', 'Repeat'] },
 ];
 
+const bulkProductionTiers = [
+  { type: 'Starting Run', note: 'Entry batch', size: '~50–100 pcs', level: 15, icon: Boxes },
+  { type: 'Standard Run', note: 'Core production', size: '100–500 pcs', level: 42, icon: Layers },
+  { type: 'Bulk Production', note: 'Batch consistent', size: '500–1,000 pcs', level: 75, icon: Factory, highlight: true },
+  { type: 'High Volume', note: 'Full capacity', size: '1,000+ pcs', level: 100, icon: Warehouse },
+];
+
 export const Home: React.FC = () => {
     const selectedFaqs = faqData.slice(0, 6);
   const featuredWork = workData.slice(0, 6);
@@ -322,17 +329,45 @@ export const Home: React.FC = () => {
             </div>
 
             <div className="relative rounded-[30px] border border-[#c9c0b2] bg-[#fbfaf6] p-5 md:p-7 shadow-[0_24px_55px_rgba(77,61,43,0.10)]">
-              <div className="relative flex items-start justify-between gap-5 pb-6 border-b border-[#d9d2c6]">
-                <div>
+              <div className="relative flex flex-wrap items-start justify-between gap-x-5 gap-y-3 pb-6 border-b border-[#d9d2c6]">
+                <div className="min-w-0">
                   <p className="text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#756d63]">Production capacity</p>
-                  <div className="mt-2 flex items-baseline gap-3"><span className="text-[clamp(54px,7vw,82px)] leading-none tracking-[-0.08em] font-extrabold text-[#181715]">1,000+</span><span className="text-[11px] uppercase tracking-[0.13em] font-extrabold text-[#756d63]">Pieces<br />per bulk run</span></div>
+                  <div className="mt-2 flex items-baseline gap-3"><span className="text-[clamp(44px,9vw,82px)] leading-none tracking-[-0.08em] font-extrabold text-[#181715]">1,000+</span><span className="text-[11px] uppercase tracking-[0.13em] font-extrabold text-[#756d63]">Pieces<br />per bulk run</span></div>
                 </div>
-                <span className="rounded-full bg-[#181715] px-3 py-2 text-[10px] uppercase tracking-[0.13em] font-extrabold text-white">Scale ready</span>
+                <span className="shrink-0 rounded-full bg-[#181715] px-3 py-2 text-[10px] uppercase tracking-[0.13em] font-extrabold text-white">Scale ready</span>
               </div>
 
               <div className="relative pt-6">
-                <div className="overflow-x-auto">
-                  <table className="w-full min-w-[470px] border-collapse text-left">
+                {/* Mobile — stacked tier cards (no horizontal scroll) */}
+                <div className="sm:hidden space-y-3">
+                  {bulkProductionTiers.map((tier) => (
+                    <div
+                      key={tier.type}
+                      className={`rounded-[16px] border p-4 ${tier.highlight ? 'border-[#c85d2f]/40 bg-[#f4f0e8]' : 'border-[#d9d2c6] bg-[#fbfaf6]'}`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] border ${tier.highlight ? 'border-[#c85d2f]/30 bg-[#c85d2f]/10 text-[#c85d2f]' : 'border-[#d9d2c6] bg-white text-[#8a837a]'}`}>
+                          <tier.icon className="h-[18px] w-[18px]" />
+                        </span>
+                        <div className="flex min-w-0 flex-1 flex-col">
+                          <span className={`text-[15px] font-extrabold tracking-[-0.01em] ${tier.highlight ? 'text-[#c85d2f]' : 'text-[#181715]'}`}>{tier.type}</span>
+                          <span className="text-[10px] uppercase tracking-[0.08em] font-bold text-[#8a837a]">{tier.note}</span>
+                        </div>
+                        <span className="shrink-0 text-[14px] font-bold tabular-nums text-[#181715]">{tier.size}</span>
+                      </div>
+                      <div className="mt-3 flex items-center gap-3">
+                        <div className="h-1.5 flex-1 rounded-full bg-[#e7dfd2] overflow-hidden">
+                          <div className={`h-full rounded-full ${tier.highlight ? 'bg-[#c85d2f]' : 'bg-[#d9bca7]'}`} style={{ width: `${tier.level}%` }} />
+                        </div>
+                        <span className="w-9 shrink-0 text-right text-[10px] font-bold tabular-nums text-[#8a837a]">{tier.level}%</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Desktop — table */}
+                <div className="hidden sm:block">
+                  <table className="w-full border-collapse text-left">
                     <caption className="sr-only">DISCREN production run tiers — order size and relative scale</caption>
                     <thead>
                       <tr className="border-b border-[#d9d2c6]">
@@ -342,12 +377,7 @@ export const Home: React.FC = () => {
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-[#e7dfd2]">
-                      {[
-                        { type: 'Starting Run', note: 'Entry batch', size: '~50–100 pcs', level: 15, icon: Boxes },
-                        { type: 'Standard Run', note: 'Core production', size: '100–500 pcs', level: 42, icon: Layers },
-                        { type: 'Bulk Production', note: 'Batch consistent', size: '500–1,000 pcs', level: 75, icon: Factory, highlight: true },
-                        { type: 'High Volume', note: 'Full capacity', size: '1,000+ pcs', level: 100, icon: Warehouse },
-                      ].map((tier) => (
+                      {bulkProductionTiers.map((tier) => (
                         <tr key={tier.type} className={`transition-colors ${tier.highlight ? 'bg-[#f4f0e8]' : 'hover:bg-[#f4f0e8]/60'}`}>
                           <td className="py-4 pr-4">
                             <div className="flex items-center gap-3">
@@ -363,7 +393,7 @@ export const Home: React.FC = () => {
                           <td className="py-4 pr-4 text-[14px] font-bold tabular-nums text-[#181715] align-middle">{tier.size}</td>
                           <td className="py-4 align-middle">
                             <div className="flex justify-end">
-                              <div className="h-1.5 w-20 sm:w-24 rounded-full bg-[#e7dfd2] overflow-hidden">
+                              <div className="h-1.5 w-24 rounded-full bg-[#e7dfd2] overflow-hidden">
                                 <div className={`h-full rounded-full ${tier.highlight ? 'bg-[#c85d2f]' : 'bg-[#d9bca7]'}`} style={{ width: `${tier.level}%` }} />
                               </div>
                             </div>
@@ -494,100 +524,89 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 06 / WORKING TOGETHER — cream band, pill kicker beside a modern spec-card grid */}
-      <section className="py-20 md:py-28 bg-[#f4f0e8] border-t border-[#d9d2c6]">
+      {/* 06 / WORKING TOGETHER — compact spec sheet, two panels side by side */}
+      <section className="py-16 md:py-20 bg-[#f4f0e8] border-t border-[#d9d2c6]">
         <div className="container-custom">
           <div ref={workingTogetherRef}>
-            {/* Centered editorial header — full-width, deliberately unlike the sticky FAQ below */}
-            <div className="wt-reveal mx-auto max-w-[720px] text-center">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#c9c0b2] bg-[#fbfaf6] px-4 py-2 text-[10px] uppercase tracking-[0.14em] font-extrabold text-[#756d63]">
+            {/* Compact centered header */}
+            <div className="wt-reveal mx-auto max-w-[620px] text-center mb-10 md:mb-12">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#c9c0b2] bg-[#fbfaf6] px-4 py-1.5 text-[10px] uppercase tracking-[0.14em] font-extrabold text-[#756d63]">
                 <span className="w-1.5 h-1.5 rounded-full bg-[#c85d2f]" />
                 06 / Working together
               </div>
-              <h2 className="mt-7 text-[clamp(34px,4.6vw,56px)] leading-[1.0] tracking-[-0.055em] font-extrabold text-[#181715]">
+              <h2 className="mt-5 text-[clamp(28px,3.6vw,44px)] leading-[1.05] tracking-[-0.05em] font-extrabold text-[#181715]">
                 Straightforward printing for apparel businesses.
               </h2>
-              <p className="mt-6 text-[16px] md:text-[18px] leading-relaxed text-[#5f5951] max-w-[600px] mx-auto">
-                Practical information, clear expectations and a process designed around bulk apparel production — so you know exactly what to expect before an order begins.
+              <p className="mt-4 text-[15px] md:text-[16px] leading-relaxed text-[#5f5951]">
+                Clear expectations around quantity, timing and terms — set before your order begins.
               </p>
-              <Button to="/contact" variant="primary" className="mt-8 gap-2">
-                <span>Start a Conversation</span>
-                <ArrowRight className="w-4 h-4" />
-              </Button>
             </div>
 
-            <div className="mt-14 space-y-10">
-              {/* Production Details — full-width card grid */}
-              <div>
-                <div className="wt-reveal flex items-center gap-3 mb-5" style={{ transitionDelay: '80ms' }}>
-                  <span className="flex-1 h-px bg-[#d9d2c6]" />
-                  <span className="flex items-center gap-2 text-[13px] uppercase tracking-[0.16em] font-extrabold text-[#181715]">
-                    <FileText className="w-3.5 h-3.5 text-[#c85d2f]" />
-                    Production Details
+            <div className="grid md:grid-cols-2 gap-4 lg:gap-5">
+              {/* Production Details — light panel */}
+              <div className="wt-reveal bg-[#fbfaf6] border border-[#d9d2c6] rounded-[20px] p-6 md:p-7">
+                <div className="flex items-center gap-2.5 pb-4 mb-1 border-b border-[#d9d2c6]">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#c85d2f]/10 text-[#c85d2f]">
+                    <FileText className="w-4 h-4" />
                   </span>
-                  <span className="flex-1 h-px bg-[#d9d2c6]" />
+                  <h3 className="text-[13px] uppercase tracking-[0.16em] font-extrabold text-[#181715]">Production Details</h3>
                 </div>
-                <div className="grid sm:grid-cols-2 gap-3">
+                <ul className="divide-y divide-[#e7dfd2]">
                   {[
-                    { icon: Package, value: '~50 pcs', label: 'Approx. starting MOQ', featured: true },
+                    { icon: Package, value: '~50 pcs', label: 'Approx. starting MOQ' },
                     { icon: Ruler, value: 'Mixed sizes', label: 'Yes, when properly sorted' },
                     { icon: Sparkles, value: 'Paid sampling', label: 'Available on request' },
                     { icon: IndianRupee, value: 'Quantity pricing', label: 'Can reduce with volume' },
                     { icon: Clock, value: '2–4 weeks', label: 'Typical turnaround' },
-                  ].map((item, i) => (
-                    <div
-                      key={item.label}
-                      className={`wt-reveal ${item.featured ? 'sm:col-span-2' : ''}`}
-                      style={{ transitionDelay: `${140 + i * 70}ms` }}
-                    >
-                      <div className="group h-full bg-[#fbfaf6] border border-[#d9d2c6] rounded-[16px] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#c85d2f]/50 hover:shadow-[0_16px_36px_rgba(77,61,43,0.10)]">
-                        <div className="flex items-center gap-3.5">
-                          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] border border-[#e7dfd2] bg-[#f4f0e8] text-[#c85d2f] transition-colors group-hover:border-[#c85d2f]/30 group-hover:bg-[#c85d2f]/10">
-                            <item.icon className="w-[18px] h-[18px]" />
-                          </span>
-                          <div className="flex flex-col">
-                            <span className="text-[17px] leading-none tracking-[-0.02em] font-extrabold text-[#181715]">{item.value}</span>
-                            <span className="mt-1.5 text-[10px] uppercase tracking-[0.1em] font-bold text-[#8a837a]">{item.label}</span>
-                          </div>
-                        </div>
+                  ].map((item) => (
+                    <li key={item.label} className="group flex items-center gap-3.5 py-3">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] border border-[#e7dfd2] bg-[#f4f0e8] text-[#c85d2f] transition-colors group-hover:border-[#c85d2f]/30 group-hover:bg-[#c85d2f]/10">
+                        <item.icon className="w-4 h-4" />
+                      </span>
+                      <div className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-2">
+                        <span className="text-[15px] font-extrabold tracking-[-0.01em] text-[#181715]">{item.value}</span>
+                        <span className="text-[12px] text-[#8a837a]">{item.label}</span>
                       </div>
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
 
-              {/* Commercial Terms — full-width dark panel, revealed as a block */}
-              <div className="wt-reveal bg-[#1b1a18] text-white rounded-[24px] p-6 md:p-8" style={{ transitionDelay: '520ms' }}>
-                <div className="flex items-center gap-3 mb-6">
-                  <span className="flex-1 h-px bg-white/10" />
-                  <span className="flex items-center gap-2 text-[13px] uppercase tracking-[0.16em] font-extrabold text-white">
-                    <Wallet className="w-3.5 h-3.5 text-[#e37b4f]" />
-                    Commercial Terms
+              {/* Commercial Terms — dark panel */}
+              <div className="wt-reveal bg-[#1b1a18] text-white rounded-[20px] p-6 md:p-7" style={{ transitionDelay: '120ms' }}>
+                <div className="flex items-center gap-2.5 pb-4 mb-1 border-b border-white/10">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-white/10 text-[#e37b4f]">
+                    <Wallet className="w-4 h-4" />
                   </span>
-                  <span className="flex-1 h-px bg-white/10" />
+                  <h3 className="text-[13px] uppercase tracking-[0.16em] font-extrabold text-white">Commercial Terms</h3>
                 </div>
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <ul className="divide-y divide-white/10">
                   {[
                     { icon: Banknote, value: '50% advance', label: 'Payment to begin' },
                     { icon: Truck, value: '50% balance', label: 'Due before dispatch' },
                     { icon: MapPin, value: 'Jogeshwari West', label: 'Mumbai facility' },
                     { icon: Factory, value: '1,000+ pcs', label: 'Bulk capacity' },
                   ].map((item) => (
-                    <div
-                      key={item.label}
-                      className="group flex items-center gap-3.5 rounded-[16px] border border-white/10 bg-white/[0.04] p-4 transition-colors duration-300 hover:border-[#e37b4f]/40 hover:bg-white/[0.07]"
-                    >
-                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] border border-white/10 bg-white/[0.06] text-[#e37b4f] transition-colors group-hover:border-[#e37b4f]/40 group-hover:bg-[#e37b4f]/15">
-                        <item.icon className="w-[18px] h-[18px]" />
+                    <li key={item.label} className="group flex items-center gap-3.5 py-3">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] border border-white/10 bg-white/[0.06] text-[#e37b4f] transition-colors group-hover:border-[#e37b4f]/40 group-hover:bg-[#e37b4f]/15">
+                        <item.icon className="w-4 h-4" />
                       </span>
-                      <div className="flex flex-col">
-                        <span className="text-[16px] leading-none tracking-[-0.02em] font-extrabold text-white">{item.value}</span>
-                        <span className="mt-1.5 text-[10px] uppercase tracking-[0.1em] font-bold text-[#a9a49b]">{item.label}</span>
+                      <div className="flex min-w-0 flex-1 flex-wrap items-baseline gap-x-2">
+                        <span className="text-[15px] font-extrabold tracking-[-0.01em] text-white">{item.value}</span>
+                        <span className="text-[12px] text-[#a9a49b]">{item.label}</span>
                       </div>
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
+            </div>
+
+            {/* Compact CTA */}
+            <div className="wt-reveal mt-8 flex justify-center" style={{ transitionDelay: '220ms' }}>
+              <Button to="/contact" variant="primary" className="gap-2">
+                <span>Start a Conversation</span>
+                <ArrowRight className="w-4 h-4" />
+              </Button>
             </div>
           </div>
         </div>

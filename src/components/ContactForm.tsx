@@ -62,12 +62,19 @@ export const ContactForm: React.FC = () => {
   };
 
   /**
-   * Deliver the enquiry.
+   * Deliver the enquiry to the DISCREN inbox (companyData.emailPlaceholder).
    *
-   * This is a static SPA with no backend, so mail is relayed through a form
-   * endpoint (Formspree / Web3Forms / Getform all accept the same JSON POST)
-   * supplied via VITE_FORM_ENDPOINT. If no endpoint is configured, or the
-   * request fails, we fall back to the visitor's mail client so a lead is
+   * This is a static SPA with no backend, so a plain <form> cannot send email
+   * on its own. Delivery is handled by a free form relay service:
+   *
+   *   1. Web3Forms (recommended) — set VITE_WEB3FORMS_ACCESS_KEY. Sign up at
+   *      https://web3forms.com using info.discren@gmail.com; submissions are
+   *      emailed straight to that inbox with no server required.
+   *   2. Generic endpoint — set VITE_FORM_ENDPOINT to any Formspree / Getform
+   *      style URL that accepts a JSON POST.
+   *
+   * If neither is configured (or a request fails), we fall back to opening the
+   * visitor's mail client addressed to info.discren@gmail.com, so a lead is
    * never silently discarded.
    */
   const handleSubmit = async (e: FormEvent) => {
@@ -76,25 +83,7 @@ export const ContactForm: React.FC = () => {
 
     setIsSubmitting(true);
     const enquiry = { ...formData };
-    const endpoint = import.meta.env.VITE_FORM_ENDPOINT;
-
-    if (endpoint) {
-      try {
-        const res = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(enquiry),
-        });
-        if (!res.ok) throw new Error(`Endpoint responded ${res.status}`);
-        setSentVia('endpoint');
-        setIsSubmitting(false);
-        setIsSubmitted(true);
-        return;
-      } catch (err) {
-        console.error('Form endpoint failed — falling back to mail client.', err);
-      }
-    }
-
+    const subject = `New B2B Enquiry — ${enquiry.company || enquiry.name}`;
     const body = [
       `Name: ${enquiry.name}`,
       `Company: ${enquiry.company || 'N/A'}`,
@@ -108,9 +97,60 @@ export const ContactForm: React.FC = () => {
       enquiry.message || 'N/A',
     ].join('\n');
 
-    window.location.href = `${companyData.emailHref}?subject=${encodeURIComponent(
-      `New B2B Enquiry — ${enquiry.company || enquiry.name}`
-    )}&body=${encodeURIComponent(body)}`;
+    const endpoint = import.meta.env.VITE_FORM_ENDPOINT;
+    const web3Key = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY;
+
+    // Preferred: Web3Forms — emails the configured inbox (info.discren@gmail.com).
+    if (web3Key) {
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            access_key: web3Key,
+            subject,
+            from_name: 'DISCREN Website — B2B Enquiry',
+            replyto: enquiry.email,
+            ...enquiry,
+          }),
+        });
+        const data = await res.json().catch(() => null);
+        if (!res.ok || (data && data.success === false)) {
+          throw new Error(data?.message || `Web3Forms responded ${res.status}`);
+        }
+        setSentVia('endpoint');
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+        return;
+      } catch (err) {
+        console.error('Web3Forms delivery failed — falling back to mail client.', err);
+      }
+    } else if (endpoint) {
+      // Generic JSON form endpoint (Formspree / Getform / etc.).
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            subject,
+            from_name: enquiry.name,
+            _replyto: enquiry.email,
+            _subject: subject,
+            ...enquiry,
+          }),
+        });
+        if (!res.ok) throw new Error(`Endpoint responded ${res.status}`);
+        setSentVia('endpoint');
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+        return;
+      } catch (err) {
+        console.error('Form endpoint failed — falling back to mail client.', err);
+      }
+    }
+
+    // Fallback: open the visitor's mail client addressed to the DISCREN inbox.
+    window.location.href = `${companyData.emailHref}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
     setSentVia('mail');
     setIsSubmitting(false);
@@ -154,7 +194,11 @@ export const ContactForm: React.FC = () => {
 
         {sentVia === 'endpoint' ? (
           <p className="text-[13px] text-[#6e6a63] mb-6">
-            * Your enquiry has been emailed to our production team. We typically respond within one business day.
+            * Your enquiry has been emailed to{' '}
+            <a href={companyData.emailHref} className="font-extrabold text-[#c85d2f] hover:underline">
+              {companyData.emailPlaceholder}
+            </a>
+            . We typically respond within one business day.
           </p>
         ) : (
           <p className="text-[13px] text-[#6e6a63] mb-6">
