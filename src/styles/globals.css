@@ -121,6 +121,90 @@ html.lenis, html.lenis body {
   }
 }
 
+/* ─────────────────────────────────────────
+   Expertise stage auto-rotation animations
+   ───────────────────────────────────────── */
+
+/* Card surface: gentle opacity-only crossfade so the background/gradient
+   cross-fades smoothly instead of popping when the stage swaps. */
+@keyframes stageFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.animate-stage-fade-in {
+  animation: stageFadeIn 0.5s cubic-bezier(.22,.9,.32,1) both;
+}
+
+/* Content reveal: refined slide + subtle scale, staggered across the children
+   via .stage-delay-* so the new stage cascades in fluidly rather than the
+   whole block blinking on at once. */
+@keyframes stageRiseIn {
+  from { opacity: 0; transform: translateY(18px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.stage-rise {
+  opacity: 0;
+  animation: stageRiseIn 0.6s cubic-bezier(.22,.9,.32,1) both;
+}
+.stage-delay-1 { animation-delay: 0.06s; }
+.stage-delay-2 { animation-delay: 0.14s; }
+.stage-delay-3 { animation-delay: 0.22s; }
+.stage-delay-4 { animation-delay: 0.30s; }
+.stage-delay-5 { animation-delay: 0.38s; }
+
+/* Progress bar fills over the 3-second auto-advance window */
+@keyframes barProgress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+.animate-bar-progress {
+  animation: barProgress 3s linear forwards;
+}
+
+/* Pause animations while hovering the stage card (matches hover-pause on interval) */
+.stage-card:hover .animate-bar-progress {
+  animation-play-state: paused;
+}
+
+/* ─────────────────────────────────────────
+   Working Together — scroll-triggered reveal
+   Distinct from the sticky-sidebar FAQ: cards fade + rise in, staggered,
+   the first time the section scrolls into view.
+   ───────────────────────────────────────── */
+.wt-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.7s cubic-bezier(.22,.9,.32,1),
+    transform 0.7s cubic-bezier(.22,.9,.32,1);
+  will-change: opacity, transform;
+}
+.wt-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-stage-fade-in,
+  .animate-bar-progress {
+    animation: none;
+  }
+  .animate-bar-progress {
+    width: 100%;
+  }
+  .stage-rise {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .wt-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+
 /* Focus styles for accessibility */
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
   outline: 2px solid var(--accent);

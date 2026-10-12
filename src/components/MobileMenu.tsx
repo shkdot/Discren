@@ -37,7 +37,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 bg-[#181715]/60 backdrop-blur-md flex justify-end animate-fade-in">
-      <div className="w-full max-w-sm bg-[#f4f0e8] h-full flex flex-col justify-between p-6 overflow-y-auto shadow-2xl border-l border-[#d9d2c6]">
+      <div className="w-full max-w-sm bg-white h-full flex flex-col justify-between p-6 overflow-y-auto shadow-2xl border-l border-[#d9d2c6]">
         <div>
           <div className="flex items-center justify-between pb-6 border-b border-[#d9d2c6]">
             <NavLink to="/" onClick={onClose} className="flex items-center gap-2.5">
@@ -48,7 +48,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
             </NavLink>
             <button
               onClick={onClose}
-              className="p-2 rounded-full border border-[#d9d2c6] text-[#181715] hover:bg-[#fbfaf6]"
+              className="p-2 rounded-full border border-[#d9d2c6] text-[#181715] hover:bg-[#f4f0e8]"
               aria-label="Close menu"
             >
               <X className="w-5 h-5" />
@@ -63,7 +63,7 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, onClose }) => {
                 onClick={onClose}
                 className={({ isActive }) =>
                   `flex items-center justify-between py-3 px-4 rounded-xl text-[17px] font-extrabold transition-colors ${
-                    isActive ? 'bg-[#1b1a18] text-white' : 'text-[#181715] hover:bg-[#fbfaf6]'
+                    isActive ? 'bg-[#1b1a18] text-white' : 'text-[#181715] hover:bg-[#f4f0e8]'
                   }`
                 }
               >

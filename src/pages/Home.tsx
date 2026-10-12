@@ -11,7 +11,7 @@ import { capabilitiesData } from '../data/capabilitiesData';
 import { processData } from '../data/processData';
 import { faqData } from '../data/faqData';
 import { workData } from '../data/workData';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Package, Clock, Timer, Boxes, Layers, Factory, Warehouse, Ruler, Sparkles, IndianRupee, Wallet, Banknote, MapPin, Truck, FileText } from 'lucide-react';
 import Timeline from '../components/ui/timeline';
 
 /** Continuous capability marquee content under the hero. */
@@ -37,10 +37,48 @@ const expertiseStages = [
 ];
 
 export const Home: React.FC = () => {
-  const selectedFaqs = faqData.slice(0, 6);
+    const selectedFaqs = faqData.slice(0, 6);
   const featuredWork = workData.slice(0, 6);
   const [activeExpertiseStage, setActiveExpertiseStage] = useState(0);
   const expertiseStage = expertiseStages[activeExpertiseStage];
+  const [isHovered, setIsHovered] = useState(false);
+  const workingTogetherRef = useRef<HTMLDivElement>(null);
+
+  // Auto-advance the 4 expertise stages every 3 seconds (paused on hover / reduced motion).
+  // Restarting the interval whenever the active stage changes keeps the progress
+  // bar and the auto-advance perfectly in sync — including on manual clicks.
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || isHovered) return;
+    const interval = window.setInterval(() => {
+      setActiveExpertiseStage((prev) => (prev + 1) % expertiseStages.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [isHovered, activeExpertiseStage]);
+
+  // Reveal the Working Together cards with a staggered fade-up the first time
+  // the section scrolls into view — a distinct feel from the sticky FAQ below.
+  useEffect(() => {
+    const root = workingTogetherRef.current;
+    if (!root) return;
+    const items = Array.from(root.querySelectorAll<HTMLElement>('.wt-reveal'));
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      items.forEach((el) => el.classList.add('is-visible'));
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -40px 0px' }
+    );
+    items.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
 
   const homeSchema = [
@@ -168,16 +206,19 @@ export const Home: React.FC = () => {
               </div>
             </div>
 
-            <div className="relative rounded-[30px] border border-[#d9d2c6] bg-[#f4f0e8] p-4 md:p-6 shadow-[0_28px_65px_rgba(45,39,30,0.10)] overflow-hidden">
+                        <div
+              className="stage-card relative rounded-[30px] border border-[#d9d2c6] bg-[#f4f0e8] p-4 md:p-6 shadow-[0_28px_65px_rgba(45,39,30,0.10)] overflow-hidden"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
               <div aria-hidden="true" className="absolute inset-0 opacity-50 [background-image:linear-gradient(#d9d2c655_1px,transparent_1px),linear-gradient(90deg,#d9d2c655_1px,transparent_1px)] [background-size:28px_28px]" />
               <div className="relative rounded-[22px] border border-[#d9d2c6] bg-[#fbfaf6] overflow-hidden">
                 <div className="flex items-center justify-between border-b border-[#d9d2c6] px-5 py-4">
                   <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.14em] font-extrabold text-[#5f5951]"><span className="w-2 h-2 rounded-full bg-[#e37b4f]" /> Production decision desk</div>
-                  <span className="text-[10px] font-extrabold text-[#8a837a]">01—04</span>
                 </div>
 
                 <div className="grid md:grid-cols-[0.78fr_1.22fr] min-h-[430px]">
-                  <div className="border-b md:border-b-0 md:border-r border-[#d9d2c6] p-3">
+                  <div className="border-b md:border-b-0 md:border-r border-[#d9d2c6] p-3 md:flex md:flex-col md:justify-center">
                     {expertiseStages.map((stage, index) => (
                       <button key={stage.num} type="button" onClick={() => setActiveExpertiseStage(index)} aria-current={activeExpertiseStage === index} className={`w-full flex items-center gap-3 rounded-[12px] px-3 py-3.5 text-left transition-colors ${activeExpertiseStage === index ? 'bg-[#181715] text-white' : 'text-[#625e57] hover:bg-[#e7dfd2]'}`}>
                         <span className={`text-[10px] font-extrabold tracking-[0.13em] ${activeExpertiseStage === index ? 'text-[#e37b4f]' : 'text-[#a39b90]'}`}>{stage.num}</span>
@@ -186,19 +227,50 @@ export const Home: React.FC = () => {
                     ))}
                   </div>
 
-                  <div className="p-6 md:p-8 flex flex-col justify-between bg-[radial-gradient(circle_at_88%_8%,#f1ddc955,transparent_38%)]">
+                  <div key={activeExpertiseStage} className="p-6 md:p-8 md:h-[500px] flex flex-col justify-between bg-[radial-gradient(circle_at_88%_8%,#f1ddc955,transparent_38%)] animate-stage-fade-in">
                     <div>
-                      <span className="text-[11px] uppercase tracking-[0.16em] font-extrabold text-[#c85d2f]">Stage {expertiseStage.num}</span>
-                      <h3 className="mt-4 text-[clamp(30px,3.2vw,42px)] leading-[0.98] tracking-[-0.055em] font-extrabold text-[#181715]">{expertiseStage.title}</h3>
-                      <p className="mt-5 max-w-[390px] text-[15px] md:text-[16px] leading-relaxed text-[#6e6a63]">{expertiseStage.text}</p>
+                      <span className="stage-rise stage-delay-1 inline-block text-[11px] uppercase tracking-[0.16em] font-extrabold text-[#c85d2f]">Stage {expertiseStage.num}</span>
+                      <h3 className="stage-rise stage-delay-2 mt-4 min-h-[84px] text-[clamp(30px,3.2vw,42px)] leading-[0.98] tracking-[-0.055em] font-extrabold text-[#181715]">{expertiseStage.title}</h3>
+                      <p className="stage-rise stage-delay-3 mt-5 min-h-[100px] max-w-[390px] text-[15px] md:text-[16px] leading-relaxed text-[#6e6a63]">{expertiseStage.text}</p>
                     </div>
                     <div className="mt-9">
                       <div className="h-px bg-[#d9d2c6] mb-4" />
-                      <div className="flex flex-wrap gap-2">
+                      <div className="stage-rise stage-delay-4 flex flex-wrap content-start gap-2 min-h-[64px]">
                         {expertiseStage.tags.map((tag) => <span key={tag} className="rounded-full border border-[#d9d2c6] bg-white px-3 py-1.5 text-[10px] uppercase tracking-[0.1em] font-extrabold text-[#625e57]">{tag}</span>)}
                       </div>
-                      <div className="mt-7 flex items-center gap-3 text-[11px] uppercase tracking-[0.12em] font-extrabold text-[#625e57]"><span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#e37b4f] text-white">✓</span> Checked before production</div>
+                      <div className="stage-rise stage-delay-5 mt-7 flex items-center gap-3 text-[11px] uppercase tracking-[0.12em] font-extrabold text-[#625e57]"><span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#e37b4f] text-white">✓</span> Checked before production</div>
                     </div>
+                  </div>
+                </div>
+
+                {/* Auto-advance progress bar + stage indicator */}
+                <div className="px-6 md:px-8 py-4 border-t border-[#d9d2c6]">
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1 h-1.5 rounded-full bg-[#e0d8ce] overflow-hidden">
+                      <div
+                        key={activeExpertiseStage}
+                        className="h-full w-0 bg-[#c85d2f] animate-bar-progress"
+                      />
+                    </div>
+                    <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] font-extrabold text-[#756d63]">
+                      <span>{activeExpertiseStage + 1}</span>
+                      <span>/</span>
+                      <span>{expertiseStages.length}</span>
+                    </div>
+                  </div>
+                  <div className="mt-2.5 flex justify-center gap-1.5">
+                    {expertiseStages.map((s, i) => (
+                      <button
+                        key={s.num}
+                        onClick={() => setActiveExpertiseStage(i)}
+                        className={`h-1.5 rounded-full transition-all duration-300 ${
+                          i === activeExpertiseStage
+                            ? 'w-5 bg-[#c85d2f]'
+                            : 'w-1.5 bg-[#d9d2c6] hover:bg-[#c85d2f]'
+                        }`}
+                        aria-label={`Stage ${s.num}`}
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
@@ -233,10 +305,23 @@ export const Home: React.FC = () => {
                 <span>Discuss your production run</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
+
+              <div className="mt-10 pt-6 border-t border-[#c9c0b2] grid grid-cols-3 gap-4">
+                {[
+                  { icon: Package, value: '~50', label: 'Min. order (MOQ)' },
+                  { icon: Clock, value: '2–4 wks', label: 'Typical turnaround' },
+                  { icon: Timer, value: '3–5 days', label: 'Sampling time' },
+                ].map((fact) => (
+                  <div key={fact.label} className="flex flex-col gap-2">
+                    <fact.icon className="w-4 h-4 text-[#c85d2f]" />
+                    <span className="text-[19px] leading-none tracking-[-0.03em] font-extrabold text-[#181715]">{fact.value}</span>
+                    <span className="text-[10px] uppercase tracking-[0.1em] font-bold text-[#6e6a63] leading-snug">{fact.label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="relative rounded-[30px] border border-[#c9c0b2] bg-[#fbfaf6] p-5 md:p-7 shadow-[0_24px_55px_rgba(77,61,43,0.10)]">
-              <div aria-hidden="true" className="absolute top-0 right-0 h-36 w-36 rounded-bl-[100px] bg-[#ead8ca]" />
               <div className="relative flex items-start justify-between gap-5 pb-6 border-b border-[#d9d2c6]">
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#756d63]">Production capacity</p>
@@ -245,30 +330,51 @@ export const Home: React.FC = () => {
                 <span className="rounded-full bg-[#181715] px-3 py-2 text-[10px] uppercase tracking-[0.13em] font-extrabold text-white">Scale ready</span>
               </div>
 
-              <div className="relative py-8 md:py-10">
-                <div className="flex items-end gap-2 h-28 md:h-32" aria-label="Order volume scale from 50 to 1000 plus pieces">
-                  {[18, 30, 46, 64, 82, 100].map((height, index) => (
-                    <div key={height} className="flex-1 rounded-t-[10px] bg-[#ead8ca] overflow-hidden flex items-end">
-                      <div className={`w-full rounded-t-[10px] ${index === 5 ? 'bg-[#c85d2f]' : 'bg-[#d9bca7]'}`} style={{ height: `${height}%` }} />
-                    </div>
-                  ))}
+              <div className="relative pt-6">
+                <div className="overflow-x-auto">
+                  <table className="w-full min-w-[470px] border-collapse text-left">
+                    <caption className="sr-only">DISCREN production run tiers — order size and relative scale</caption>
+                    <thead>
+                      <tr className="border-b border-[#d9d2c6]">
+                        <th scope="col" className="pb-3 pr-4 text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#756d63]">Run type</th>
+                        <th scope="col" className="pb-3 pr-4 text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#756d63]">Order size</th>
+                        <th scope="col" className="pb-3 text-right text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#756d63]">Scale</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-[#e7dfd2]">
+                      {[
+                        { type: 'Starting Run', note: 'Entry batch', size: '~50–100 pcs', level: 15, icon: Boxes },
+                        { type: 'Standard Run', note: 'Core production', size: '100–500 pcs', level: 42, icon: Layers },
+                        { type: 'Bulk Production', note: 'Batch consistent', size: '500–1,000 pcs', level: 75, icon: Factory, highlight: true },
+                        { type: 'High Volume', note: 'Full capacity', size: '1,000+ pcs', level: 100, icon: Warehouse },
+                      ].map((tier) => (
+                        <tr key={tier.type} className={`transition-colors ${tier.highlight ? 'bg-[#f4f0e8]' : 'hover:bg-[#f4f0e8]/60'}`}>
+                          <td className="py-4 pr-4">
+                            <div className="flex items-center gap-3">
+                              <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] border ${tier.highlight ? 'border-[#c85d2f]/30 bg-[#c85d2f]/10 text-[#c85d2f]' : 'border-[#d9d2c6] bg-white text-[#8a837a]'}`}>
+                                <tier.icon className="h-4 w-4" />
+                              </span>
+                              <span className="flex flex-col">
+                                <span className={`text-[14px] font-extrabold tracking-[-0.01em] ${tier.highlight ? 'text-[#c85d2f]' : 'text-[#181715]'}`}>{tier.type}</span>
+                                <span className="text-[10px] uppercase tracking-[0.08em] font-bold text-[#8a837a]">{tier.note}</span>
+                              </span>
+                            </div>
+                          </td>
+                          <td className="py-4 pr-4 text-[14px] font-bold tabular-nums text-[#181715] align-middle">{tier.size}</td>
+                          <td className="py-4 align-middle">
+                            <div className="flex justify-end">
+                              <div className="h-1.5 w-20 sm:w-24 rounded-full bg-[#e7dfd2] overflow-hidden">
+                                <div className={`h-full rounded-full ${tier.highlight ? 'bg-[#c85d2f]' : 'bg-[#d9bca7]'}`} style={{ width: `${tier.level}%` }} />
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-                <div className="mt-3 flex justify-between text-[10px] uppercase tracking-[0.12em] font-extrabold text-[#756d63]"><span>~50 MOQ</span><span>250</span><span>500</span><span>1,000+</span></div>
+                <p className="mt-5 text-[11px] leading-relaxed text-[#756d63]">*Capacity and turnaround depend on the production conditions, artwork and requirements of each order.</p>
               </div>
-
-              <div className="grid sm:grid-cols-3 gap-px rounded-[18px] overflow-hidden border border-[#d9d2c6] bg-[#d9d2c6]">
-                {[
-                  { value: '~50+', label: 'Approx. starting MOQ' },
-                  { value: '3 days*', label: '1,000-piece capacity under suitable conditions' },
-                  { value: '2–4 wks', label: 'Typical production turnaround' },
-                ].map((stat) => (
-                  <div key={stat.value} className="bg-[#f4f0e8] p-5">
-                    <strong className="block text-[24px] leading-none tracking-[-0.05em] font-extrabold text-[#181715]">{stat.value}</strong>
-                    <span className="block mt-2 text-[11px] leading-snug font-medium text-[#6e6a63]">{stat.label}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-5 text-[11px] leading-relaxed text-[#756d63]">*Capacity and turnaround depend on the production conditions, artwork and requirements of each order.</p>
             </div>
           </div>
         </div>
@@ -388,60 +494,96 @@ export const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* 06 / WORKING TOGETHER — cream, sticky heading beside stacked spec panels */}
-      <section className="py-20 md:py-28 bg-[#f4f0e8]">
+      {/* 06 / WORKING TOGETHER — cream band, pill kicker beside a modern spec-card grid */}
+      <section className="py-20 md:py-28 bg-[#f4f0e8] border-t border-[#d9d2c6]">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-[0.8fr_1.2fr] gap-10 lg:gap-16 items-start">
-            <div className="lg:sticky lg:top-28">
-              <SectionHeading
-                kicker="06 / WORKING TOGETHER"
-                title="Straightforward Printing for Apparel Businesses."
-                lead="Practical information, clear expectations and a process designed around bulk apparel production."
-              />
-              <Button to="/contact" variant="primary" className="gap-2">
+          <div ref={workingTogetherRef}>
+            {/* Centered editorial header — full-width, deliberately unlike the sticky FAQ below */}
+            <div className="wt-reveal mx-auto max-w-[720px] text-center">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#c9c0b2] bg-[#fbfaf6] px-4 py-2 text-[10px] uppercase tracking-[0.14em] font-extrabold text-[#756d63]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#c85d2f]" />
+                06 / Working together
+              </div>
+              <h2 className="mt-7 text-[clamp(34px,4.6vw,56px)] leading-[1.0] tracking-[-0.055em] font-extrabold text-[#181715]">
+                Straightforward printing for apparel businesses.
+              </h2>
+              <p className="mt-6 text-[16px] md:text-[18px] leading-relaxed text-[#5f5951] max-w-[600px] mx-auto">
+                Practical information, clear expectations and a process designed around bulk apparel production — so you know exactly what to expect before an order begins.
+              </p>
+              <Button to="/contact" variant="primary" className="mt-8 gap-2">
                 <span>Start a Conversation</span>
                 <ArrowRight className="w-4 h-4" />
               </Button>
             </div>
 
-            <div className="space-y-4">
-              {/* Production Details — light panel */}
-              <div className="bg-[#fbfaf6] border border-[#d9d2c6] rounded-[22px] p-7 md:p-9">
-                <h3 className="text-[22px] tracking-[-0.04em] font-extrabold text-[#181715] mb-5">
-                  Production Details
-                </h3>
-                <div className="text-[14px]">
+            <div className="mt-14 space-y-10">
+              {/* Production Details — full-width card grid */}
+              <div>
+                <div className="wt-reveal flex items-center gap-3 mb-5" style={{ transitionDelay: '80ms' }}>
+                  <span className="flex-1 h-px bg-[#d9d2c6]" />
+                  <span className="flex items-center gap-2 text-[13px] uppercase tracking-[0.16em] font-extrabold text-[#181715]">
+                    <FileText className="w-3.5 h-3.5 text-[#c85d2f]" />
+                    Production Details
+                  </span>
+                  <span className="flex-1 h-px bg-[#d9d2c6]" />
+                </div>
+                <div className="grid sm:grid-cols-2 gap-3">
                   {[
-                    ['MOQ', 'Approx. 50 pieces'],
-                    ['Mixed sizes', 'Yes, when properly sorted'],
-                    ['Sampling', 'Paid sampling available'],
-                    ['Pricing', 'Can reduce with quantity'],
-                    ['Turnaround', 'Approx. 2–4 weeks'],
-                  ].map(([label, value]) => (
-                    <div key={label} className="py-3 border-t border-[#d9d2c6] flex justify-between gap-6">
-                      <span className="font-semibold text-[#181715]">{label}</span>
-                      <span className="text-[#6e6a63] text-right">{value}</span>
+                    { icon: Package, value: '~50 pcs', label: 'Approx. starting MOQ', featured: true },
+                    { icon: Ruler, value: 'Mixed sizes', label: 'Yes, when properly sorted' },
+                    { icon: Sparkles, value: 'Paid sampling', label: 'Available on request' },
+                    { icon: IndianRupee, value: 'Quantity pricing', label: 'Can reduce with volume' },
+                    { icon: Clock, value: '2–4 weeks', label: 'Typical turnaround' },
+                  ].map((item, i) => (
+                    <div
+                      key={item.label}
+                      className={`wt-reveal ${item.featured ? 'sm:col-span-2' : ''}`}
+                      style={{ transitionDelay: `${140 + i * 70}ms` }}
+                    >
+                      <div className="group h-full bg-[#fbfaf6] border border-[#d9d2c6] rounded-[16px] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[#c85d2f]/50 hover:shadow-[0_16px_36px_rgba(77,61,43,0.10)]">
+                        <div className="flex items-center gap-3.5">
+                          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] border border-[#e7dfd2] bg-[#f4f0e8] text-[#c85d2f] transition-colors group-hover:border-[#c85d2f]/30 group-hover:bg-[#c85d2f]/10">
+                            <item.icon className="w-[18px] h-[18px]" />
+                          </span>
+                          <div className="flex flex-col">
+                            <span className="text-[17px] leading-none tracking-[-0.02em] font-extrabold text-[#181715]">{item.value}</span>
+                            <span className="mt-1.5 text-[10px] uppercase tracking-[0.1em] font-bold text-[#8a837a]">{item.label}</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Commercial Terms — inverted panel, keeps the two panels visually distinct */}
-              <div className="bg-[#1b1a18] text-white rounded-[22px] p-7 md:p-9">
-                <h3 className="text-[22px] tracking-[-0.04em] font-extrabold mb-5">
-                  Commercial Terms
-                </h3>
-                <div className="text-[14px]">
+              {/* Commercial Terms — full-width dark panel, revealed as a block */}
+              <div className="wt-reveal bg-[#1b1a18] text-white rounded-[24px] p-6 md:p-8" style={{ transitionDelay: '520ms' }}>
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="flex-1 h-px bg-white/10" />
+                  <span className="flex items-center gap-2 text-[13px] uppercase tracking-[0.16em] font-extrabold text-white">
+                    <Wallet className="w-3.5 h-3.5 text-[#e37b4f]" />
+                    Commercial Terms
+                  </span>
+                  <span className="flex-1 h-px bg-white/10" />
+                </div>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
                   {[
-                    ['Payment', '50% advance'],
-                    ['Balance', '50% before dispatch'],
-                    ['Location', 'Jogeshwari West, Mumbai'],
-                    ['Transport', 'Varies by customer/order'],
-                    ['Bulk capacity', 'Up to 1,000+ pieces'],
-                  ].map(([label, value]) => (
-                    <div key={label} className="py-3 border-t border-white/10 flex justify-between gap-6">
-                      <span className="font-semibold text-white">{label}</span>
-                      <span className="text-[#a9a49b] text-right">{value}</span>
+                    { icon: Banknote, value: '50% advance', label: 'Payment to begin' },
+                    { icon: Truck, value: '50% balance', label: 'Due before dispatch' },
+                    { icon: MapPin, value: 'Jogeshwari West', label: 'Mumbai facility' },
+                    { icon: Factory, value: '1,000+ pcs', label: 'Bulk capacity' },
+                  ].map((item) => (
+                    <div
+                      key={item.label}
+                      className="group flex items-center gap-3.5 rounded-[16px] border border-white/10 bg-white/[0.04] p-4 transition-colors duration-300 hover:border-[#e37b4f]/40 hover:bg-white/[0.07]"
+                    >
+                      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] border border-white/10 bg-white/[0.06] text-[#e37b4f] transition-colors group-hover:border-[#e37b4f]/40 group-hover:bg-[#e37b4f]/15">
+                        <item.icon className="w-[18px] h-[18px]" />
+                      </span>
+                      <div className="flex flex-col">
+                        <span className="text-[16px] leading-none tracking-[-0.02em] font-extrabold text-white">{item.value}</span>
+                        <span className="mt-1.5 text-[10px] uppercase tracking-[0.1em] font-bold text-[#a9a49b]">{item.label}</span>
+                      </div>
                     </div>
                   ))}
                 </div>

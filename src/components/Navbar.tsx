@@ -31,7 +31,7 @@ export const Navbar: React.FC = () => {
 
   return (
     <>
-      <header className={`sticky top-0 z-40 transition-all duration-200 border-b border-[#d9d2c6] bg-[#f4f0e8] ${
+      <header className={`sticky top-0 z-40 transition-all duration-200 border-b border-[#d9d2c6] bg-white ${
         scrolled ? 'shadow-sm' : 'shadow-none'
       }`}>
         <div className="container-custom">
