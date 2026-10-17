@@ -8,8 +8,8 @@ const footerLinkClass = 'text-[14px] text-[#a9a49b] hover:text-white transition-
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="relative bg-[#06172e] text-white border-t border-white/10 overflow-hidden">
-      <div aria-hidden="true" className="absolute z-0 inset-x-0 bottom-10 select-none pointer-events-none overflow-hidden text-center text-[clamp(88px,17.4vw,248px)] leading-[0.72] tracking-[-0.09em] font-extrabold text-[#16304f] whitespace-nowrap">
+    <footer className="relative bg-[#1b1a18] text-white border-t border-white/10 overflow-hidden">
+      <div aria-hidden="true" className="absolute z-0 inset-x-0 bottom-10 select-none pointer-events-none overflow-hidden text-center text-[clamp(88px,17.4vw,248px)] leading-[0.72] tracking-[-0.09em] font-extrabold text-[#3a3530] whitespace-nowrap">
         DISCREN
       </div>
 
@@ -21,19 +21,19 @@ export const Footer: React.FC = () => {
               <span className="block mt-2 text-[9px] uppercase tracking-[0.16em] font-extrabold text-[#a9a49b]">Apparel Printing & Production</span>
             </Link>
 
-            <p className="mt-6 text-[15px] leading-relaxed text-[#aeb9ca]">
+            <p className="mt-6 text-[15px] leading-relaxed text-[#b8b4ab]">
               Practical B2B apparel printing for clothing brands, garment manufacturers and businesses that need reliable production support.
             </p>
 
             <form className="mt-8" onSubmit={(event) => event.preventDefault()}>
               <label htmlFor="footer-email" className="sr-only">Email address</label>
               <div className="flex gap-3">
-                <input id="footer-email" type="email" placeholder="Enter your email address" className="min-w-0 flex-1 rounded-xl border border-white/15 bg-white/[0.06] px-4 py-3.5 text-[13px] text-white placeholder:text-[#8793a7] outline-none transition-colors focus:border-[#e37b4f]" />
-                <button type="submit" aria-label="Subscribe to updates" className="w-[52px] rounded-xl bg-white text-[#06172e] grid place-items-center hover:bg-[#e37b4f] hover:text-white transition-colors">
+                <input id="footer-email" type="email" placeholder="Enter your email address" className="min-w-0 flex-1 rounded-xl border border-white/15 bg-white/[0.06] px-4 py-3.5 text-[13px] text-white placeholder:text-[#8a847c] outline-none transition-colors focus:border-[#e37b4f]" />
+                <button type="submit" aria-label="Subscribe to updates" className="w-[52px] rounded-xl bg-white text-[#1b1a18] grid place-items-center hover:bg-[#e37b4f] hover:text-white transition-colors">
                   <ArrowUpRight className="w-5 h-5" />
                 </button>
               </div>
-              <label className="mt-4 flex items-start gap-2.5 text-[12px] leading-snug text-[#aeb9ca] cursor-pointer">
+              <label className="mt-4 flex items-start gap-2.5 text-[12px] leading-snug text-[#b8b4ab] cursor-pointer">
                 <input type="checkbox" className="mt-0.5 accent-[#e37b4f]" />
                 <span>I consent to receive newsletters and updates.</span>
               </label>
@@ -90,7 +90,7 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="relative border-t border-white/10 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-[#8998ac]">
+        <div className="relative border-t border-white/10 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[12px] text-[#8a847c]">
           <span>© 2026 DISCREN. All rights reserved.</span>
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
