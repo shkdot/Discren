@@ -28,7 +28,7 @@ export const companyData: CompanyInfo = {
   location: "Jogeshwari West, Mumbai",
   area: "Jogeshwari West",
   city: "Mumbai",
-  experienceYears: "14+ years",
+  experienceYears: "25+ years",
   moq: "Approx. 50 pieces",
   bulkCapacity: "Up to 1,000+ pieces",
   turnaround: "Approx. 2–4 weeks (depends on workload)",

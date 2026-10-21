@@ -120,7 +120,7 @@ export const Home: React.FC = () => {
     <>
       <SEO 
         title="DISCREN — B2B Apparel Printing & Garment Job-Work in Mumbai"
-        description="Premium B2B apparel printing for fashion brands, streetwear labels, and garment manufacturers in Jogeshwari West, Mumbai. 14+ years experience in Plastisol, Water-Based, Discharge, High-Density HD, 3D Puff, Metallic Foil, and Reflective Printing."
+        description="Premium B2B apparel printing for fashion brands, streetwear labels, and garment manufacturers in Jogeshwari West, Mumbai. 25+ years experience in Plastisol, Water-Based, Discharge, High-Density HD, 3D Puff, Metallic Foil, and Reflective Printing."
         keywords="B2B apparel printing Mumbai, garment printing Jogeshwari West, screen printing job work Mumbai, plastisol printing, puff print hoodie, high density silicone print, discharge printing cotton, cut panel printing Mumbai, bulk t-shirt printing factory"
         schema={homeSchema}
       />
@@ -169,7 +169,7 @@ export const Home: React.FC = () => {
             <div className="pt-4 md:pt-5 border-t border-white/15 flex flex-wrap gap-x-7 gap-y-2 text-[#d1ccc4] text-[12px] md:text-[13px] font-semibold">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[#e37b4f]"></span>
-                <span>14+ years of printing experience</span>
+                <span>25+ years of printing experience</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[#e37b4f]"></span>
@@ -208,7 +208,7 @@ export const Home: React.FC = () => {
               </Link>
 
               <div className="flex items-center gap-4 mt-12 pt-6 border-t border-[#d9d2c6]">
-                <span className="text-[42px] leading-none tracking-[-0.07em] font-extrabold text-[#c85d2f]">14+</span>
+                <span className="text-[42px] leading-none tracking-[-0.07em] font-extrabold text-[#c85d2f]">25+</span>
                 <span className="text-[11px] uppercase tracking-[0.15em] leading-relaxed font-extrabold text-[#6e6a63]">Years applying the right<br />print to the right garment</span>
               </div>
             </div>

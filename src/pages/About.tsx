@@ -43,7 +43,7 @@ const principles = [
 
 export const About: React.FC = () => {
   const stats = [
-    { value: '14+', label: 'Years of experience' },
+    { value: '25+', label: 'Years of experience' },
     { value: '~50', label: 'Starting MOQ' },
     { value: '1,000+', label: 'Bulk capacity' },
     { value: '3–5 days', label: 'Sample turnaround' },
@@ -53,7 +53,7 @@ export const About: React.FC = () => {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
     name: 'About DISCREN Apparel Printing',
-    description: 'B2B apparel printing and garment production job-work facility in Jogeshwari West, Mumbai with 14+ years operational heritage.',
+    description: 'B2B apparel printing and garment production job-work facility in Jogeshwari West, Mumbai with 25+ years operational heritage.',
     mainEntity: {
       '@type': 'LocalBusiness',
       name: 'DISCREN',
@@ -76,8 +76,8 @@ export const About: React.FC = () => {
   return (
     <>
       <SEO
-        title="About DISCREN — 14+ Years B2B Apparel Printing in Mumbai"
-        description="Learn about DISCREN, a B2B apparel printing partner based in Jogeshwari West, Mumbai. 14+ years of precision printing experience, fabric-first approach, and bulk job-work."
+        title="About DISCREN — 25+ Years B2B Apparel Printing in Mumbai"
+        description="Learn about DISCREN, a B2B apparel printing partner based in Jogeshwari West, Mumbai. 25+ years of precision printing experience, fabric-first approach, and bulk job-work."
         keywords="about DISCREN, apparel printing company Mumbai, garment job work Jogeshwari, screen printing factory Maharashtra, Farooqui Arts heritage, B2B clothing manufacturing Mumbai"
         schema={aboutSchema}
       />
@@ -236,7 +236,7 @@ export const About: React.FC = () => {
               04 / OUR STORY
             </div>
             <h2 className="text-[clamp(30px,4.4vw,50px)] leading-[1.05] tracking-[-0.05em] font-extrabold text-[#181715] mb-4">
-              14 Years of Print Heritage.
+              25+ Years of Print Heritage.
             </h2>
             <p className="text-[16px] md:text-[17px] text-[#6e6a63] leading-relaxed max-w-[520px]">
               From a single screen-printing press in Jogeshwari West to a structured B2B production partner — scroll through the milestones that shaped DISCREN.

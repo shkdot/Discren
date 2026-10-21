@@ -279,12 +279,12 @@ const Hero = () => (
 
           <div className="mt-10 flex flex-wrap gap-x-8 gap-y-3 border-t border-[var(--line)] pt-6 text-xs font-medium text-[var(--muted)]">
             <span className="inline-flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[var(--accent-text)]" /> Sampling before bulk production</span>
-            <span className="inline-flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[var(--accent-text)]" /> 14+ years of hands-on experience</span>
+            <span className="inline-flex items-center gap-2"><Check className="h-3.5 w-3.5 text-[var(--accent-text)]" /> 25+ years of hands-on experience</span>
           </div>
 
           <div className="mt-8 flex items-center gap-8 border-t border-[var(--line)] pt-6">
             {[
-              { v: "14+", l: "Years of printing experience" },
+              { v: "25+", l: "Years of printing experience" },
               { v: "~50", l: "MOQ, in pieces" },
               { v: "1,000+", l: "Bulk order capacity" },
             ].map((s) => (
@@ -386,7 +386,7 @@ const HeroPreview = () => (
    APPROACH — "More Than Printing" + "Built on Practical Experience"
    ============================================================ */
 const experience = [
-  { tag: "14+", title: "Years of Experience", desc: "14+ years of hands-on apparel printing experience." },
+  { tag: "25+", title: "Years of Experience", desc: "25+ years of hands-on apparel printing experience." },
   { tag: null, title: "Multiple Printing Methods", desc: "Plastisol, water-based, discharge, puff and high-density printing, along with cut-panel and finished-garment printing." },
   { tag: null, title: "Production-Focused Advice", desc: "We help you choose an approach based on the garment, design and intended result — not simply the method you initially request." },
   { tag: null, title: "Sampling Before Bulk", desc: "Paid sampling allows you to review the actual print before approving the production order." },

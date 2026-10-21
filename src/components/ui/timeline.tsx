@@ -272,8 +272,8 @@ export default function Timeline({
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
-          start: `${startPos}% 30%`,
-          end:   `${endPos}% 50%`,
+          start: `${startPos}% 40%`,
+          end:   `${endPos}% 60%`,
           scrub: true,
         },
       });
@@ -293,8 +293,8 @@ export default function Timeline({
 
     const positions: ReadonlyArray<readonly [number, number]> =
       window.innerWidth < 600
-        ? [[22,32],[28,38],[36,46],[45,55],[52,62],[60,70],[69,79]]
-        : [[6,26],[16,36],[26,46],[35,55],[45,65],[55,75],[65,85]];
+        ? [[6,16],[14,24],[22,32],[30,40],[38,48],[46,56],[54,64]]
+        : [[2,16],[10,24],[18,32],[26,40],[34,48],[42,56],[50,64]];
 
     allItems.forEach((item, idx) => {
       const [s, e] = positions[Math.min(idx, positions.length - 1)];
