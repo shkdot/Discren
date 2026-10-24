@@ -16,6 +16,7 @@ const Contact = lazy(() => import('./pages/Contact').then((module) => ({ default
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy').then((module) => ({ default: module.PrivacyPolicy })));
 const TermsConditions = lazy(() => import('./pages/TermsConditions').then((module) => ({ default: module.TermsConditions })));
 const Test001 = lazy(() => import('./pages/test001').then((module) => ({ default: module.Home })));
+const NotFound = lazy(() => import('./pages/NotFound').then((module) => ({ default: module.NotFound })));
 
 function AppContent() {
   const location = useLocation();
@@ -61,7 +62,7 @@ function AppContent() {
             <Route path="/terms" element={<TermsConditions />} />
             <Route path="/terms-and-conditions" element={<TermsConditions />} />
             <Route path="/test001" element={<Test001 />} />
-            <Route path="*" element={<Home />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
           </Suspense>
         </main>
