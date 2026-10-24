@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { SmoothScroll } from './components/SmoothScroll';
 import { ScrollToTop } from './components/ScrollToTop';
@@ -17,13 +17,34 @@ const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy').then((module) =
 const TermsConditions = lazy(() => import('./pages/TermsConditions').then((module) => ({ default: module.TermsConditions })));
 
 function App() {
+  const footerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const footer = footerRef.current;
+    if (!footer) return;
+
+    const update = () => {
+      document.documentElement.style.setProperty('--footer-h', `${footer.offsetHeight}px`);
+    };
+
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(footer);
+    window.addEventListener('resize', update);
+
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', update);
+    };
+  }, []);
+
   return (
     <BrowserRouter>
       <SmoothScroll>
         <ScrollToTop />
         <div className="min-h-screen flex flex-col bg-[#f4f0e8] text-[#181715] selection:bg-[#c85d2f] selection:text-white">
           <Navbar />
-          <main className="flex-grow">
+          <main className="flex-grow relative z-10 bg-[#f4f0e8] shadow-[0_10px_30px_rgba(0,0,0,.15)]" style={{ marginBottom: 'var(--footer-h, 0px)' }}>
             <Suspense fallback={<div className="min-h-[45vh]" aria-busy="true" aria-label="Loading page" />}>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -41,7 +62,9 @@ function App() {
             </Routes>
             </Suspense>
           </main>
-          <Footer />
+          <div ref={footerRef} className="fixed bottom-0 left-0 right-0 z-0">
+            <Footer />
+          </div>
         </div>
       </SmoothScroll>
     </BrowserRouter>
