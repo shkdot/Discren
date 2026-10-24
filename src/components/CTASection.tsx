@@ -17,7 +17,7 @@ export const CTASection: React.FC<CTASectionProps> = ({
   return (
     <section className="relative bg-[#fbfaf6] py-16 md:py-24 border-t border-[#d9d2c6]">
       <div className="container-custom">
-        <div className="relative mx-auto max-w-[980px] -mb-24 md:-mb-32 rounded-[28px] bg-[#1b1a18] text-white p-8 md:p-12 lg:p-14 shadow-[0_40px_90px_-30px_rgba(27,27,24,0.45)] border border-[#292722] overflow-hidden">
+        <div className="relative mx-auto max-w-[980px] rounded-[28px] bg-[#1b1a18] text-white p-8 md:p-12 lg:p-14 shadow-[0_40px_90px_-30px_rgba(27,27,24,0.45)] border border-[#292722] overflow-hidden">
           <div aria-hidden="true" className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-[#c85d2f]/10 blur-3xl" />
           <div aria-hidden="true" className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-[#e37b4f]/10 blur-3xl" />
 
