@@ -5,10 +5,15 @@ import gsap from 'gsap';
 
 interface SmoothScrollProps {
   children: ReactNode;
+  disable?: boolean;
 }
 
-export const SmoothScroll = ({ children }: SmoothScrollProps) => {
+export const SmoothScroll = ({ children, disable = false }: SmoothScrollProps) => {
   useEffect(() => {
+    // Disable Lenis when footer curtain reveal is active (fixed footer)
+    // or when explicitly disabled (e.g., pages with ScrollTrigger)
+    if (disable) return;
+
     // Respect prefers-reduced-motion
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       return;
@@ -35,7 +40,7 @@ export const SmoothScroll = ({ children }: SmoothScrollProps) => {
       gsap.ticker.remove(rafCallback);
       lenis.destroy();
     };
-  }, []);
+  }, [disable]);
 
   return <>{children}</>;
 };

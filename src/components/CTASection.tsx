@@ -15,7 +15,7 @@ export const CTASection: React.FC<CTASectionProps> = ({
   description = "Tell us what you're producing, how many pieces you need, and what you're looking to achieve. We'll understand the requirement and help you take the next step toward production.",
 }) => {
   return (
-    <section className="relative bg-[#fbfaf6] py-16 md:py-24 border-t border-[#d9d2c6]">
+    <section className="w-full bg-[#fbfaf6] py-16 md:py-24 border-t border-[#d9d2c6]">
       <div className="container-custom">
         <div className="relative mx-auto max-w-[980px] rounded-[28px] bg-[#1b1a18] text-white p-8 md:p-12 lg:p-14 shadow-[0_40px_90px_-30px_rgba(27,27,24,0.45)] border border-[#292722] overflow-hidden">
           <div aria-hidden="true" className="absolute -top-24 -right-24 h-64 w-64 rounded-full bg-[#c85d2f]/10 blur-3xl" />
