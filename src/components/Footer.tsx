@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, MapPin } from 'lucide-react';
+import { ArrowUpRight, MapPin, Phone, Mail } from 'lucide-react';
 import { companyData } from '../data/companyData';
 import { InstagramIcon } from './Icons';
 
@@ -22,10 +22,27 @@ export const Footer: React.FC = () => {
             </Link>
 
             <p className="mt-6 text-[15px] leading-relaxed text-[#b8b4ab]">
-              Practical B2B apparel printing for clothing brands, garment manufacturers and businesses that need reliable production support.
+              Practical B2B apparel printing for clothing brands, garment manufacturers and businesses that need reliable production support in Mumbai.
             </p>
 
-            <form className="mt-8" onSubmit={(event) => event.preventDefault()}>
+            {/* Visible NAP section (Name, Address, Phone) in plain text for Google SEO/AEO */}
+            <div className="mt-6 p-4 rounded-xl bg-white/[0.04] border border-white/10 space-y-2 text-[13px] text-[#d1ccc4]">
+              <div className="font-bold text-white tracking-wide">DISCREN Apparel Printing</div>
+              <div className="flex items-start gap-2">
+                <MapPin className="w-4 h-4 text-[#e37b4f] shrink-0 mt-0.5" />
+                <span>Opposite Vijay Vishal Building, Jogeshwari West, Mumbai, Maharashtra 400102, India</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Phone className="w-4 h-4 text-[#e37b4f] shrink-0" />
+                <a href={companyData.phoneHref} className="hover:text-white transition-colors">{companyData.phonePlaceholder}</a>
+              </div>
+              <div className="flex items-center gap-2">
+                <Mail className="w-4 h-4 text-[#e37b4f] shrink-0" />
+                <a href={companyData.emailHref} className="hover:text-white transition-colors">{companyData.emailPlaceholder}</a>
+              </div>
+            </div>
+
+            <form className="mt-6" onSubmit={(event) => event.preventDefault()}>
               <label htmlFor="footer-email" className="sr-only">Email address</label>
               <div className="flex gap-3">
                 <input id="footer-email" type="email" placeholder="Enter your email address" className="min-w-0 flex-1 rounded-xl border border-white/15 bg-white/[0.06] px-4 py-3.5 text-[13px] text-white placeholder:text-[#8a847c] outline-none transition-colors focus:border-[#e37b4f]" />
@@ -38,19 +55,15 @@ export const Footer: React.FC = () => {
                 <span>I consent to receive newsletters and updates.</span>
               </label>
             </form>
-
-            <a href={companyData.googleMapsPlaceholder} target="_blank" rel="noreferrer" className="mt-7 inline-flex items-center gap-2 text-[13px] font-bold text-[#e37b4f] hover:text-white transition-colors">
-              <MapPin className="w-4 h-4" />
-              <span>{companyData.location}</span>
-            </a>
           </div>
 
           <div>
             <h4 className="text-[10px] uppercase tracking-[0.16em] font-extrabold text-white mb-5">Explore</h4>
             <ul className="space-y-3">
               <li><Link to="/" className={footerLinkClass}>Home</Link></li>
+              <li><Link to="/services" className={footerLinkClass}>All Services</Link></li>
               <li><Link to="/about" className={footerLinkClass}>About DISCREN</Link></li>
-              <li><Link to="/capabilities" className={footerLinkClass}>Capabilities</Link></li>
+              <li><Link to="/capabilities" className={footerLinkClass}>Capabilities Overview</Link></li>
               <li><Link to="/work" className={footerLinkClass}>Our Work</Link></li>
               <li><Link to="/process" className={footerLinkClass}>Production Process</Link></li>
               <li><Link to="/faq" className={footerLinkClass}>FAQ</Link></li>
@@ -58,15 +71,15 @@ export const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h4 className="text-[10px] uppercase tracking-[0.16em] font-extrabold text-white mb-5">Printing methods</h4>
+            <h4 className="text-[10px] uppercase tracking-[0.16em] font-extrabold text-white mb-5">Printing Methods</h4>
             <ul className="space-y-3">
-              <li><Link to="/capabilities#plastisol-printing" className={footerLinkClass}>Plastisol Printing</Link></li>
-              <li><Link to="/capabilities#water-based-printing" className={footerLinkClass}>Water-Based Printing</Link></li>
-              <li><Link to="/capabilities#discharge-printing" className={footerLinkClass}>Discharge Printing</Link></li>
-              <li><Link to="/capabilities#high-density" className={footerLinkClass}>High-Density (HD)</Link></li>
-              <li><Link to="/capabilities#puff-printing" className={footerLinkClass}>Puff Printing</Link></li>
-              <li><Link to="/capabilities#metallic-foil-printing" className={footerLinkClass}>Metallic / Foil</Link></li>
-              <li><Link to="/capabilities#reflective-glow-printing" className={footerLinkClass}>Glow / Reflective</Link></li>
+              <li><Link to="/plastisol-printing-mumbai" className={footerLinkClass}>Plastisol Screen Printing</Link></li>
+              <li><Link to="/water-based-printing-mumbai" className={footerLinkClass}>Water-Based Printing</Link></li>
+              <li><Link to="/discharge-printing-mumbai" className={footerLinkClass}>Discharge Printing on Cotton</Link></li>
+              <li><Link to="/puff-printing-mumbai" className={footerLinkClass}>3D Puff Printing</Link></li>
+              <li><Link to="/high-density-printing-mumbai" className={footerLinkClass}>High-Density Silicone (HD)</Link></li>
+              <li><Link to="/foil-printing-mumbai" className={footerLinkClass}>Metallic Foil Printing</Link></li>
+              <li><Link to="/cut-panel-printing-mumbai" className={footerLinkClass}>Cut Panel Printing</Link></li>
             </ul>
           </div>
 
@@ -75,7 +88,7 @@ export const Footer: React.FC = () => {
             <ul className="space-y-3 text-[14px]">
               <li><a href={companyData.phoneHref} className={footerLinkClass}>{companyData.phonePlaceholder}</a></li>
               <li><a href={companyData.emailHref} className={footerLinkClass}>{companyData.emailPlaceholder}</a></li>
-              <li><a href={companyData.whatsappPlaceholder} target="_blank" rel="noreferrer" className={footerLinkClass}>WhatsApp</a></li>
+              <li><a href={companyData.whatsappPlaceholder} target="_blank" rel="noreferrer" className={footerLinkClass}>WhatsApp Us</a></li>
               <li><Link to="/contact" className={footerLinkClass}>Request a quote</Link></li>
             </ul>
 

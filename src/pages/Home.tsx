@@ -119,9 +119,8 @@ export const Home: React.FC = () => {
   return (
     <>
       <SEO 
-        title="DISCREN — B2B Apparel Printing & Garment Job-Work in Mumbai"
-        description="Premium B2B apparel printing for fashion brands, streetwear labels, and garment manufacturers in Jogeshwari West, Mumbai. 25+ years experience in Plastisol, Water-Based, Discharge, High-Density HD, 3D Puff, Metallic Foil, and Reflective Printing."
-        keywords="B2B apparel printing Mumbai, garment printing Jogeshwari West, screen printing job work Mumbai, plastisol printing, puff print hoodie, high density silicone print, discharge printing cotton, cut panel printing Mumbai, bulk t-shirt printing factory"
+        title="B2B Apparel & Garment Printing in Mumbai | DISCREN"
+        description="B2B apparel printing in Jogeshwari West, Mumbai. Plastisol, water-based, discharge, puff, high-density and foil printing for clothing brands. Request a quote."
         schema={homeSchema}
       />
 
