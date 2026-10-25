@@ -126,7 +126,7 @@ export const Home: React.FC = () => {
 
       {/* Hero Section - Viewport-Fitted Desktop View (No Scrolling Required) */}
       {/* Hero Section */}
-      <section className="relative bg-[#181715] text-white min-h-[calc(100vh-76px)] flex items-center py-10 lg:py-0 overflow-hidden border-b border-[#292722]">
+      <section className="relative bg-[#181715] text-white min-h-[70vh] md:min-h-[calc(100vh-76px)] flex items-center py-10 lg:py-0 overflow-hidden border-b border-[#292722]">
 
         {/* Background Image — desktop only; hidden on mobile to avoid a cropped/shrunk image */}
         <div className="absolute inset-0 z-0 hidden md:block">
