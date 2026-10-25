@@ -125,24 +125,31 @@ export const Home: React.FC = () => {
       />
 
       {/* Hero Section - Viewport-Fitted Desktop View (No Scrolling Required) */}
+      {/* Hero Section */}
       <section className="relative bg-[#181715] text-white min-h-[calc(100vh-76px)] flex items-center py-10 lg:py-0 overflow-hidden border-b border-[#292722]">
-        
-        {/* Background Image positioned to highlight the right side */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="/images/home-hero-image.webp" 
-            alt="DISCREN Apparel Printing Factory Production" 
+
+        {/* Background Image — desktop only; hidden on mobile to avoid a cropped/shrunk image */}
+        <div className="absolute inset-0 z-0 hidden md:block">
+          <img
+            src="/images/home-hero-image.webp"
+            alt="DISCREN Apparel Printing Factory Production"
             className="w-full h-full object-cover object-right scale-105 transition-transform duration-1000 opacity-70 lg:opacity-90"
           />
-          {/* Subtle gradient overlay ensuring crisp text contrast on left while leaving right side highlighted */}
           <div className="absolute inset-0 bg-gradient-to-r from-[#181715] via-[#181715]/90 to-transparent lg:via-[#181715]/70" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#181715] via-transparent to-transparent opacity-80" />
         </div>
 
+        {/* Mobile background — subtle pattern + accent glow, no image */}
+        <div aria-hidden="true" className="absolute inset-0 z-0 md:hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,#2a1f12_0%,#181715_70%)]" />
+          <div className="absolute -top-20 -right-20 h-64 w-64 rounded-full bg-[#c85d2f]/15 blur-3xl" />
+          <div className="absolute bottom-0 left-0 h-48 w-48 rounded-full bg-[#e37b4f]/10 blur-3xl" />
+        </div>
+
         {/* Hero Content */}
         <div className="container-custom relative z-10 my-auto py-4">
-          <div className="max-w-[820px]">
-            <div className="text-[11px] md:text-[12px] tracking-[0.15em] font-extrabold text-[#e37b4f] uppercase mb-4 md:mb-5 flex items-center gap-2">
+          <div className="max-w-[820px] mx-auto md:mx-0 text-center md:text-left">
+            <div className="text-[11px] md:text-[12px] tracking-[0.15em] font-extrabold text-[#e37b4f] uppercase mb-4 md:mb-5 flex items-center gap-2 justify-center md:justify-start">
               <span className="w-2 h-2 rounded-full bg-[#e37b4f] animate-pulse"></span>
               <span>B2B APPAREL PRINTING · JOGESHWARI WEST, MUMBAI</span>
             </div>
@@ -151,11 +158,11 @@ export const Home: React.FC = () => {
               Printing Built Around the <span className="text-[#e37b4f] underline decoration-[#e37b4f]/30 underline-offset-8">Garment.</span>
             </h1>
 
-            <p className="max-w-[640px] text-[16px] md:text-[19px] leading-[1.45] text-[#d1ccc4] mb-6 md:mb-8 font-normal">
+            <p className="max-w-[640px] mx-auto md:mx-0 text-[16px] md:text-[19px] leading-[1.45] text-[#d1ccc4] mb-6 md:mb-8 font-normal">
               We help clothing brands and garment businesses turn their designs into production-ready prints — choosing the right printing approach for the garment, the artwork and the result you want to achieve.
             </p>
 
-            <div className="flex flex-wrap items-center gap-3.5 mb-8 md:mb-10">
+            <div className="flex flex-wrap items-center gap-3.5 mb-8 md:mb-10 justify-center md:justify-start">
               <Button to="/contact" variant="white" className="px-7 py-3 shadow-lg text-[13px] md:text-[14px] min-h-[46px] md:min-h-[50px]">
                 Discuss Your Requirement
               </Button>
@@ -165,7 +172,7 @@ export const Home: React.FC = () => {
             </div>
 
             {/* Hero Meta Badges */}
-            <div className="pt-4 md:pt-5 border-t border-white/15 flex flex-wrap gap-x-7 gap-y-2 text-[#d1ccc4] text-[12px] md:text-[13px] font-semibold">
+            <div className="pt-4 md:pt-5 border-t border-white/15 flex flex-wrap gap-x-7 gap-y-2 text-[#d1ccc4] text-[12px] md:text-[13px] font-semibold justify-center md:justify-start">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[#e37b4f]"></span>
                 <span>25+ years of printing experience</span>
