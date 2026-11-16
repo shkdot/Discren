@@ -10,9 +10,9 @@ import { CTASection } from '../components/CTASection';
 import { capabilitiesData } from '../data/capabilitiesData';
 import { processData } from '../data/processData';
 import { faqData } from '../data/faqData';
-import { workData } from '../data/workData';
 import { ArrowRight, Package, Clock, Timer, Boxes, Layers, Factory, Warehouse, Ruler, Sparkles, IndianRupee, Wallet, Banknote, MapPin, Truck, FileText } from 'lucide-react';
 import Timeline from '../components/ui/timeline';
+import { WorkShowcase } from '../components/WorkShowcase';
 
 /** Continuous capability marquee content under the hero. */
 const tickerItems = [
@@ -44,8 +44,7 @@ const bulkProductionTiers = [
 ];
 
 export const Home: React.FC = () => {
-    const selectedFaqs = faqData.slice(0, 6);
-  const featuredWork = workData.slice(0, 6);
+  const selectedFaqs = faqData.slice(0, 6);
   const [activeExpertiseStage, setActiveExpertiseStage] = useState(0);
   const expertiseStage = expertiseStages[activeExpertiseStage];
   const [isHovered, setIsHovered] = useState(false);
@@ -442,93 +441,20 @@ export const Home: React.FC = () => {
           imageAlt="DISCREN screen printing studio — garments on the press table"
           duration={1.4}
           topItems={[
-            { id: "stage-01", year: "Stage 01", month: "January", content: "Requirement & Consultation — share artwork, garment details, quantity and print requirements." },
-            { id: "stage-02", year: "Stage 02", month: "March", content: "Artwork & Garment Review — technical assessment of artwork, colour separation and fabric behaviour." },
-            { id: "stage-03", year: "Stage 03", month: "May", content: "Method & Ink Selection — choosing the right printing approach for your garment, artwork and result." },
-            { id: "stage-04", year: "Stage 04", month: "July", content: "Sample & Testing — paid sample production for client review before bulk production begins." },
+            { id: "stage-01", order: 1, title: "01 · Consultation", content: "Share your vector artwork, garment specifications, quantity and print finish goals with our Mumbai studio team." },
+            { id: "stage-03", order: 3, title: "03 · Ink & Method", content: "Selecting high-opacity plastisol, soft-hand water-based, discharge, or 3D puff tailored to your apparel." },
+            { id: "stage-05", order: 5, title: "05 · Bulk Production", content: "Precision table printing with calibrated squeegee pressure and temperature-controlled curing tunnels." },
+            { id: "stage-07", order: 7, title: "07 · Dispatch", content: "Packed in client-labelled lots, coordinated for direct dispatch or Mumbai factory collection." },
           ]}
           bottomItems={[
-            { id: "stage-05", year: "Stage 05", month: "February", content: "Bulk Production — executing bulk printing to approved sample standards with batch consistency." },
-            { id: "stage-06", year: "Stage 06", month: "April", content: "Quality Check — continuous inspection during production to maintain visual and tactile consistency." },
-            { id: "stage-07", year: "Stage 07", month: "June", content: "Handover & Dispatch — complete order handover, transport coordination or factory collection." },
+            { id: "stage-02", order: 2, title: "02 · Tech Review", content: "Evaluation of screen separation feasibility, line tolerances, and fabric interaction before print." },
+            { id: "stage-04", order: 4, title: "04 · Paid Sample", content: "Production-grade physical strike-off piece printed and cured for hand-feel and wash verification." },
+            { id: "stage-06", order: 6, title: "06 · Quality Control", content: "Individual piece-by-piece inspection for registration accuracy, cure completion, and cleanliness." },
           ]}
         />
       </section>
 
-      {/* 05 / OUR WORK — editorial dark gallery */}
-      <section className="relative py-20 md:py-28 bg-[#1b1a18] text-white overflow-hidden">
-        <div aria-hidden="true" className="absolute -right-5 top-[28%] text-[clamp(90px,17vw,250px)] leading-none tracking-[-0.1em] font-extrabold text-white/[0.025] whitespace-nowrap select-none">
-          PRINT / PRODUCE
-        </div>
-        <div className="container-custom">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-            <SectionHeading
-              dark
-              kicker="05 / OUR WORK"
-              title="Work That Speaks for Itself."
-              lead="A visual selection of printing work across different techniques, garment formats and production requirements."
-              className="mb-0"
-            />
-            <Link
-              to="/work"
-              className="inline-flex items-center gap-2 text-[14px] font-extrabold text-[#e37b4f] hover:text-white transition-colors shrink-0"
-            >
-              <span>View Portfolio Gallery</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-
-          <div className="relative grid lg:grid-cols-12 gap-4 lg:gap-5">
-            <Link to="/work" className="group relative lg:col-span-7 min-h-[420px] lg:min-h-[575px] overflow-hidden rounded-[28px] border border-white/10 bg-[#242220]">
-              <img src={featuredWork[0].image} alt={featuredWork[0].title} loading="lazy" className="absolute inset-0 w-full h-full object-cover opacity-80 transition-all duration-1000 group-hover:scale-105 group-hover:opacity-100" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#181715] via-[#181715]/25 to-transparent" />
-              <div className="absolute top-5 left-5 flex items-center gap-2 rounded-full border border-white/20 bg-[#181715]/55 backdrop-blur-md px-3 py-1.5 text-[10px] uppercase tracking-[0.14em] font-extrabold text-white">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#e37b4f]" /> Featured production
-              </div>
-              <div className="absolute inset-x-0 bottom-0 p-6 md:p-8 lg:p-10">
-                <div className="flex flex-wrap gap-2 mb-4">
-                  <span className="px-3 py-1 rounded-full bg-white/10 backdrop-blur text-[10px] uppercase tracking-[0.12em] font-extrabold text-[#f4f0e8]">{featuredWork[0].technique}</span>
-                  <span className="px-3 py-1 rounded-full bg-white/10 backdrop-blur text-[10px] uppercase tracking-[0.12em] font-extrabold text-[#f4f0e8]">{featuredWork[0].fabric}</span>
-                </div>
-                <div className="flex items-end justify-between gap-6">
-                  <div>
-                    <h3 className="text-[clamp(26px,3.3vw,44px)] leading-[0.98] tracking-[-0.055em] font-extrabold text-white">{featuredWork[0].title}</h3>
-                    <p className="hidden md:block max-w-[520px] mt-3 text-[14px] leading-relaxed text-[#d5d0c8]">{featuredWork[0].description}</p>
-                  </div>
-                  <span className="w-12 h-12 rounded-full bg-[#e37b4f] grid place-items-center shrink-0 text-white transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1"><ArrowRight className="w-5 h-5" /></span>
-                </div>
-              </div>
-            </Link>
-
-            <div className="lg:col-span-5 grid sm:grid-cols-2 lg:grid-cols-1 gap-4 lg:gap-5">
-              {featuredWork.slice(1, 3).map((work, index) => (
-                <Link key={work.id} to="/work" className="group relative min-h-[240px] lg:min-h-0 lg:h-[278px] overflow-hidden rounded-[24px] border border-white/10 bg-[#242220]">
-                  <img src={work.image} alt={work.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover opacity-70 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#181715] via-[#181715]/20 to-transparent" />
-                  <div className="absolute top-5 right-5 text-[10px] font-extrabold tracking-[0.14em] text-[#e37b4f]">0{index + 2}</div>
-                  <div className="absolute inset-x-0 bottom-0 p-5 lg:p-6">
-                    <span className="text-[10px] uppercase tracking-[0.13em] font-extrabold text-[#e37b4f]">{work.technique}</span>
-                    <h3 className="mt-1 text-[20px] lg:text-[23px] leading-tight tracking-[-0.04em] font-extrabold text-white">{work.title}</h3>
-                  </div>
-                </Link>
-              ))}
-            </div>
-
-            <div className="lg:col-span-12 grid grid-cols-1 sm:grid-cols-3 gap-3 lg:gap-5 mt-1">
-              {featuredWork.slice(3).map((work, index) => (
-                <Link key={work.id} to="/work" className="group flex items-center gap-4 overflow-hidden rounded-[18px] border border-white/10 bg-white/[0.04] p-3 hover:border-[#e37b4f]/70 hover:bg-white/[0.07] transition-colors">
-                  <img src={work.image} alt="" loading="lazy" className="w-20 h-20 md:w-24 md:h-24 rounded-[12px] object-cover opacity-75 group-hover:opacity-100 transition-opacity" />
-                  <div className="min-w-0">
-                    <span className="text-[10px] uppercase tracking-[0.13em] font-extrabold text-[#e37b4f]">0{index + 4} / {work.format}</span>
-                    <h3 className="mt-1 text-[16px] leading-tight tracking-[-0.03em] font-extrabold text-white">{work.title}</h3>
-                    <p className="mt-1 text-[12px] text-[#a9a49b] truncate">{work.fabric}</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <WorkShowcase />
 
       {/* 06 / WORKING TOGETHER — compact spec sheet, two panels side by side */}
       <section className="py-16 md:py-20 bg-[#f4f0e8] border-t border-[#d9d2c6]">

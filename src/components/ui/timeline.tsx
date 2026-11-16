@@ -87,6 +87,7 @@ const monthOrder = {
 
 export type JourneyItem = {
   id: string;
+  order?: number;
   year?: string;
   month?: Month | string;
   title?: string;
@@ -185,9 +186,16 @@ export default function Timeline({
 
   // Merge and sort all items chronologically for sequential reveal
   const allItems: JourneyItem[] = [...topItems, ...bottomItems].sort((a, b) => {
-    const yr = Number(a.year) - Number(b.year);
-    if (yr !== 0) return yr;
-    return monthOrder[a.month] - monthOrder[b.month];
+    if (a.order !== undefined && b.order !== undefined) {
+      return a.order - b.order;
+    }
+    const yrA = Number(a.year);
+    const yrB = Number(b.year);
+    if (!isNaN(yrA) && !isNaN(yrB) && yrA !== yrB) return yrA - yrB;
+    if (a.month && b.month && a.month in monthOrder && b.month in monthOrder) {
+      return monthOrder[a.month as Month] - monthOrder[b.month as Month];
+    }
+    return 0;
   });
 
   const sectionStyle: CSSProperties = { color: textColor, backgroundColor };
@@ -386,7 +394,7 @@ export default function Timeline({
                         className={`title-${item.id} text-[2.5vw] leading-none max-[600px]:text-[6.4vw] font-extrabold tracking-[-0.03em]`}
                         style={{ color: textColor }}
                       >
-                        {item.year} {item.month}
+                        {item.title || (item.year && item.month ? `${item.year} ${item.month}` : item.year || '')}
                       </h4>
                       <p
                         className={`description-${item.id} w-[90%] text-[1.5vw] leading-[1.15] max-[600px]:w-[90%] max-[600px]:text-[4.8vw]`}
@@ -433,7 +441,7 @@ export default function Timeline({
                         className={`title-${item.id} text-[2.5vw] leading-none max-[600px]:text-[6.4vw] font-extrabold tracking-[-0.03em]`}
                         style={{ color: textColor }}
                       >
-                        {item.year} {item.month}
+                        {item.title || (item.year && item.month ? `${item.year} ${item.month}` : item.year || '')}
                       </h4>
                       <p
                         className={`description-${item.id} w-[90%] text-[1.5vw] leading-[1.15] max-[600px]:w-[90%] max-[600px]:text-[4.8vw]`}

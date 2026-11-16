@@ -2,10 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SEO } from '../components/SEO';
 import { PageHero } from '../components/PageHero';
-import { CapabilityDetail } from '../components/CapabilityDetail';
 import { CTASection } from '../components/CTASection';
 import { capabilitiesData } from '../data/capabilitiesData';
-import { Plus, Minus, ArrowRight } from 'lucide-react';
+import { Button } from '../components/Button';
+import { ArrowRight, Layers, CheckCircle2, AlertCircle, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export const Capabilities: React.FC = () => {
   const { hash } = useLocation();
@@ -13,7 +13,7 @@ export const Capabilities: React.FC = () => {
 
   // Shared scroll helper for deep links and index clicks.
   const scrollToCapability = useCallback((id: string) => {
-    const el = document.getElementById(id);
+    const el = document.getElementById('capabilities-workbench') || document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
 
@@ -31,6 +31,19 @@ export const Capabilities: React.FC = () => {
   const handleIndexClick = (id: string) => {
     setOpenId(id);
     requestAnimationFrame(() => scrollToCapability(id));
+  };
+
+  const currentIndex = capabilitiesData.findIndex((c) => c.id === openId);
+  const currentCap = capabilitiesData[currentIndex >= 0 ? currentIndex : 0];
+
+  const handlePrevCap = () => {
+    const prevIndex = (currentIndex - 1 + capabilitiesData.length) % capabilitiesData.length;
+    setOpenId(capabilitiesData[prevIndex].id);
+  };
+
+  const handleNextCap = () => {
+    const nextIndex = (currentIndex + 1) % capabilitiesData.length;
+    setOpenId(capabilitiesData[nextIndex].id);
   };
 
   const capabilitiesSchema = capabilitiesData.map((cap) => ({
@@ -72,91 +85,275 @@ export const Capabilities: React.FC = () => {
         subtitle="Printing capabilities tailored for different apparel production needs, fabric types, and artwork requirements."
       />
 
-      <section className="py-16 md:py-24 bg-[#f4f0e8]">
+      <section id="capabilities-workbench" className="py-16 md:py-28 bg-[#f4f0e8] scroll-mt-20">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-[0.32fr_1fr] gap-8 lg:gap-14 items-start">
-
-            {/* Sticky index rail — a real, working jump nav */}
-            <aside className="lg:sticky lg:top-28">
-              <div className="text-[11px] tracking-[0.14em] uppercase text-[#c85d2f] font-extrabold mb-4">
-                Jump To
+          {/* Header */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 md:mb-16">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#c9c0b2] bg-[#fbfaf6] px-3.5 py-1.5 text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#756d63] mb-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#c85d2f]" />
+                01 / Production Techniques
               </div>
-              <nav className="flex lg:flex-col gap-1.5 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 -mx-1 px-1">
+              <h2 className="text-[clamp(32px,4vw,52px)] leading-[1.02] tracking-[-0.05em] font-extrabold text-[#181715]">
+                Mastered on Our Print Tables.
+              </h2>
+              <p className="mt-4 text-[16px] md:text-[17px] text-[#5f5951] leading-relaxed max-w-[620px]">
+                From breathable zero-hand water-based formulations to dimensional 3D silicone emblems — select any technique below to inspect technical specifications, fabric compatibility, and engineering considerations.
+              </p>
+            </div>
+            
+            <div className="text-[12px] font-bold text-[#8a837a] uppercase tracking-wider shrink-0">
+              Showing 07 Studio Techniques
+            </div>
+          </div>
+
+          {/* Mobile Swiper Bar */}
+          <div className="lg:hidden flex items-center gap-2 overflow-x-auto pb-4 mb-6 scrollbar-none -mx-2 px-2">
+            {capabilitiesData.map((cap) => {
+              const active = openId === cap.id;
+              return (
+                <button
+                  key={cap.id}
+                  type="button"
+                  onClick={() => setOpenId(cap.id)}
+                  className={`shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-full text-[13px] font-extrabold transition-all ${
+                    active
+                      ? 'bg-[#181715] text-white shadow-md'
+                      : 'bg-[#fbfaf6] text-[#6e6a63] border border-[#d9d2c6]'
+                  }`}
+                >
+                  <span className={`text-[11px] ${active ? 'text-[#e37b4f]' : 'text-[#c85d2f]'}`}>{cap.num}</span>
+                  <span>{cap.title.replace(' Printing', '')}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Main Grid: Left Rail Selector + Right Interactive Deck */}
+          <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+            
+            {/* Left Rail (Desktop Selector) */}
+            <aside className="hidden lg:block lg:col-span-4 sticky top-28 space-y-2.5">
+              <div className="text-[11px] tracking-[0.16em] uppercase text-[#756d63] font-extrabold mb-3 px-1 flex items-center justify-between">
+                <span>Select Technique</span>
+                <span className="text-[#c85d2f]">07 Options</span>
+              </div>
+              <nav className="space-y-2" aria-label="Capabilities Navigation">
                 {capabilitiesData.map((cap) => {
                   const active = openId === cap.id;
                   return (
                     <button
                       key={cap.id}
                       type="button"
-                      onClick={() => handleIndexClick(cap.id)}
-                      aria-current={active ? 'true' : undefined}
-                      className={`flex items-center gap-3 text-left rounded-[12px] px-3 py-2.5 whitespace-nowrap lg:whitespace-normal transition-colors ${
+                      onClick={() => setOpenId(cap.id)}
+                      className={`w-full text-left rounded-[18px] p-4 transition-all duration-300 flex items-center justify-between gap-3 border ${
                         active
-                          ? 'bg-[#1b1a18] text-white'
-                          : 'text-[#5f5951] hover:bg-[#fbfaf6] hover:text-[#181715]'
+                          ? 'bg-[#181715] text-white border-[#181715] shadow-[0_12px_28px_rgba(24,23,21,0.18)] translate-x-1.5 ring-1 ring-[#c85d2f]/40'
+                          : 'bg-[#fbfaf6] text-[#181715] border-[#d9d2c6] hover:border-[#b8afa3] hover:bg-white'
                       }`}
                     >
-                      <span className={`text-[11px] font-extrabold tracking-wider shrink-0 ${active ? 'text-[#e37b4f]' : 'text-[#c85d2f]'}`}>
-                        {cap.num}
-                      </span>
-                      <span className="text-[14px] font-bold leading-snug">{cap.title}</span>
+                      <div className="flex items-center gap-3.5 min-w-0">
+                        <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-[10px] text-[12px] font-extrabold tracking-wider ${
+                          active ? 'bg-[#c85d2f]/20 text-[#e37b4f]' : 'bg-[#e7dfd2] text-[#c85d2f]'
+                        }`}>
+                          {cap.num}
+                        </span>
+                        <div className="min-w-0">
+                          <span className="block text-[14.5px] font-extrabold tracking-tight truncate">
+                            {cap.title}
+                          </span>
+                          <span className={`block text-[11px] font-medium truncate mt-0.5 ${active ? 'text-[#a9a49b]' : 'text-[#756d63]'}`}>
+                            {cap.badge ?? 'Specialized Finish'}
+                          </span>
+                        </div>
+                      </div>
+                      <ArrowRight className={`w-4 h-4 shrink-0 transition-transform ${active ? 'text-[#e37b4f] translate-x-0.5' : 'text-[#b8afa3]'}`} />
                     </button>
                   );
                 })}
               </nav>
             </aside>
 
-            {/* Accordion — one open at a time, far less repetition than six stacked cards */}
-            <div className="border-t border-[#d9d2c6]">
-              {capabilitiesData.map((cap) => {
-                const open = openId === cap.id;
-                return (
-                  <article key={cap.id} id={cap.id} className="scroll-mt-24 border-b border-[#d9d2c6]">
-                    <h2>
+            {/* Right Deck (Active Capability Dossier Console) */}
+            <div className="lg:col-span-8">
+              {currentCap && (
+                <div 
+                  key={currentCap.id}
+                  className="rounded-[28px] md:rounded-[34px] border border-[#d9d2c6] bg-[#fbfaf6] p-6 md:p-8 lg:p-10 shadow-[0_20px_60px_rgba(77,61,43,0.08)] animate-fade-in"
+                >
+                  {/* Top Badges & Title */}
+                  <div className="flex flex-wrap items-center justify-between gap-4 pb-6 border-b border-[#d9d2c6]">
+                    <div className="flex items-center gap-2.5">
+                      <span className="rounded-full bg-[#c85d2f] text-white text-[11px] font-extrabold px-3 py-1 uppercase tracking-wider">
+                        Stage {currentCap.num}
+                      </span>
+                      {currentCap.badge && (
+                        <span className="rounded-full border border-[#d9d2c6] bg-[#f4f0e8] text-[#5f5951] text-[11px] font-bold px-3 py-1 uppercase tracking-wider">
+                          {currentCap.badge}
+                        </span>
+                      )}
+                    </div>
+                    
+                    <span className="text-[12px] font-bold text-[#8a837a] uppercase tracking-wider">
+                      Technical Spec #{currentCap.id.replace('-printing', '').toUpperCase()}
+                    </span>
+                  </div>
+
+                  <div className="mt-6">
+                    <h3 className="text-[clamp(28px,3.5vw,44px)] leading-[1.05] tracking-[-0.04em] font-extrabold text-[#181715]">
+                      {currentCap.title}
+                    </h3>
+                    <p className="mt-4 text-[16px] md:text-[17px] text-[#4a453f] leading-relaxed">
+                      {currentCap.fullDesc}
+                    </p>
+                  </div>
+
+                  {/* Visual Specimen + Key Parameters Banner */}
+                  <div className="mt-8 grid md:grid-cols-12 gap-6 items-stretch">
+                    <div className="md:col-span-7 relative aspect-[16/10] md:aspect-auto min-h-[260px] rounded-[22px] overflow-hidden bg-[#242220] border border-[#d9d2c6] group">
+                      <img
+                        src={currentCap.image}
+                        alt={currentCap.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#181715]/85 via-transparent to-transparent" />
+                      <div className="absolute bottom-4 left-5 right-5 flex items-center justify-between text-white">
+                        <span className="text-[11px] font-extrabold uppercase tracking-wider">
+                          DISCREN Studio Proof
+                        </span>
+                        <span className="text-[10px] uppercase font-bold tracking-widest text-[#e37b4f] bg-black/60 px-2.5 py-1 rounded-full backdrop-blur-md">
+                          Macro Tested
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="md:col-span-5 grid grid-cols-2 md:grid-cols-1 gap-3">
+                      <div className="rounded-[16px] border border-[#d9d2c6] bg-[#f4f0e8] p-4 flex flex-col justify-center">
+                        <span className="text-[10px] uppercase tracking-[0.14em] font-extrabold text-[#756d63]">
+                          Starting MOQ
+                        </span>
+                        <span className="text-[18px] font-extrabold text-[#181715] mt-1">
+                          ~50 Pieces
+                        </span>
+                        <span className="text-[11px] text-[#6e6a63]">Scalable to 1,000+</span>
+                      </div>
+
+                      <div className="rounded-[16px] border border-[#d9d2c6] bg-[#f4f0e8] p-4 flex flex-col justify-center">
+                        <span className="text-[10px] uppercase tracking-[0.14em] font-extrabold text-[#756d63]">
+                          Sample Turnaround
+                        </span>
+                        <span className="text-[18px] font-extrabold text-[#c85d2f] mt-1">
+                          3–5 Working Days
+                        </span>
+                        <span className="text-[11px] text-[#6e6a63]">Paid strike-off approval</span>
+                      </div>
+
+                      <div className="col-span-2 md:col-span-1 rounded-[16px] border border-[#d9d2c6] bg-[#f4f0e8] p-4 flex flex-col justify-center">
+                        <span className="text-[10px] uppercase tracking-[0.14em] font-extrabold text-[#756d63]">
+                          Wash Fastness
+                        </span>
+                        <span className="text-[18px] font-extrabold text-[#181715] mt-1">
+                          50+ Commercial Cycles
+                        </span>
+                        <span className="text-[11px] text-[#6e6a63]">Heat tunnel cured at 160°C+</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Fabrics & Production Use Cases */}
+                  <div className="mt-8 pt-8 border-t border-[#d9d2c6] grid md:grid-cols-2 gap-8">
+                    {/* Suitable Fabrics */}
+                    <div>
+                      <h4 className="text-[12px] uppercase tracking-[0.14em] font-extrabold text-[#181715] mb-3.5 flex items-center gap-2">
+                        <Layers className="w-4 h-4 text-[#c85d2f]" />
+                        <span>Suitable Fabrics &amp; Substrates</span>
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {currentCap.suitableFabrics.map((fabric) => (
+                          <span
+                            key={fabric}
+                            className="inline-flex items-center gap-1.5 rounded-full border border-[#d9d2c6] bg-[#f4f0e8] px-3 py-1.5 text-[12.5px] font-bold text-[#181715]"
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#c85d2f]" />
+                            {fabric}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Best Use Cases */}
+                    <div>
+                      <h4 className="text-[12px] uppercase tracking-[0.14em] font-extrabold text-[#181715] mb-3.5 flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-[#c85d2f]" />
+                        <span>Best Production Use Cases</span>
+                      </h4>
+                      <ul className="space-y-2 text-[13.5px] text-[#4a453f]">
+                        {currentCap.useCases.map((useCase) => (
+                          <li key={useCase} className="flex items-start gap-2.5">
+                            <CheckCircle2 className="w-4 h-4 text-[#c85d2f] shrink-0 mt-0.5" />
+                            <span className="leading-snug">{useCase}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Engineering Considerations Callout */}
+                  <div className="mt-8 rounded-[20px] border border-[#c9c0b2] bg-[#ece5d8] p-5 md:p-6">
+                    <h4 className="text-[12px] uppercase tracking-[0.14em] font-extrabold text-[#181715] mb-2.5 flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 text-[#c85d2f]" />
+                      <span>Production &amp; Engineering Notes</span>
+                    </h4>
+                    <ul className="space-y-2 text-[13.5px] text-[#4a453f]">
+                      {currentCap.considerations.map((consideration) => (
+                        <li key={consideration} className="flex items-start gap-2">
+                          <span className="text-[#c85d2f] font-bold shrink-0">—</span>
+                          <span className="leading-snug">{consideration}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Navigation & Action Bar */}
+                  <div className="mt-8 pt-6 border-t border-[#d9d2c6] flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+                    <div className="flex items-center gap-2">
                       <button
                         type="button"
-                        onClick={() => setOpenId(open ? null : cap.id)}
-                        aria-expanded={open}
-                        className="group w-full text-left py-6 md:py-7 flex items-start justify-between gap-5 focus:outline-none"
+                        onClick={handlePrevCap}
+                        aria-label="Previous capability"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-[#d9d2c6] bg-[#f4f0e8] hover:bg-white text-[12px] font-bold text-[#181715] transition-colors"
                       >
-                        <div className="flex items-start gap-4 md:gap-6 min-w-0">
-                          <span className="text-[13px] font-extrabold text-[#c85d2f] tracking-wider pt-1.5 shrink-0">
-                            {cap.num}
-                          </span>
-                          <div className="min-w-0">
-                            <h3 className="text-[24px] md:text-[30px] tracking-[-0.04em] font-extrabold text-[#181715] leading-tight group-hover:text-[#c85d2f] transition-colors">
-                              {cap.title}
-                            </h3>
-                            <p className="text-[14.5px] text-[#5f5951] leading-relaxed mt-2 max-w-[620px]">
-                              {cap.shortDesc}
-                            </p>
-                            {cap.badge && (
-                              <span className="inline-block mt-3 text-[10px] uppercase font-bold tracking-[0.12em] px-2.5 py-1 rounded-full bg-[#fbfaf6] text-[#6e6a63] border border-[#d9d2c6]">
-                                {cap.badge}
-                              </span>
-                            )}
-                          </div>
-                        </div>
-
-                        <span className={`shrink-0 w-8 h-8 rounded-full border flex items-center justify-center transition-colors mt-1 ${
-                          open
-                            ? 'bg-[#1b1a18] border-[#1b1a18] text-[#e37b4f]'
-                            : 'border-[#d9d2c6] text-[#c85d2f] group-hover:border-[#c85d2f]'
-                        }`}>
-                          {open ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-                        </span>
+                        <ChevronLeft className="w-4 h-4 text-[#c85d2f]" />
+                        <span>Prev</span>
                       </button>
-                    </h2>
+                      <button
+                        type="button"
+                        onClick={handleNextCap}
+                        aria-label="Next capability"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border border-[#d9d2c6] bg-[#f4f0e8] hover:bg-white text-[12px] font-bold text-[#181715] transition-colors"
+                      >
+                        <span>Next</span>
+                        <ChevronRight className="w-4 h-4 text-[#c85d2f]" />
+                      </button>
+                      <span className="text-[12px] font-bold text-[#756d63] ml-2">
+                        {currentCap.num} of 07
+                      </span>
+                    </div>
 
-                    {open && (
-                      <div className="pb-10">
-                        <CapabilityDetail cap={cap} />
-                      </div>
-                    )}
-                  </article>
-                );
-              })}
+                    <Button
+                      to={`/contact?method=${encodeURIComponent(currentCap.title)}`}
+                      variant="primary"
+                      className="justify-center gap-2"
+                    >
+                      <span>Discuss {currentCap.title} Requirement</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </Button>
+                  </div>
+
+                </div>
+              )}
             </div>
+
           </div>
         </div>
       </section>
