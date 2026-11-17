@@ -227,98 +227,110 @@ export const Capabilities: React.FC = () => {
           {/* Individual Technique Sections */}
           {capabilitiesData.map((cap) => {
             const active = openId === cap.id;
+            const isPlastisol = cap.id === 'plastisol-printing';
+
             return (
               <section
                 key={cap.id}
                 id={cap.id}
                 ref={(el) => (sectionRefs.current[cap.id] = el)}
-                className={`relative mb-24 md:mb-32 cap-reveal-inner overflow-hidden ${active ? 'opacity-100' : 'opacity-20 pointer-events-none'}`}
+                className={`relative mb-24 md:mb-32 cap-reveal-inner overflow-hidden ${active ? 'opacity-100' : 'opacity-20 pointer-events-none'} ${isPlastisol ? 'bg-[#14120e]/40 rounded-[32px] border border-[#242220]/60 p-8 md:p-12' : ''}`}
               >
                 {/* Technique Badge & Title */}
                 <div className="cap-reveal mb-8 md:mb-12 flex flex-wrap items-start justify-between gap-4">
                   <div>
-                    <span className="inline-flex items-center gap-2 rounded-full border border-[#c9c0b2] bg-[#fbfaf6] px-3.5 py-1.5 text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#756d63] mb-3">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#c85d2f]" />
+                    <span className={`inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[10px] uppercase tracking-[0.16em] font-extrabold mb-3 ${
+                      isPlastisol
+                        ? 'border-[#c85d2f]/40 bg-[#c85d2f]/10 text-[#e37b4f]'
+                        : 'border-[#c9c0b2] bg-[#fbfaf6] text-[#756d63]'
+                    }`}>
+                      <span className={`w-1.5 h-1.5 rounded-full ${isPlastisol ? 'bg-[#e37b4f]' : 'bg-[#c85d2f]'}`} />
                       Stage {cap.num}
                     </span>
-                    <h3 className="text-[clamp(30px,4vw,48px)] leading-[1.02] tracking-[-0.04em] font-extrabold text-[#181715] mb-4">
+                    <h3 className={`text-[clamp(30px,4vw,48px)] leading-[1.02] tracking-[-0.04em] font-extrabold mb-4 ${isPlastisol ? 'text-[#e2dccf]' : 'text-[#181715]'}`}>
                       {cap.title}
                     </h3>
-                    <p className="text-[15px] md:text-[17px] text-[#5f5951] leading-relaxed max-w-[600px]">
+                    <p className={`text-[15px] md:text-[17px] leading-relaxed max-w-[600px] ${isPlastisol ? 'text-[#c2bcaf]' : 'text-[#5f5951]'}`}>
                       {cap.fullDesc}
                     </p>
                   </div>
-                  <span className="text-[11px] font-bold text-[#8a837a] uppercase tracking-wider hidden md:block">
+                  <span className={`text-[11px] font-bold uppercase tracking-wider hidden md:block ${isPlastisol ? 'text-[#e37b4f]' : 'text-[#8a837a]'}`}>
                     Technical Spec #{cap.id.replace('-printing', '').toUpperCase()}
                   </span>
                 </div>
 
                 {/* Image + Specs Grid */}
-                <div className="cap-reveal-inner grid lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+                <div className={`cap-reveal-inner grid lg:grid-cols-12 gap-6 lg:gap-8 items-start ${isPlastisol ? 'pt-8' : ''}`}>
                   <div className="lg:col-span-7 relative aspect-[4/3] md:aspect-auto min-h-[320px] md:min-h-[420px] rounded-[24px] overflow-hidden bg-[#242220] border border-[#d9d2c6] group">
                     <img
                       src={cap.image}
                       alt={cap.title}
-                      className="w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105 opacity-90 group-hover:opacity-100"
+                      className={`w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105 opacity-${isPlastisol ? '85' : '90'} group-hover:opacity-100 ${isPlastisol ? 'grayscale-20 group-hover:grayscale-0 duration-1000' : ''}`}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#181715]/80 via-transparent to-transparent" />
                     <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between text-white">
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider">
+                      <span className={`text-[10px] font-extrabold uppercase tracking-wider ${isPlastisol ? 'text-[#e37b4f]' : 'text-white'}`}>
                         DISCREN Studio Proof
                       </span>
-                      <span className="text-[9px] uppercase font-bold tracking-widest text-[#e37b4f] bg-black/60 px-2 py-0.5 rounded-full backdrop-blur-md">
+                      <span className={`text-[9px] uppercase font-bold tracking-widest px-2 py-0.5 rounded-full backdrop-blur-md ${isPlastisol ? 'text-white bg-[#c85d2f]/20 border border-[#c85d2f]/40' : 'text-[#e37b4f] bg-black/60 border border-[#c85d2f]/40'}`}>
                         Macro Tested
                       </span>
                     </div>
                   </div>
 
                   <div className="lg:col-span-5 grid grid-cols-2 gap-3">
-                    <div className="rounded-[16px] border border-[#d9d2c6] bg-[#f4f0e8] p-4 flex flex-col justify-center">
-                      <span className="text-[10px] uppercase tracking-[0.14em] font-extrabold text-[#756d63]">
+                    <div className={`rounded-[16px] p-4 flex flex-col justify-center border ${isPlastisol ? 'border-[#c85d2f]/30 bg-[#c85d2f]/5' : 'border-[#d9d2c6] bg-[#f4f0e8]'}`}>
+                      <span className={`block text-[10px] uppercase tracking-[0.14em] font-extrabold mb-1 ${isPlastisol ? 'text-[#e37b4f]' : 'text-[#756d63]'}`}>
                         Starting MOQ
                       </span>
-                      <span className="text-[18px] font-extrabold text-[#181715] mt-1">
+                      <span className={`block text-[18px] font-extrabold mt-1 ${isPlastisol ? 'text-white' : 'text-[#181715]'}`}>
                         ~50 Pieces
                       </span>
-                      <span className="text-[11px] text-[#6e6a63]">Scalable to 1,000+</span>
+                      <span className={`block text-[11px] mt-0.5 ${isPlastisol ? 'text-[#c2bcaf]' : 'text-[#6e6a63]'}`}>
+                        Scalable to 1,000+
+                      </span>
                     </div>
 
-                    <div className="rounded-[16px] border border-[#d9d2c6] bg-[#f4f0e8] p-4 flex flex-col justify-center">
-                      <span className="text-[10px] uppercase tracking-[0.14em] font-extrabold text-[#756d63]">
+                    <div className={`rounded-[16px] p-4 flex flex-col justify-center border ${isPlastisol ? 'border-[#c85d2f]/30 bg-[#c85d2f]/5' : 'border-[#d9d2c6] bg-[#f4f0e8]'}`}>
+                      <span className={`block text-[10px] uppercase tracking-[0.14em] font-extrabold mb-1 ${isPlastisol ? 'text-[#e37b4f]' : 'text-[#756d63]'}`}>
                         Sample Turnaround
                       </span>
-                      <span className="text-[18px] font-extrabold text-[#c85d2f] mt-1">
+                      <span className={`block text-[18px] font-extrabold mt-1 ${isPlastisol ? 'text-white' : 'text-[#c85d2f]'}`}>
                         3–5 Working Days
                       </span>
-                      <span className="text-[11px] text-[#6e6a63]">Paid strike-off approval</span>
+                      <span className={`block text-[11px] mt-0.5 ${isPlastisol ? 'text-[#c2bcaf]' : 'text-[#6e6a63]'}`}>
+                        Paid strike-off approval
+                      </span>
                     </div>
 
-                    <div className="col-span-2 lg:col-span-1 rounded-[16px] border border-[#d9d2c6] bg-[#f4f0e8] p-4 flex flex-col justify-center">
-                      <span className="text-[10px] uppercase tracking-[0.14em] font-extrabold text-[#756d63]">
+                    <div className={`col-span-2 lg:col-span-1 rounded-[16px] p-4 flex flex-col justify-center border ${isPlastisol ? 'border-[#c85d2f]/30 bg-[#c85d2f]/5' : 'border-[#d9d2c6] bg-[#f4f0e8]'}`}>
+                      <span className={`block text-[10px] uppercase tracking-[0.14em] font-extrabold mb-1 ${isPlastisol ? 'text-[#e37b4f]' : 'text-[#756d63]'}`}>
                         Wash Fastness
                       </span>
-                      <span className="text-[18px] font-extrabold text-[#181715] mt-1">
+                      <span className={`block text-[18px] font-extrabold mt-1 ${isPlastisol ? 'text-white' : 'text-[#181715]'}`}>
                         50+ Commercial Cycles
                       </span>
-                      <span className="text-[11px] text-[#6e6a63]">Heat tunnel cured at 160°C+</span>
+                      <span className={`block text-[11px] mt-0.5 ${isPlastisol ? 'text-[#c2bcaf]' : 'text-[#6e6a63]'}`}>
+                        Heat tunnel cured at 160°C+
+                      </span>
                     </div>
                   </div>
                 </div>
 
                 {/* Fabrics & Use Cases */}
-                <div className="cap-reveal mt-12 md:mt-16 pt-10 border-t border-[#d9d2c6] grid md:grid-cols-2 gap-8">
+                <div className={`cap-reveal mt-12 md:mt-16 pt-10 border-t ${isPlastisol ? 'border-[#c85d2f]/30' : 'border-[#d9d2c6]'} grid md:grid-cols-2 gap-8`}>
                   <div>
-                    <h4 className="text-[11px] uppercase tracking-[0.16em] font-extrabold text-[#181715] mb-4 flex items-center gap-2">
-                      <Layers className="w-3.5 h-3.5 text-[#c85d2f]" />
+                    <h4 className={`text-[11px] uppercase tracking-[0.16em] font-extrabold mb-4 flex items-center gap-2 ${isPlastisol ? 'text-[#e2dccf]' : 'text-[#181715]'}`}>
+                      <Layers className={`w-3.5 h-3.5 ${isPlastisol ? 'text-[#e37b4f]' : 'text-[#c85d2f]'}`} />
                       <span>Suitable Fabrics &amp; Substrates</span>
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {cap.suitableFabrics.map((fabric) => (
                         <span
                           key={fabric}
-                          className="inline-flex items-center gap-1.5 rounded-full border border-[#d9d2c6] bg-[#f4f0e8] px-3 py-1.5 text-[12px] font-bold text-[#181715]"
+                          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[12px] font-bold ${isPlastisol ? 'border-[#c85d2f]/30 bg-[#c85d2f]/10 text-[#e2dccf]' : 'border-[#d9d2c6] bg-[#f4f0e8] text-[#181715]'}`}
                         >
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#c85d2f]" />
+                          <span className={`w-1.5 h-1.5 rounded-full ${isPlastisol ? 'bg-[#e37b4f]' : 'bg-[#c85d2f]'}`} />
                           {fabric}
                         </span>
                       ))}
@@ -326,17 +338,17 @@ export const Capabilities: React.FC = () => {
                   </div>
 
                   <div>
-                    <h4 className="text-[11px] uppercase tracking-[0.16em] font-extrabold text-[#181715] mb-4 flex items-center gap-2">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#c85d2f]" />
+                    <h4 className={`text-[11px] uppercase tracking-[0.16em] font-extrabold mb-4 flex items-center gap-2 ${isPlastisol ? 'text-[#e2dccf]' : 'text-[#181715]'}`}>
+                      <CheckCircle2 className={`w-3.5 h-3.5 ${isPlastisol ? 'text-[#e37b4f]' : 'text-[#c85d2f]'}`} />
                       <span>Best Production Use Cases</span>
                     </h4>
                     <ul className="space-y-3">
                       {cap.useCases.map((useCase, i) => (
                         <li key={i} className="flex items-start gap-3">
-                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#f4f0e8] text-[#c85d2f] font-bold text-[10px]">
+                          <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full font-bold text-[10px] ${isPlastisol ? 'bg-[#c85d2f]/20 text-[#e37b4f]' : 'bg-[#f4f0e8] text-[#c85d2f]'}`}>
                             {i + 1}
                           </span>
-                          <span className="text-[13px] text-[#4a453f] leading-relaxed">
+                          <span className={`text-[13px] leading-relaxed ${isPlastisol ? 'text-[#c2bcaf]' : 'text-[#4a453f]'}`}>
                             {useCase}
                           </span>
                         </li>
@@ -346,27 +358,27 @@ export const Capabilities: React.FC = () => {
                 </div>
 
                 {/* Engineering Considerations */}
-                <div className="cap-reveal-inner mt-12 md:mt-16 rounded-[20px] border border-[#c9c0b2] bg-[#ece5d8] p-6 md:p-8">
-                  <h4 className="text-[11px] uppercase tracking-[0.16em] font-extrabold text-[#181715] mb-3 flex items-center gap-2">
-                    <AlertCircle className="w-3.5 h-3.5 text-[#c85d2f]" />
+                <div className={`cap-reveal-inner mt-12 md:mt-16 rounded-[20px] p-6 md:p-8 border ${isPlastisol ? 'border-[#c85d2f]/30 bg-[#c85d2f]/5' : 'border-[#c9c0b2] bg-[#ece5d8]'}`}>
+                  <h4 className={`text-[11px] uppercase tracking-[0.16em] font-extrabold mb-3 flex items-center gap-2 ${isPlastisol ? 'text-[#e2dccf]' : 'text-[#181715]'}`}>
+                    <AlertCircle className={`w-3.5 h-3.5 ${isPlastisol ? 'text-[#e37b4f]' : 'text-[#c85d2f]'}`} />
                     <span>Production &amp; Engineering Notes</span>
                   </h4>
-                  <ul className="space-y-3 text-[13px] text-[#4a453f]">
+                  <ul className={`space-y-3 text-[13px] leading-relaxed ${isPlastisol ? 'text-[#c2bcaf]' : 'text-[#4a453f]'}`}>
                     {cap.considerations.map((consideration, i) => (
                       <li key={i} className="flex items-start gap-3">
-                        <span className="text-[#c85d2f] font-bold shrink-0 text-[11px]">—</span>
-                        <span className="leading-relaxed">{consideration}</span>
+                        <span className={`text-[#c85d2f] font-bold shrink-0 text-[11px] ${isPlastisol ? 'text-[#e37b4f]' : ''}`}>—</span>
+                        <span>{consideration}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
                 {/* CTA */}
-                <div className="cap-reveal mt-10 md:mt-14 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+                <div className={`cap-reveal mt-10 md:mt-14 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 ${isPlastisol ? 'pt-6 border-t border-[#c85d2f]/20' : ''}`}>
                   <Button
                     to={`/contact?method=${encodeURIComponent(cap.title)}`}
                     variant="primary"
-                    className="justify-center gap-2"
+                    className={`justify-center gap-2 ${isPlastisol ? 'shadow-[0_0_30px_rgba(200,93,47,0.25)]' : ''}`}
                   >
                     <span>Discuss {cap.title} Requirement</span>
                     <ArrowRight className="w-4 h-4" />
@@ -382,10 +394,10 @@ export const Capabilities: React.FC = () => {
                           if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         });
                       }}
-                      className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-[#d9d2c6] bg-white text-[#181715] text-[13px] font-extrabold hover:bg-[#f4f0e8] transition-colors"
+                      className={`inline-flex items-center gap-2 px-5 py-3 rounded-full border text-[13px] font-extrabold transition-colors ${isPlastisol ? 'border-[#c85d2f]/30 bg-[#c85d2f]/5 text-[#e2dccf] hover:bg-[#c85d2f]/10' : 'border-[#d9d2c6] bg-white text-[#181715] hover:bg-[#f4f0e8]'}`}
                     >
                       <span>Next Technique →</span>
-                      <ChevronRight className="w-4 h-4 text-[#c85d2f]" />
+                      <ChevronRight className={`w-4 h-4 ${isPlastisol ? 'text-[#e37b4f]' : 'text-[#c85d2f]'}`} />
                     </button>
                   )}
                 </div>
