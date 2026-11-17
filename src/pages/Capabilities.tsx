@@ -17,6 +17,7 @@ export const Capabilities: React.FC = () => {
   const { hash } = useLocation();
   const [openId, setOpenId] = useState<string | null>('plastisol-printing');
   const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const heroRef = useRef<HTMLDivElement>(null);
 
   // Deep links from homepage (/capabilities#puff-printing) open + scroll.
   useEffect(() => {
@@ -68,6 +69,22 @@ export const Capabilities: React.FC = () => {
 
   useGSAP(
     () => {
+      // Hero section animation
+      const hero = heroRef.current;
+      if (hero) {
+        gsap.from(hero.querySelectorAll<HTMLElement>('.hero-reveal'), {
+          y: 60,
+          opacity: 0,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: hero,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+          },
+        });
+      }
+
       capabilitiesData.forEach((cap) => {
         const section = sectionRefs.current[cap.id];
         if (!section) return;
@@ -148,22 +165,42 @@ export const Capabilities: React.FC = () => {
         </div>
       </section>
 
-      {/* 01 / Production Techniques — Each technique is its own scroll section */}
-      <section id="capabilities-workbench" className="py-16 md:py-32 bg-[#f4f0e8]">
-        <div className="container-custom">
-          {/* Section Header */}
-          <div className="cap-reveal mb-20 md:mb-28">
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#c9c0b2] bg-[#fbfaf6] px-3.5 py-1.5 text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#756d63] mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#c85d2f]" />
-              01 / Production Techniques
+      {/* 00 / Capabilities Hero — Premium intro section */}
+      <section ref={heroRef} className="relative bg-[#181715] text-white py-20 md:py-32 border-b border-[#292722] overflow-hidden">
+        <div aria-hidden="true" className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_60%_20%,#2a1f12_0%,#181715_70%)]" />
+        <div aria-hidden="true" className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-[#c85d2f]/12 blur-[100px]" />
+        <div aria-hidden="true" className="absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-[#c85d2f]/10 blur-[100px]" />
+
+        <div className="container-custom relative z-10">
+          <div className="hero-reveal max-w-[700px]">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#c9c0b2] bg-[#fbfaf6] px-4 py-2 text-[10px] uppercase tracking-[0.18em] font-extrabold text-[#756d63] mb-6">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#c85d2f] animate-pulse" />
+              00 / Studio Introduction
             </div>
-            <h2 className="text-[clamp(32px,4vw,52px)] leading-[1.02] tracking-[-0.05em] font-extrabold text-[#181715] mb-4">
-              Mastered on Our Print Tables.
-            </h2>
-            <p className="text-[16px] md:text-[17px] text-[#5f5951] leading-relaxed max-w-[620px]">
-              From breathable zero-hand water-based formulations to dimensional 3D silicone emblems — each technique below has its own dedicated section with technical specifications, fabric compatibility, and engineering considerations.
+            <h1 className="text-[clamp(40px,6vw,64px)] leading-[1.0] tracking-[-0.05em] font-extrabold text-white mb-6">
+              Printing Capabilities
+            </h1>
+            <p className="text-[16px] md:text-[19px] leading-relaxed text-[#c2bcaf] mb-10 max-w-[560px]">
+              Seven specialized print techniques. One Mumbai production studio. Each method below has its own dedicated section with technical specs, fabric compatibility, and engineering notes.
             </p>
+            <div className="flex flex-wrap items-center gap-3">
+              <Button to="/contact" variant="primary" className="gap-2">
+                <span>Start a Conversation</span>
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+              <Link
+                to="/work"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full border border-[#c9c0b2] bg-[#f4f0e8] text-[#181715] font-extrabold text-[13px] hover:bg-[#e37b4f] hover:border-[#e37b4f] hover:text-white transition-colors"
+              >
+                <span>View Production Archive</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* 01 / Production Techniques — Each technique is its own scroll section */}
 
           {/* Index Rail */}
           <div className="cap-reveal mb-16 md:mb-24 flex flex-wrap items-center gap-3 overflow-x-auto scrollbar-none pb-4">
@@ -355,9 +392,7 @@ export const Capabilities: React.FC = () => {
               </section>
             );
           })}
-        </div>
-      </section>
-
+      
       <CTASection />
     </>
   );
