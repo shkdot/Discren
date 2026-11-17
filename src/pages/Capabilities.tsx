@@ -201,7 +201,9 @@ export const Capabilities: React.FC = () => {
       </section>
 
       {/* 01 / Production Techniques — Each technique is its own scroll section */}
-
+      <section id="capabilities-workbench" className="py-16 md:py-32 bg-[#f4f0e8]">
+        <div className="container-custom">
+          
           {/* Index Rail */}
           <div className="cap-reveal mb-16 md:mb-24 flex flex-wrap items-center gap-3 overflow-x-auto scrollbar-none pb-4">
             {capabilitiesData.map((cap) => {
@@ -404,7 +406,9 @@ export const Capabilities: React.FC = () => {
               </section>
             );
           })}
-      
+        </div>
+      </section>
+
       <CTASection />
     </>
   );
