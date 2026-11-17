@@ -5,41 +5,18 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { WorkItem, workData } from '../data/workData';
 import { WorkLightbox } from './WorkLightbox';
-import {
-  ArrowRight,
-  Maximize2,
-  Sparkles,
-  Layers,
-  ShieldCheck,
-  Droplets,
-  ChevronLeft,
-  ChevronRight,
-  ExternalLink,
-  SlidersHorizontal,
-} from 'lucide-react';
+import { ArrowRight, Maximize2, ChevronLeft, ChevronRight } from 'lucide-react';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const categories = [
-  'All',
-  'High-Density Printing',
-  'Puff Printing',
-  'Water-Based Printing',
-  'Discharge Printing',
-  'Plastisol Printing',
-  'Metallic / Foil Printing',
-];
-
 export const WorkShowcase: React.FC = () => {
   const [activeWorkId, setActiveWorkId] = useState<string>(workData[0]?.id || '');
-  const [activeCategory, setActiveCategory] = useState<string>('All');
   const [lightboxItem, setLightboxItem] = useState<WorkItem | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  const filteredWork = activeCategory === 'All' ? workData : workData.filter((item) => item.category === activeCategory);
-  const activeWork = workData.find((item) => item.id === activeWorkId) || filteredWork[0] || workData[0];
+  const activeWork = workData.find((item) => item.id === activeWorkId) || workData[0];
   const activeIndex = workData.findIndex((item) => item.id === activeWork.id);
 
   useGSAP(
@@ -47,8 +24,7 @@ export const WorkShowcase: React.FC = () => {
       const section = sectionRef.current;
       if (!section) return;
 
-      const revealEls = section.querySelectorAll<HTMLElement>('.work-reveal');
-      gsap.from(revealEls, {
+      gsap.from(section.querySelectorAll<HTMLElement>('.work-reveal'), {
         y: 60,
         opacity: 0,
         duration: 0.8,
@@ -61,28 +37,15 @@ export const WorkShowcase: React.FC = () => {
         },
       });
 
-      gsap.from(section.querySelectorAll<HTMLElement>('.work-thumb'), {
+      gsap.from(section.querySelectorAll<HTMLElement>('.work-reveal-inner'), {
         y: 40,
         opacity: 0,
         duration: 0.7,
-        stagger: 0.08,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 90%',
-          toggleActions: 'play none none reverse',
-        },
-      });
-
-      gsap.from(section.querySelectorAll<HTMLElement>('.work-pillar'), {
-        y: 30,
-        opacity: 0,
-        duration: 0.6,
         stagger: 0.1,
         ease: 'power3.out',
         scrollTrigger: {
           trigger: section,
-          start: 'top 95%',
+          start: 'top 90%',
           toggleActions: 'play none none reverse',
         },
       });
@@ -136,41 +99,8 @@ export const WorkShowcase: React.FC = () => {
           </div>
         </div>
 
-        {/* Category Filter Pills */}
-        <div className="work-reveal flex items-center gap-2 overflow-x-auto pb-4 mb-14 scrollbar-none">
-          <span className="flex items-center gap-1.5 text-[10px] uppercase tracking-wider font-extrabold text-[#6e665c] mr-2 shrink-0">
-            <SlidersHorizontal className="w-3 h-3" />
-            <span>Filter:</span>
-          </span>
-          {categories.map((cat) => {
-            const count = cat === 'All' ? workData.length : workData.filter((w) => w.category === cat).length;
-            const isSelected = activeCategory === cat;
-            return (
-              <button
-                key={cat}
-                type="button"
-                onClick={() => {
-                  setActiveCategory(cat);
-                  const firstOfCat = cat === 'All' ? workData[0] : workData.find((w) => w.category === cat);
-                  if (firstOfCat) setActiveWorkId(firstOfCat.id);
-                }}
-                className={`shrink-0 flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] font-bold tracking-tight transition-all duration-200 ${
-                  isSelected
-                    ? 'bg-[#c85d2f] text-white shadow-lg shadow-[#c85d2f]/30 border border-[#c85d2f]'
-                    : 'bg-white/[0.03] text-[#6e665c] hover:text-white hover:bg-white/[0.06] border border-white/8'
-                }`}
-              >
-                <span>{cat === 'All' ? 'All Techniques' : cat.replace(' Printing', '')}</span>
-                <span className={`text-[9px] px-1.5 py-0.2 rounded-full ${isSelected ? 'bg-black/30 text-white' : 'bg-white/6 text-[#6e665c]'}`}>
-                  {count}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
         {/* FEATURED SHOWCASE */}
-        <div className="work-reveal relative rounded-[24px] md:rounded-[32px] border border-white/8 bg-[#171614]/80 backdrop-blur-md overflow-hidden shadow-[0_25px_50px_rgba(0,0,0,0.5)] mb-12 md:mb-16">
+        <div className="work-reveal-inner relative rounded-[24px] md:rounded-[32px] border border-white/8 bg-[#171614]/80 backdrop-blur-md overflow-hidden shadow-[0_25px_50px_rgba(0,0,0,0.5)]">
           <div className="grid lg:grid-cols-12 items-start gap-0 lg:gap-0">
             {/* Visual Column */}
             <div className="lg:col-span-7 relative min-h-[420px] lg:min-h-[480px] bg-[#12110f] overflow-hidden group">
@@ -301,99 +231,6 @@ export const WorkShowcase: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* WORK FILMSTRIP */}
-        <div className="work-reveal">
-          <div className="flex items-center justify-between mb-6">
-            <span className="text-[10px] uppercase tracking-[0.18em] font-extrabold text-[#6e665c]">
-              Select any piece to inspect details ({filteredWork.length} pieces)
-            </span>
-            <span className="text-[10px] font-bold text-[#9c9588] hidden sm:block">Tap thumbnail to preview</span>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-3">
-            {filteredWork.map((item, idx) => {
-              const isCurrent = item.id === activeWork.id;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => setActiveWorkId(item.id)}
-                  className={`group relative text-left rounded-[14px] md:rounded-[18px] overflow-hidden border p-1.5 md:p-2 transition-all duration-300 flex flex-col justify-between ${
-                    isCurrent
-                      ? 'border-[#c85d2f] bg-[#c85d2f]/8 shadow-[0_0_20px_rgba(200,93,47,0.2)] ring-1 ring-[#c85d2f]/30 -translate-y-1'
-                      : 'border-white/6 bg-white/[0.02] hover:border-white/16 hover:bg-white/[0.04]'
-                  }`}
-                >
-                  <div className="relative aspect-[4/3] rounded-[10px] overflow-hidden bg-[#1c1b19] mb-2 w-full">
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      loading="lazy"
-                      className={`work-thumb w-full h-full object-cover transition-all duration-500 ${
-                        isCurrent ? 'opacity-100' : 'opacity-70 group-hover:opacity-95'
-                      }`}
-                    />
-                    <div className="absolute top-2 left-2 text-[8px] font-extrabold px-2 py-0.5 rounded-full bg-black/55 backdrop-blur-md text-[#e37b4f]">
-                      0{idx + 1}
-                    </div>
-                    {isCurrent && (
-                      <div className="absolute inset-0 border border-[#c85d2f] rounded-[10px] pointer-events-none" />
-                    )}
-                  </div>
-
-                  <div className="px-1 pb-1">
-                    <span className="block text-[8px] uppercase tracking-wider font-extrabold text-[#c85d2f] truncate">
-                      {item.category.replace(' Printing', '')}
-                    </span>
-                    <h4 className="text-[11px] font-extrabold text-white leading-tight tracking-tight line-clamp-1 group-hover:text-[#e2dccf]">
-                      {item.title}
-                    </h4>
-                    <span className="block text-[9px] text-[#6e665c] truncate mt-0.5">
-                      {item.fabric}
-                    </span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* PRODUCTION PILLARS */}
-        <div className="work-reveal mt-12 md:mt-16 pt-8 border-t border-white/6 grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
-          {[{
-            icon: Layers,
-            label: '±0.2mm Micro-Registration',
-            desc: 'Disciplined screen alignment on long print tables ensuring multi-colour graphics match vector files cleanly.',
-          }, {
-            icon: Droplets,
-            label: 'Tested Ink Formulations',
-            desc: 'High-opacity plastisol, discharge bases, soft water-based and high-density silicones matched to garment chemistry.',
-          }, {
-            icon: ShieldCheck,
-            label: '50+ Wash-Cycle Curing',
-            desc: 'Controlled temperature flash and tunnel curing to prevent cracking, fading, or peeling.',
-          }, {
-            icon: Sparkles,
-            label: 'Sample Verification',
-            desc: 'Physical strike-off sample available for your sign-off before commencing bulk production batches.',
-          }].map((pillar, i) => (
-            <div
-              key={pillar.label}
-              className="work-pillar p-3 md:p-4 rounded-[16px] bg-white/[0.02] border border-white/5"
-            >
-              <span className="flex h-8 w-8 items-center justify-center rounded-[10px] bg-[#c85d2f]/12 text-[#e37b4f] mb-2.5">
-                <pillar.icon className="w-3.5 h-3.5" />
-              </span>
-              <span className="block text-[12px] font-extrabold text-white tracking-tight mb-1">
-                {pillar.label}
-              </span>
-              <p className="text-[10px] text-[#7a7468] leading-relaxed">
-                {pillar.desc}
-              </p>
-            </div>
-          ))}
         </div>
       </div>
 
