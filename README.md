@@ -84,6 +84,8 @@ When you are ready to publish the website live to the internet:
 1. **Vercel / Netlify**: Connect your GitHub repository or drag-and-drop the `dist/` folder after running `npm run build`. Set build command to `npm run build` and publish directory to `dist`.
 2. **Nginx / Apache / IIS**: Run `npm run build` and upload the contents of the `dist/` folder to your web server root.
 
+> **Changing the Vercel account?** See [`TRANSFER-CHECKLIST.md`](./TRANSFER-CHECKLIST.md) for the step-by-step transfer procedure, the prerequisites Vercel enforces, and the project-specific gotchas (environment variables, hardcoded URLs in `index.html`, Git connection, domains).
+
 ---
 
 ## 📄 Included Routes
