@@ -57,24 +57,22 @@ export const ProcessFlow: React.FC = () => {
 
     let slideDistance = measure();
 
+    const dots   = section.querySelectorAll<HTMLElement>('[data-dot]');
+    const vlines = section.querySelectorAll<HTMLElement>('[data-vline]');
+    const n = dots.length;
+
     const update = () => {
       const rect     = section.getBoundingClientRect();
-      const scrolled = Math.max(0, -rect.top);                       // px past the top
+      const scrolled = Math.max(0, -rect.top);
       const progress = slideDistance > 0
         ? Math.min(1, scrolled / slideDistance)
         : 0;
 
       track.style.transform = `translateX(-${progress * slideDistance}px)`;
 
-      // Journey line grow
       if (lineRef.current) {
         lineRef.current.style.width = `${progress * 100}%`;
       }
-
-      // Dots + vertical lines
-      const dots   = section.querySelectorAll<HTMLElement>('[data-dot]');
-      const vlines = section.querySelectorAll<HTMLElement>('[data-vline]');
-      const n = dots.length;
 
       dots.forEach((dot, i) => {
         const threshold = (i + 1) / (n + 1);

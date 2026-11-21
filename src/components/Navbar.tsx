@@ -9,11 +9,23 @@ export const Navbar: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
+    let rafId = 0;
+    let pending = false;
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      if (pending) return;
+      pending = true;
+      rafId = requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 20);
+        pending = false;
+      });
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   useEffect(() => {

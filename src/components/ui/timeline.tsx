@@ -219,7 +219,7 @@ export default function Timeline({
         trigger: section,
         start: "top top",
         end: slideEnd,
-        scrub: true,
+        scrub: 0.5,
       },
       defaults: { ease: "none" },
     });
@@ -282,7 +282,7 @@ export default function Timeline({
           trigger: section,
           start: `${startPos}% 40%`,
           end:   `${endPos}% 60%`,
-          scrub: true,
+          scrub: 0.5,
         },
       });
 

@@ -19,7 +19,7 @@
   }
 
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     background-color: var(--bg);
     color: var(--ink);
     font-family: 'DM Sans', Inter, system-ui, -apple-system, sans-serif;
