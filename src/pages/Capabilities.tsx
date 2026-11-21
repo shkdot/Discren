@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SEO } from '../components/SEO';
-import { PageHero } from '../components/PageHero';
 import { CTASection } from '../components/CTASection';
 import { capabilitiesData } from '../data/capabilitiesData';
 import { Button } from '../components/Button';
@@ -79,11 +78,55 @@ export const Capabilities: React.FC = () => {
         schema={capabilitiesSchema}
       />
 
-      <PageHero
-        eyebrow="PRODUCTION TECHNIQUES"
-        title="Printing Capabilities"
-        subtitle="Printing capabilities tailored for different apparel production needs, fabric types, and artwork requirements."
-      />
+      {/* Hero Section — visual infographic + centered text */}
+      <section className="relative bg-[#f4f0e8] border-b border-[#d9d2c6]">
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/home-hero-image.webp"
+            alt="DISCREN Apparel Printing Studio Production"
+            className="w-full h-full object-cover object-right opacity-60"
+          />
+          <div className="absolute inset-0 bg-[#f4f0e8]/85" />
+        </div>
+
+        <div className="container-custom relative z-10 py-20 md:py-32 text-center">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#c9c0b2] bg-[#fbfaf6] px-4 py-2 text-[11px] uppercase tracking-[0.18em] font-extrabold text-[#756d63] mx-auto mb-6 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            <span className="w-2 h-2 rounded-full bg-[#c85d2f]" />
+            Production Techniques
+          </div>
+
+          <h1 className="text-[clamp(36px,7vw,72px)] leading-[0.98] tracking-[-0.06em] font-extrabold text-[#181715] max-w-[800px] mx-auto mb-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+            Printing Capabilities
+          </h1>
+
+          <p className="max-w-[700px] text-[17px] md:text-[20px] leading-relaxed text-[#5f5951] mx-auto mb-10 animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            Tailored for different apparel production needs, fabric types, and artwork requirements.
+          </p>
+
+          {/* Technique infographic strip */}
+          <div className="flex flex-wrap justify-center gap-3 md:gap-5 mb-8 opacity-0 transition-opacity duration-1000" style={{ animationDelay: '0.4s' }}>
+            {capabilitiesData.map((cap) => (
+              <button
+                key={cap.id}
+                type="button"
+                onClick={() => handleIndexClick(cap.id)}
+                className={`group relative shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full border border-[#d9d2c6] bg-white flex items-center justify-center transition-all hover:border-[#c85d2f] hover:shadow-[0_10px_30px_rgba(200,93,47,0.15)]`}
+              >
+                <span className="text-[11px] md:text-[13px] font-extrabold tracking-wider text-[#181715] group-hover:text-[#c85d2f]">
+                  {cap.num}
+                </span>
+                <span className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] md:text-[11px] font-bold text-[#6e6a63] opacity-0 group-hover:opacity-100 transition-opacity">
+                  {cap.title.replace(' Printing', '')}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          <p className="text-[12px] md:text-[13px] tracking-[0.2em] uppercase text-[#756d63] font-extrabold animate-fade-in" style={{ animationDelay: '0.5s' }}>
+            Select a technique to inspect technical specifications
+          </p>
+        </div>
+      </section>
 
       <section id="capabilities-workbench" className="py-16 md:py-28 bg-[#f4f0e8] scroll-mt-20">
         <div className="container-custom">
