@@ -638,7 +638,7 @@ export const Home: React.FC = () => {
           textColor="#241a10"
           mutedTextColor="#7a6a4d"
           activeColor="#8e2f23"
-          imageUrl="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80"
+          imageUrl="/images/screen_print.webp"
           imageAlt="DISCREN screen printing studio — garments on the press table"
           duration={1.4}
           topItems={[

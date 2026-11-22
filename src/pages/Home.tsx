@@ -437,8 +437,8 @@ export const Home: React.FC = () => {
           textColor="#181715"
           mutedTextColor="#6e6a63"
           activeColor="#c85d2f"
-          imageUrl="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80"
-          imageAlt="DISCREN screen printing studio — garments on the press table"
+          imageUrl="/images/screen_print.webp"
+          imageAlt="DISCREN apparel screen printing studio — manual print press with garments and squeegee"
           duration={1.4}
           topItems={[
             { id: "stage-01", order: 1, title: "01 · Consultation", content: "Share your vector artwork, garment specifications, quantity and print finish goals with our Mumbai studio team." },

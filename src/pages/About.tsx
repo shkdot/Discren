@@ -251,8 +251,8 @@ export const About: React.FC = () => {
           textColor="#181715"
           mutedTextColor="#6e6a63"
           activeColor="#c85d2f"
-          imageUrl="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80"
-          imageAlt="Screen printing studio — inks and garments on the press table"
+          imageUrl="/images/screen_print.webp"
+          imageAlt="DISCREN screen printing studio — garment printing carousel and squeegee"
           duration={1.4}
         />
       </section>
