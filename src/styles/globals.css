@@ -161,6 +161,57 @@ html.lenis, html.lenis body {
   transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* ─────────────────────────────────────────
+   Premium section reveal on scroll
+   ───────────────────────────────────────── */
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+
+.section-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section-reveal:nth-child(2) { transition-delay: 0.08s; }
+.section-reveal:nth-child(3) { transition-delay: 0.16s; }
+.section-reveal:nth-child(4) { transition-delay: 0.24s; }
+.section-reveal:nth-child(5) { transition-delay: 0.32s; }
+
+/* ─────────────────────────────────────────
+   First-load entrance (premium fade-in)
+   ───────────────────────────────────────── */
+
+@keyframes sectionEntrance {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-entrance {
+  opacity: 0;
+  animation: sectionEntrance 0.8s cubic-bezier(.22,.9,.32,1) forwards;
+}
+
+.section-entrance-delay-1 { animation-delay: 0.2s; }
+.section-entrance-delay-2 { animation-delay: 0.4s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .section-reveal,
+  .section-revealed {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 .stage-tag-reveal {
   animation: stageTagRise 0.5s ease-out forwards;
 }
@@ -174,8 +225,58 @@ html.lenis, html.lenis body {
    Expertise stage auto-rotation animations
    ───────────────────────────────────────── */
 
-/* Card surface: gentle opacity-only crossfade so the background/gradient
-   cross-fades smoothly instead of popping when the stage swaps. */
+/* Card stagger reveal for Capabilities section — items cascade up one by one */
+@keyframes cardRiseIn {
+  from { opacity: 0; transform: translateY(22px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card-reveal {
+  opacity: 0;
+  animation: cardRiseIn 0.6s ease-out forwards;
+}
+
+.card-reveal:nth-child(2) { animation-delay: 0.1s; }
+.card-reveal:nth-child(3) { animation-delay: 0.2s; }
+.card-reveal:nth-child(4) { animation-delay: 0.3s; }
+.card-reveal:nth-child(5) { animation-delay: 0.4s; }
+.card-reveal:nth-child(6) { animation-delay: 0.5s; }
+.card-reveal:nth-child(7) { animation-delay: 0.6s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .card-reveal {
+    opacity: 1;
+    animation: none;
+  }
+}
+
+/* Timeline marker pulse for Process section — markers light up sequentially */
+@keyframes markerPulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.4); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.5; }
+}
+
+.marker-reveal {
+  animation: markerPulse 1.4s ease-in-out infinite;
+}
+
+.marker-reveal:nth-child(1) { animation-delay: 0s; }
+.marker-reveal:nth-child(2) { animation-delay: 0.2s; }
+.marker-reveal:nth-child(3) { animation-delay: 0.4s; }
+.marker-reveal:nth-child(4) { animation-delay: 0.6s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marker-reveal {
+    animation: none;
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ─────────────────────────────────────────
+   Expertise stage auto-rotation animations
+   ───────────────────────────────────────── */
 @keyframes stageFadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
@@ -205,6 +306,44 @@ html.lenis, html.lenis body {
 @keyframes barProgress {
   from { width: 0%; }
   to { width: 100%; }
+}
+.animate-bar-progress {
+  animation: barProgress 3s linear forwards;
+}
+
+/* Card entrance — noticeable scale-up + rotate for CapabilityCarousel active card */
+@keyframes cardEnter {
+  from { opacity: 0; transform: scale(0.72) rotate(-3deg); }
+  to { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+.card-enter {
+  animation: cardEnter 0.7s cubic-bezier(.22,1,.36,1) both;
+}
+
+/* Shine sweep over active card image */
+@keyframes shineSweep {
+  0% { transform: translateX(-120%) rotate(30deg); }
+  40%, 100% { transform: translateX(140%) rotate(30deg); }
+}
+
+.shine-sweep {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.45) 40%, transparent 80%);
+  transform: translateX(-140%) rotate(30deg);
+  animation: shineSweep 1.6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: soft-light;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-enter, .shine-sweep {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }
 .animate-bar-progress {
   animation: barProgress 3s linear forwards;

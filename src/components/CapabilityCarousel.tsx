@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { CapabilityItem } from '../data/capabilitiesData';
@@ -13,6 +13,7 @@ const getImagePath = (image: string) => image.replace(/\.png$/, '.webp');
 /** An automatically advancing, manually controllable capability showcase. */
 export const CapabilityCarousel: React.FC<CapabilityCarouselProps> = ({ items }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const goTo = (index: number) => {
     setActiveIndex((index + items.length) % items.length);
@@ -25,6 +26,29 @@ export const CapabilityCarousel: React.FC<CapabilityCarouselProps> = ({ items })
     return () => window.clearInterval(interval);
   }, [activeIndex, items.length]);
 
+  // Staggered card reveal as the carousel scrolls into view.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const cards = el.querySelectorAll<HTMLElement>('.card-reveal-trigger');
+            cards.forEach((card, i) => {
+              setTimeout(() => card.classList.add('card-reveal'), i * 90);
+            });
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -80px 0px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [items.length]);
+
   if (!items.length) return null;
 
   const activeItem = items[activeIndex];
@@ -35,7 +59,7 @@ export const CapabilityCarousel: React.FC<CapabilityCarouselProps> = ({ items })
   });
 
   return (
-    <div className="grid md:grid-cols-[0.82fr_1.18fr] gap-10 md:gap-12 lg:gap-16 items-center">
+    <div ref={containerRef} className="grid md:grid-cols-[0.82fr_1.18fr] gap-10 md:gap-12 lg:gap-16 items-center">
       <div className="max-w-[420px]">
         <SectionHeading
           compact
@@ -52,7 +76,7 @@ export const CapabilityCarousel: React.FC<CapabilityCarouselProps> = ({ items })
               type="button"
               onClick={() => goTo(index)}
               aria-current={index === activeIndex}
-              className={`w-full flex items-center justify-between gap-4 py-4 text-left border-b border-[#d9d2c6] transition-all ${index === activeIndex ? 'text-[#9e4522] bg-[#ead8ca] px-4 -mx-4 rounded-[12px] border-transparent' : 'text-[#5f5951] hover:text-[#181715] hover:px-2'}`}
+              className={`card-reveal-trigger w-full flex items-center justify-between gap-4 py-4 text-left border-b border-[#d9d2c6] transition-all ${index === activeIndex ? 'text-[#9e4522] bg-[#ead8ca] px-4 -mx-4 rounded-[12px] border-transparent' : 'text-[#5f5951] hover:text-[#181715] hover:px-2'}`}
             >
               <span className="flex items-center gap-3 min-w-0">
                 <span className="w-6 text-[11px] font-extrabold tracking-[0.12em]">{item.num}</span>
@@ -85,10 +109,10 @@ export const CapabilityCarousel: React.FC<CapabilityCarouselProps> = ({ items })
               to={`/capabilities#${item.id}`}
               aria-hidden={index !== activeIndex}
               tabIndex={index === activeIndex ? 0 : -1}
-              className={`absolute inset-y-0 left-0 w-[84%] sm:w-[82%] overflow-hidden rounded-[24px] border transition-all duration-700 ease-out ${
+              className={`card-reveal-trigger card-enter absolute inset-y-0 left-0 w-[84%] sm:w-[82%] overflow-hidden rounded-[24px] border transition-all duration-700 ease-out ${
                 index === activeIndex
                   ? 'translate-x-0 scale-100 opacity-100 z-10 border-[#e37b4f]/70 shadow-2xl'
-                  : 'translate-x-[18%] scale-[0.94] opacity-0 pointer-events-none border-[#c9c0b2]'
+                  : 'translate-x-[28%] scale-[0.7] opacity-0 pointer-events-none border-[#c9c0b2]'
               }`}
             >
               <img
@@ -97,6 +121,9 @@ export const CapabilityCarousel: React.FC<CapabilityCarouselProps> = ({ items })
                 loading="lazy"
                 className="w-full h-full object-cover"
               />
+              {index === activeIndex && (
+                <div className="shine-sweep" />
+              )}
               <div className="absolute inset-0 bg-gradient-to-t from-[#181715] via-[#181715]/15 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 flex items-end justify-between gap-4">
                 <div>

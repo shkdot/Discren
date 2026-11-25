@@ -3,6 +3,7 @@
 
 import {
   type CSSProperties,
+  useEffect,
   useLayoutEffect,
   useRef,
   useSyncExternalStore,
@@ -180,6 +181,7 @@ export default function Timeline({
 }: TimelineProps) {
   const sectionRef     = useRef<HTMLElement>(null);
   const wholeSliderRef = useRef<HTMLDivElement>(null);
+  const timelineRef    = useRef<HTMLElement>(null);
   const reducedMotion  = usePrefersReducedMotion();
   const animDuration   = duration ?? scrollDuration;
   const normDuration   = Math.max(0.2, animDuration);
@@ -197,6 +199,31 @@ export default function Timeline({
     }
     return 0;
   });
+
+  // Sequential marker pulse as the timeline section scrolls into view.
+  useEffect(() => {
+    const el = timelineRef.current;
+    if (!el || reducedMotion) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            allItems.forEach((item, i) => {
+              const marker = el.querySelector<HTMLElement>(`.jd-${item.id}`);
+              if (marker) {
+                setTimeout(() => marker.classList.add('marker-reveal'), i * 150);
+              }
+            });
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -100px 0px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [allItems.length, reducedMotion]);
 
   const sectionStyle: CSSProperties = { color: textColor, backgroundColor };
   const activeStyle: CSSProperties  = { backgroundColor: activeColor };
@@ -321,7 +348,7 @@ export default function Timeline({
 
   return (
     <section
-      ref={sectionRef}
+      ref={(el) => { sectionRef.current = el; timelineRef.current = el; }}
       id="journey"
       className="h-[200vw] max-[600px]:h-[400vh] w-full relative"
       style={sectionStyle}

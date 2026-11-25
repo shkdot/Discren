@@ -86,6 +86,38 @@ export const Home: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Reveal sections with a premium fade-up as they scroll into view.
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll<HTMLElement>('.section-reveal').forEach((el) => {
+        el.classList.add('section-revealed');
+      });
+      return;
+    }
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('section-revealed');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.08, rootMargin: '0px 0px -60px 0px' }
+    );
+    const sections = document.querySelectorAll<HTMLElement>('.section-reveal');
+    sections.forEach((el) => revealObserver.observe(el));
+    // Reveal any sections already in view on first load.
+    sections.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 60 && rect.bottom > 0) {
+        el.classList.add('section-revealed');
+        revealObserver.unobserve(el);
+      }
+    });
+    return () => revealObserver.disconnect();
+  }, []);
+
 
   const homeSchema = [
     {
@@ -125,7 +157,7 @@ export const Home: React.FC = () => {
 
       {/* Hero Section - Viewport-Fitted Desktop View (No Scrolling Required) */}
       {/* Hero Section */}
-      <section className="relative bg-[#181715] text-white min-h-[70vh] md:min-h-[calc(100vh-76px)] flex items-center py-10 lg:py-0 overflow-hidden border-b border-[#292722]">
+      <section className="section-reveal relative bg-[#181715] text-white min-h-[70vh] md:min-h-[calc(100vh-76px)] flex items-center py-10 lg:py-0 overflow-hidden border-b border-[#292722]">
 
         {/* Background Image — desktop only; hidden on mobile to avoid a cropped/shrunk image */}
         <div className="absolute inset-0 z-0 hidden md:block">
@@ -193,7 +225,7 @@ export const Home: React.FC = () => {
       <TickerBand items={tickerItems} />
 
       {/* 01 / EXPERTISE — high-tech production cockpit */}
-      <section className="py-24 md:py-32 bg-[#fbfaf6] relative overflow-hidden tech-scan">
+      <section className="section-reveal py-24 md:py-32 bg-[#fbfaf6] relative overflow-hidden tech-scan">
         {/* Technical grid overlay */}
         <div className="absolute inset-0 [background-image:linear-gradient(#d9d2c6_1px,transparent_1px),linear-gradient(90deg,#d9d2c6_1px,transparent_1px)] [background-size:40px_40px] opacity-30 pointer-events-none" />
         <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#c85d2f]/40 to-transparent" />
@@ -237,7 +269,7 @@ export const Home: React.FC = () => {
             <div className="relative group">
               {/* Active stage display */}
               <div
-                className={`mt-8 rounded-[24px] border border-[#d9d2c6] bg-[#f4f0e8] p-6 md:p-8 shadow-[0_20px_60px_rgba(45,39,30,0.08)] relative overflow-hidden will-change-transform stage-slide tech-glow ${
+                className={`mt-8 rounded-[24px] border border-[#d9d2c6] bg-[#f4f0e8] p-6 md:p-8 shadow-[0_20px_60px_rgba(45,39,30,0.08)] relative overflow-hidden will-change-transform stage-slide tech-glow min-h-[320px] ${
                   activeExpertiseStage % 2 === 0 ? '' : 'bg-[#f4f0e8]/80'
                 }`}
               >
@@ -265,29 +297,42 @@ export const Home: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="hidden lg:flex flex-col items-end gap-4">
-                    <div className="relative w-20 h-20 shrink-0">
-                      <svg className="w-full h-full transform -rotate-90" viewBox="0 0 44 44">
-                        <circle cx="22" cy="22" r="18" className="fill-none stroke-[#e7dfd2] stroke-w-[2.5]" />
-                        <circle
-                          cx="22" cy="22" r="18"
-                          className="fill-none stroke-[#c85d2f] stroke-w-[2.5] transition-all duration-700 ease-out"
-                          style={{
-                            strokeDasharray: '113.1',
-                            strokeDashoffset: `${113.1 * (1 - (activeExpertiseStage + 1) / expertiseStages.length)}`,
-                          }}
-                        />
-                      </svg>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <span className="text-[10px] font-extrabold text-[#c85d2f] tracking-tighter">
-                          {Math.round(((activeExpertiseStage + 1) / expertiseStages.length) * 100)}%
-                        </span>
-                      </div>
-                    </div>
-                    <span className="text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#756d63] writing-mode-vertical-rl rotate-180">
-                      Technical Sequence
+              {/* Right: spec panel — extends to match the step list height */}
+              <div className="hidden lg:flex flex-col items-end gap-6 min-h-[320px]">
+                <div className="relative w-20 h-20 shrink-0">
+                  <svg className="w-full h-full transform -rotate-90" viewBox="0 0 44 44">
+                    <circle cx="22" cy="22" r="18" className="fill-none stroke-[#e7dfd2] stroke-w-[2.5]" />
+                    <circle
+                      cx="22" cy="22" r="18"
+                      className="fill-none stroke-[#c85d2f] stroke-w-[2.5] transition-all duration-700 ease-out"
+                      style={{
+                        strokeDasharray: '113.1',
+                        strokeDashoffset: `${113.1 * (1 - (activeExpertiseStage + 1) / expertiseStages.length)}`,
+                      }}
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-[10px] font-extrabold text-[#c85d2f] tracking-tighter">
+                      {Math.round(((activeExpertiseStage + 1) / expertiseStages.length) * 100)}%
                     </span>
                   </div>
+                </div>
+
+                {/* Premium spec metrics */}
+                <div className="w-full rounded-[16px] border border-[#d9d2c6] bg-[#fbfaf6] p-5 shadow-sm">
+                  <span className="block text-[10px] uppercase tracking-[0.18em] font-extrabold text-[#c85d2f] mb-3">Stage brief</span>
+                  <p className="text-[13px] leading-relaxed text-[#6e6a63] mb-4">
+                    {expertiseStage.text}
+                  </p>
+                  <div className="grid grid-cols-2 gap-3">
+                    {[expertiseStage.tags[0], expertiseStage.tags[1]].map((tag, i) => (
+                      <div key={i} className="rounded-[10px] border border-[#c9c0b2] bg-white px-3 py-2 text-[11px] font-extrabold text-[#625e57]">
+                        {tag}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
                 </div>
               </div>
 
@@ -309,123 +354,114 @@ export const Home: React.FC = () => {
       </section>
 
       {/* 02 / CAPABILITIES — warm paper band with image-led cards */}
-      <section className="py-20 md:py-24 lg:min-h-[calc(100vh-76px)] lg:flex lg:items-center lg:py-8 bg-[#f4f0e8] border-y border-[#d9d2c6]">
+      <section className="section-reveal section-entrance section-entrance-delay-1 py-20 md:py-24 lg:min-h-[calc(100vh-76px)] lg:flex lg:items-center lg:py-8 bg-[#f4f0e8] border-y border-[#d9d2c6]">
         <div className="container-custom">
           <CapabilityCarousel items={capabilitiesData} />
         </div>
       </section>
 
       {/* 03 / BULK PRODUCTION — capacity dashboard */}
-      <section className="bg-[#e7dfd2] border-y border-[#c9c0b2] overflow-hidden">
-        <div className="container-custom py-20 md:py-28">
-          <div className="grid lg:grid-cols-[0.82fr_1.18fr] gap-12 lg:gap-20 items-center">
-            <div className="max-w-[460px]">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#c9c0b2] bg-[#f4f0e8] px-4 py-2 text-[10px] uppercase tracking-[0.14em] font-extrabold text-[#756d63]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#c85d2f]" />
-                03 / Bulk production
-              </div>
-              <h2 className="mt-7 text-[clamp(38px,4.8vw,58px)] leading-[0.98] tracking-[-0.065em] font-extrabold text-[#181715]">
-                Built for the run you have in mind.
-              </h2>
-              <p className="mt-6 text-[16px] md:text-[18px] leading-relaxed text-[#5f5951]">
-                Start with a focused garment run or scale into bulk production. We help set practical expectations around quantity, timing and the production conditions of your order.
-              </p>
-              <Link to="/contact" className="inline-flex items-center gap-2 mt-8 pb-1 border-b border-[#c85d2f] text-[13px] uppercase tracking-[0.1em] font-extrabold text-[#181715] hover:text-[#c85d2f] transition-colors">
-                <span>Discuss your production run</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+      <section className="section-reveal bg-[#e7dfd2] border-y border-[#c9c0b2] relative overflow-hidden tech-scan">
+        {/* Technical grid overlay */}
+        <div className="absolute inset-0 [background-image:linear-gradient(#d9d2c6_1px,transparent_1px),linear-gradient(90deg,#d9d2c6_1px,transparent_1px)] [background-size:40px_40px] opacity-25 pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#c85d2f]/35 to-transparent" />
 
-              <div className="mt-10 pt-6 border-t border-[#c9c0b2] grid grid-cols-3 gap-4">
+        <div className="container-custom relative z-10 py-20 md:py-32">
+          <div className="grid lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-24 items-start">
+            {/* Left: Command info panel */}
+            <div className="space-y-8 max-w-[460px]">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#c9c0b2] bg-[#fbfaf6] px-4 py-2 text-[10px] uppercase tracking-[0.18em] font-extrabold text-[#756d63]">
+                <span className="w-2 h-2 rounded-full bg-[#c85d2f] animate-pulse" />
+                Production Capacity
+              </div>
+              <h2 className="text-[clamp(34px,5.5vw,64px)] leading-[1.0] tracking-[-0.07em] font-extrabold text-[#181715]">
+                Scale<span className="text-[#c85d2f]"> your</span> Run.
+              </h2>
+              <p className="mt-4 text-[16px] md:text-[18px] leading-relaxed text-[#6e6a63] max-w-[440px]">
+                From a focused entry batch to full-capacity volume, we hold consistent quality across every production tier — no compromises at scale.
+              </p>
+
+              {/* Quick stat chips */}
+              <div className="mt-10 grid grid-cols-3 gap-4">
                 {[
                   { icon: Package, value: '~50', label: 'Min. order (MOQ)' },
                   { icon: Clock, value: '2–4 wks', label: 'Typical turnaround' },
                   { icon: Timer, value: '3–5 days', label: 'Sampling time' },
                 ].map((fact) => (
-                  <div key={fact.label} className="flex flex-col gap-2">
+                  <div key={fact.label} className="rounded-[16px] border border-[#d9d2c6] bg-white p-4 flex flex-col gap-2">
                     <fact.icon className="w-4 h-4 text-[#c85d2f]" />
-                    <span className="text-[19px] leading-none tracking-[-0.03em] font-extrabold text-[#181715]">{fact.value}</span>
+                    <span className="text-[19px] leading-none tracking[-0.03em] font-extrabold text-[#181715]">{fact.value}</span>
                     <span className="text-[10px] uppercase tracking-[0.1em] font-bold text-[#6e6a63] leading-snug">{fact.label}</span>
                   </div>
                 ))}
               </div>
+
+              <Link to="/contact" className="mt-8 inline-flex items-center gap-2 pb-1 border-b border-[#c85d2f] text-[13px] uppercase tracking-[0.1em] font-extrabold text-[#181715] hover:text-[#c85d2f] transition-colors">
+                <span>Discuss your production run</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
 
-            <div className="relative rounded-[30px] border border-[#c9c0b2] bg-[#fbfaf6] p-5 md:p-7 shadow-[0_24px_55px_rgba(77,61,43,0.10)]">
-              <div className="relative flex flex-wrap items-start justify-between gap-x-5 gap-y-3 pb-6 border-b border-[#d9d2c6]">
-                <div className="min-w-0">
-                  <p className="text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#756d63]">Production capacity</p>
-                  <div className="mt-2 flex items-baseline gap-3"><span className="text-[clamp(44px,9vw,82px)] leading-none tracking-[-0.08em] font-extrabold text-[#181715]">1,000+</span><span className="text-[11px] uppercase tracking-[0.13em] font-extrabold text-[#756d63]">Pieces<br />per bulk run</span></div>
+            {/* Right: Capacity tier bars + gauge */}
+            <div className="relative min-h-[320px]">
+              <div className="mb-6 flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#756d63]">Capacity by tier</span>
+                  <p className="text-[13px] text-[#6e6a63] leading-snug">Relative run size and quality level across production tiers.</p>
                 </div>
                 <span className="shrink-0 rounded-full bg-[#181715] px-3 py-2 text-[10px] uppercase tracking-[0.13em] font-extrabold text-white">Scale ready</span>
               </div>
 
-              <div className="relative pt-6">
-                {/* Mobile — stacked tier cards (no horizontal scroll) */}
-                <div className="sm:hidden space-y-3">
-                  {bulkProductionTiers.map((tier) => (
-                    <div
-                      key={tier.type}
-                      className={`rounded-[16px] border p-4 ${tier.highlight ? 'border-[#c85d2f]/40 bg-[#f4f0e8]' : 'border-[#d9d2c6] bg-[#fbfaf6]'}`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-[12px] border ${tier.highlight ? 'border-[#c85d2f]/30 bg-[#c85d2f]/10 text-[#c85d2f]' : 'border-[#d9d2c6] bg-white text-[#8a837a]'}`}>
-                          <tier.icon className="h-[18px] w-[18px]" />
-                        </span>
-                        <div className="flex min-w-0 flex-1 flex-col">
-                          <span className={`text-[15px] font-extrabold tracking-[-0.01em] ${tier.highlight ? 'text-[#c85d2f]' : 'text-[#181715]'}`}>{tier.type}</span>
-                          <span className="text-[10px] uppercase tracking-[0.08em] font-bold text-[#8a837a]">{tier.note}</span>
-                        </div>
-                        <span className="shrink-0 text-[14px] font-bold tabular-nums text-[#181715]">{tier.size}</span>
-                      </div>
-                      <div className="mt-3 flex items-center gap-3">
-                        <div className="h-1.5 flex-1 rounded-full bg-[#e7dfd2] overflow-hidden">
-                          <div className={`h-full rounded-full ${tier.highlight ? 'bg-[#c85d2f]' : 'bg-[#d9bca7]'}`} style={{ width: `${tier.level}%` }} />
-                        </div>
-                        <span className="w-9 shrink-0 text-right text-[10px] font-bold tabular-nums text-[#8a837a]">{tier.level}%</span>
-                      </div>
+              {/* Tier capacity bars */}
+              <div className="space-y-5">
+                {bulkProductionTiers.map((tier, index) => (
+                  <div
+                    key={tier.type}
+                    className="flex items-start gap-4"
+                  >
+                    <div className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-0.5">
+                      <tier.icon className="w-4 h-4 text-[#c85d2f]" />
                     </div>
-                  ))}
-                </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-[12.5px] font-extrabold tracking-tight text-[#756d63]">{tier.type}</span>
+                        <span className="text-[11px] font-bold tabular-nums text-[#8a837a]">{tier.level}%</span>
+                      </div>
+                      <div className="h-2 w-full rounded-full bg-[#e7dfd2] overflow-hidden">
+                        <div className="h-full rounded-full transition-all duration-700 ease-out bg-[#d9bca7]" style={{ width: `${tier.level}%` }} />
+                      </div>
+                      <span className="text-[10px] uppercase tracking-[0.08em] font-bold text-[#8a837a]">{tier.size}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
 
-                {/* Desktop — table */}
-                <div className="hidden sm:block">
-                  <table className="w-full border-collapse text-left">
-                    <caption className="sr-only">DISCREN production run tiers — order size and relative scale</caption>
-                    <thead>
-                      <tr className="border-b border-[#d9d2c6]">
-                        <th scope="col" className="pb-3 pr-4 text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#756d63]">Run type</th>
-                        <th scope="col" className="pb-3 pr-4 text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#756d63]">Order size</th>
-                        <th scope="col" className="pb-3 text-right text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#756d63]">Scale</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-[#e7dfd2]">
-                      {bulkProductionTiers.map((tier) => (
-                        <tr key={tier.type} className={`transition-colors ${tier.highlight ? 'bg-[#f4f0e8]' : 'hover:bg-[#f4f0e8]/60'}`}>
-                          <td className="py-4 pr-4">
-                            <div className="flex items-center gap-3">
-                              <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-[10px] border ${tier.highlight ? 'border-[#c85d2f]/30 bg-[#c85d2f]/10 text-[#c85d2f]' : 'border-[#d9d2c6] bg-white text-[#8a837a]'}`}>
-                                <tier.icon className="h-4 w-4" />
-                              </span>
-                              <span className="flex flex-col">
-                                <span className={`text-[14px] font-extrabold tracking-[-0.01em] ${tier.highlight ? 'text-[#c85d2f]' : 'text-[#181715]'}`}>{tier.type}</span>
-                                <span className="text-[10px] uppercase tracking-[0.08em] font-bold text-[#8a837a]">{tier.note}</span>
-                              </span>
-                            </div>
-                          </td>
-                          <td className="py-4 pr-4 text-[14px] font-bold tabular-nums text-[#181715] align-middle">{tier.size}</td>
-                          <td className="py-4 align-middle">
-                            <div className="flex justify-end">
-                              <div className="h-1.5 w-24 rounded-full bg-[#e7dfd2] overflow-hidden">
-                                <div className={`h-full rounded-full ${tier.highlight ? 'bg-[#c85d2f]' : 'bg-[#d9bca7]'}`} style={{ width: `${tier.level}%` }} />
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
+              {/* Big capacity gauge */}
+              <div className="mt-10 rounded-[24px] border border-[#d9d2c6] bg-[#fbfaf6] p-6 md:p-8 shadow-[0_20px_60px_rgba(45,39,30,0.08)] relative overflow-hidden">
+                <div className="absolute inset-0 [background-image:linear-gradient(#d9d2c655_1px,transparent_1px),linear-gradient(90deg,#d9d2c655_1px,transparent_1px)] [background-size:20px_20px] opacity-30 pointer-events-none" />
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                  <div>
+                    <span className="text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#c85d2f] mb-2 block">Full Capacity</span>
+                    <span className="text-[clamp(40px,7vw,72px)] leading-none tracking[-0.08em] font-extrabold text-[#181715]">1,000+</span>
+                    <span className="text-[11px] uppercase tracking-[0.13em] font-extrabold text-[#756d63]">Pieces per bulk run</span>
+                  </div>
+                  <div className="relative w-24 h-24 shrink-0">
+                    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 44 44">
+                      <circle cx="22" cy="22" r="18" className="fill-none stroke-[#e7dfd2] stroke-w-[2.5]" />
+                      <circle
+                        cx="22" cy="22" r="18"
+                        className="fill-none stroke-[#c85d2f] stroke-w-[3] transition-all duration-700 ease-out"
+                        style={{
+                          strokeDasharray: '113.1',
+                          strokeDashoffset: `${113.1 * (1 - 1)}`,
+                        }}
+                      />
+                    </svg>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-[11px] font-extrabold text-[#c85d2f] tracking-tighter">100%</span>
+                    </div>
+                  </div>
                 </div>
-                <p className="mt-5 text-[11px] leading-relaxed text-[#756d63]">*Capacity and turnaround depend on the production conditions, artwork and requirements of each order.</p>
               </div>
             </div>
           </div>
@@ -433,7 +469,7 @@ export const Home: React.FC = () => {
       </section>
 
       {/* 04 / PROCESS — Horizontal sticky-scroll timeline */}
-      <section className="bg-[#fbfaf6] border-t border-[#d9d2c6]">
+      <section className="section-reveal section-entrance section-entrance-delay-2 bg-[#fbfaf6] border-t border-[#d9d2c6]">
         {/* Header sits above the sticky scroll zone in normal flow */}
         <div className="container-custom pt-20 md:pt-28 pb-10 md:pb-14">
           <div className="mx-auto max-w-2xl text-center">
@@ -474,7 +510,7 @@ export const Home: React.FC = () => {
       <WorkShowcase />
 
       {/* 06 / WORKING TOGETHER — compact spec sheet, two panels side by side */}
-      <section className="py-16 md:py-20 bg-[#f4f0e8] border-t border-[#d9d2c6]">
+      <section className="section-reveal py-16 md:py-20 bg-[#f4f0e8] border-t border-[#d9d2c6]">
         <div className="container-custom">
           <div ref={workingTogetherRef}>
             {/* Compact centered header */}
@@ -562,7 +598,7 @@ export const Home: React.FC = () => {
       </section>
 
       {/* FAQ — sand band, two-column with a sticky heading */}
-      <section className="py-20 md:py-28 bg-[#e7dfd2] border-t border-[#c9c0b2]">
+      <section className="section-reveal py-20 md:py-28 bg-[#e7dfd2] border-t border-[#c9c0b2]">
         <div className="container-custom">
           <div className="grid lg:grid-cols-[0.75fr_1.25fr] gap-10 lg:gap-16 items-start">
             <div className="lg:sticky lg:top-28">
