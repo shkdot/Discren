@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useLayoutEffect, useRef } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { SmoothScroll } from './components/SmoothScroll';
 import { ScrollToTop } from './components/ScrollToTop';
@@ -21,23 +21,6 @@ const NotFound = lazy(() => import('./pages/NotFound').then((module) => ({ defau
 function AppContent() {
   const location = useLocation();
   const isTest001 = location.pathname === '/test001';
-  const footerRef = useRef<HTMLDivElement>(null);
-
-  // Measure footer height synchronously before paint so the curtain reveal
-  // has the correct margin-bottom from the very first frame.
-  useLayoutEffect(() => {
-    const footer = footerRef.current;
-    if (!footer) return;
-
-    const update = () => {
-      document.documentElement.style.setProperty('--footer-h', `${footer.offsetHeight}px`);
-    };
-
-    update();
-    const ro = new ResizeObserver(update);
-    ro.observe(footer);
-    return () => ro.disconnect();
-  }, []);
 
   return (
     <SmoothScroll disable={true}>
@@ -46,7 +29,6 @@ function AppContent() {
         <Navbar />
         <main
           className="flex-grow relative z-10 bg-[#f4f0e8] shadow-[0_10px_30px_rgba(0,0,0,.15)]"
-          style={{ marginBottom: 'var(--footer-h, 0px)' }}
         >
           <Suspense fallback={<div className="min-h-[45vh]" aria-busy="true" aria-label="Loading page" />}>
           <Routes>
@@ -66,9 +48,7 @@ function AppContent() {
           </Routes>
           </Suspense>
         </main>
-        <div ref={footerRef} className="fixed bottom-0 left-0 right-0 z-0">
-          <Footer />
-        </div>
+        <Footer />
       </div>
     </SmoothScroll>
   );

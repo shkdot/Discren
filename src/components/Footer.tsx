@@ -8,8 +8,8 @@ const footerLinkClass = 'text-[14px] text-[#a9a49b] hover:text-white transition-
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="relative bg-[#1b1a18] text-white border-t border-white/10 overflow-hidden">
-      <div aria-hidden="true" className="absolute z-0 inset-x-0 bottom-10 select-none pointer-events-none overflow-hidden text-center text-[clamp(88px,17.4vw,248px)] leading-[0.72] tracking-[-0.09em] font-extrabold text-[#3a3530] whitespace-nowrap">
+    <footer className="relative bg-[#1b1a18] text-white border-t border-white/10">
+      <div aria-hidden="true" className="absolute z-0 inset-x-0 bottom-[120px] md:bottom-10 select-none pointer-events-none overflow-hidden text-center text-[clamp(88px,17.4vw,248px)] leading-[0.72] tracking-[-0.09em] font-extrabold text-[#3a3530] whitespace-nowrap">
         DISCREN
       </div>
 
