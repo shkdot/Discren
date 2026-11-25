@@ -210,56 +210,31 @@ export const Home: React.FC = () => {
                 Engineering<span className="text-[#c85d2f]"> the</span> Print.
               </h2>
 
-              {/* 4-step production sequence */}
-              <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
-                {expertiseStages.map((stage, idx) => (
-                  <div
-                    key={stage.num}
-                    className={`flex items-center gap-2 min-w-0 transition-all duration-300 ${
-                      activeExpertiseStage === idx
-                        ? 'text-[#181715] font-extrabold'
-                        : 'text-[#756d63] font-medium'
-                    }`}
-                  >
-                    <span className={`shrink-0 w-6 h-6 rounded-full flex items-center justify-center font-extrabold text-[10px] transition-all ${
-                      activeExpertiseStage === idx ? 'bg-[#c85d2f] text-white' : 'bg-white text-[#c85d2f] border border-[#c85d2f]/30'
-                    }`}>{stage.num}</span>
-                    <span className="text-[12px] sm:text-[13px] tracking-tight truncate">{stage.title}</span>
-                    {idx < expertiseStages.length - 1 && (
-                      <span className="w-px h-3 bg-[#d9d2c6] shrink-0" />
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Right: Interactive stage cockpit */}
-            <div className="relative group">
-              {/* Stage selector rail */}
-              <div className="flex flex-col gap-2">
+              {/* Vertical stage selector — below heading */}
+              <div className="mt-8 flex flex-col gap-2">
                 {expertiseStages.map((stage, index) => (
                   <button
                     key={stage.num}
                     type="button"
                     onClick={() => setActiveExpertiseStage(index)}
                     aria-current={activeExpertiseStage === index}
-                    className={`w-full flex items-center gap-3 rounded-[14px] px-4 py-3.5 text-left transition-all duration-300 border ${
+                    className={`flex items-center gap-3 rounded-[16px] px-5 py-4 text-left transition-all duration-300 ${
                       activeExpertiseStage === index
-                        ? 'bg-[#181715] text-white border-[#181715] shadow-[0_0_20px_rgba(200,93,47,0.25)] translate-x-2'
-                        : 'bg-[#f4f0e8]/40 text-[#625e57] border-transparent hover:bg-[#e7dfd2] hover:border-[#d9d2c6]'
+                        ? 'bg-[#181715] text-white shadow-[0_0_25px_rgba(200,93,47,0.30)]'
+                        : 'bg-[#f4f0e8]/30 text-[#756d63] hover:bg-[#e7dfd2]'
                     }`}
                   >
-                    <span className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-extrabold text-[11px] transition-all ${
-                      activeExpertiseStage === index ? 'bg-[#c85d2f] text-white' : 'bg-white text-[#c85d2f] border border-[#c85d2f]/30'
+                    <span className={`shrink-0 w-9 h-9 rounded-full flex items-center justify-center font-extrabold text-[12px] transition-all ${
+                      activeExpertiseStage === index ? 'bg-[#c85d2f] text-white' : 'bg-white text-[#c85d2f] border border-[#c85d2f]/25'
                     }`}>{stage.num}</span>
-                    <span className="font-extrabold tracking-tight text-[13px]">{stage.title}</span>
-                    <span className="ml-auto w-1.5 h-1.5 rounded-full transition-all ${
-                      activeExpertiseStage === index ? 'bg-[#c85d2f] opacity-100' : 'bg-[#d9d2c6] opacity-0'
-                    }" />
+                    <span className="font-extrabold tracking-tight text-[14px]">{stage.title}</span>
                   </button>
                 ))}
               </div>
+            </div>
 
+            {/* Right: Interactive stage cockpit */}
+            <div className="relative group">
               {/* Active stage display */}
               <div
                 className={`mt-8 rounded-[24px] border border-[#d9d2c6] bg-[#f4f0e8] p-6 md:p-8 shadow-[0_20px_60px_rgba(45,39,30,0.08)] relative overflow-hidden will-change-transform stage-slide tech-glow ${
