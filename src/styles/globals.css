@@ -122,6 +122,55 @@ html.lenis, html.lenis body {
 }
 
 /* ─────────────────────────────────────────
+   High-tech expertise animations
+   ───────────────────────────────────────── */
+
+@keyframes techGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(200, 93, 47, 0.15), 0 0 40px rgba(200, 93, 47, 0.05); }
+  50% { box-shadow: 0 0 40px rgba(200, 93, 47, 0.35), 0 0 80px rgba(200, 93, 47, 0.15); }
+}
+
+.tech-glow {
+  animation: techGlow 4s ease-in-out infinite;
+}
+
+@keyframes techScan {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.tech-scan {
+  position: relative;
+  overflow: hidden;
+}
+.tech-scan::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(200, 93, 47, 0.08), transparent);
+  transform: translateX(-100%);
+  animation: techScan 3s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.stage-slide {
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.stage-tag-reveal {
+  animation: stageTagRise 0.5s ease-out forwards;
+}
+
+@keyframes stageTagRise {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─────────────────────────────────────────
    Expertise stage auto-rotation animations
    ───────────────────────────────────────── */
 

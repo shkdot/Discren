@@ -192,99 +192,134 @@ export const Home: React.FC = () => {
       {/* Capability Ticker — breaks the hero/cream transition and adds motion */}
       <TickerBand items={tickerItems} />
 
-      {/* 01 / EXPERTISE — editorial split layout inspired by the reference */}
-      <section className="py-20 md:py-28 bg-[#fbfaf6] overflow-hidden">
-        <div className="container-custom">
-          <div className="grid lg:grid-cols-[0.88fr_1.12fr] gap-12 lg:gap-20 items-center">
-            <div className="max-w-[470px] lg:pl-4">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[#d9d2c6] bg-white px-4 py-2 text-[10px] uppercase tracking-[0.14em] font-extrabold text-[#756d63]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#e37b4f]" />
-                01 / Expertise
-              </div>
-              <h2 className="mt-7 text-[clamp(38px,5vw,62px)] leading-[0.98] tracking-[-0.065em] font-extrabold text-[#181715]">
-                More than printing. <span className="text-[#c85d2f]">The right approach.</span>
-              </h2>
-              <p className="mt-6 text-[16px] md:text-[18px] leading-relaxed text-[#6e6a63] max-w-[440px]">
-                Every garment and design has its own requirements. We consider the fabric, artwork and intended finish before recommending the way forward.
-              </p>
-              <Link to="/process" className="inline-flex items-center gap-2 mt-8 pb-1 border-b border-[#c85d2f] text-[13px] uppercase tracking-[0.1em] font-extrabold text-[#181715] hover:text-[#c85d2f] transition-colors">
-                <span>Explore our process</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+      {/* 01 / EXPERTISE — high-tech production cockpit */}
+      <section className="py-24 md:py-32 bg-[#fbfaf6] relative overflow-hidden tech-scan">
+        {/* Technical grid overlay */}
+        <div className="absolute inset-0 [background-image:linear-gradient(#d9d2c6_1px,transparent_1px),linear-gradient(90deg,#d9d2c6_1px,transparent_1px)] [background-size:40px_40px] opacity-30 pointer-events-none" />
+        <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#c85d2f]/40 to-transparent" />
 
-              <div className="flex items-center gap-4 mt-12 pt-6 border-t border-[#d9d2c6]">
-                <span className="text-[42px] leading-none tracking-[-0.07em] font-extrabold text-[#c85d2f]">25+</span>
-                <span className="text-[11px] uppercase tracking-[0.15em] leading-relaxed font-extrabold text-[#6e6a63]">Years applying the right<br />print to the right garment</span>
+        <div className="container-custom relative z-10">
+          <div className="grid lg:grid-cols-[1fr_1.2fr] gap-12 lg:gap-20 items-start">
+            {/* Left: Command info panel */}
+            <div className="space-y-8">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[#d9d2c6] bg-white/80 backdrop-blur-sm px-4 py-2 text-[10px] uppercase tracking-[0.18em] font-extrabold text-[#756d63]">
+                <span className="w-2 h-2 rounded-full bg-[#c85d2f] animate-pulse" />
+                Production Command
+              </div>
+              <h2 className="text-[clamp(34px,5.5vw,64px)] leading-[1.0] tracking-[-0.07em] font-extrabold text-[#181715]">
+                Engineering<span className="text-[#c85d2f]"> the</span> Print.
+              </h2>
+              <p className="text-[16px] md:text-[18px] leading-relaxed text-[#6e6a63] max-w-[460px]">
+                Every garment passes through a controlled technical sequence — from ink selection to cure verification — engineered for consistency at any volume.
+              </p>
+
+              {/* Tech stats */}
+              <div className="grid grid-cols-2 gap-4 pt-6 border-t border-[#d9d2c6]/40">
+                <div className="bg-white/60 backdrop-blur rounded-[16px] p-5 border border-[#d9d2c6]/30">
+                  <span className="block text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#c85d2f]">Active Stages</span>
+                  <span className="block text-[24px] font-extrabold tracking-tight text-[#181715]">{expertiseStages.length}</span>
+                </div>
+                <div className="bg-white/60 backdrop-blur rounded-[16px] p-5 border border-[#d9d2c6]/30">
+                  <span className="block text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#c85d2f]">Precision</span>
+                  <span className="block text-[24px] font-extrabold tracking-tight text-[#181715]">±0.01mm</span>
+                </div>
               </div>
             </div>
 
-                        <div
-              className="stage-card relative rounded-[30px] border border-[#d9d2c6] bg-[#f4f0e8] p-4 md:p-6 shadow-[0_28px_65px_rgba(45,39,30,0.10)] overflow-hidden"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              <div aria-hidden="true" className="absolute inset-0 opacity-50 [background-image:linear-gradient(#d9d2c655_1px,transparent_1px),linear-gradient(90deg,#d9d2c655_1px,transparent_1px)] [background-size:28px_28px]" />
-              <div className="relative rounded-[22px] border border-[#d9d2c6] bg-[#fbfaf6] overflow-hidden">
-                <div className="flex items-center justify-between border-b border-[#d9d2c6] px-5 py-4">
-                  <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.14em] font-extrabold text-[#5f5951]"><span className="w-2 h-2 rounded-full bg-[#e37b4f]" /> Production decision desk</div>
-                </div>
+            {/* Right: Interactive stage cockpit */}
+            <div className="relative group">
+              {/* Stage selector rail */}
+              <div className="flex flex-col gap-2">
+                {expertiseStages.map((stage, index) => (
+                  <button
+                    key={stage.num}
+                    type="button"
+                    onClick={() => setActiveExpertiseStage(index)}
+                    aria-current={activeExpertiseStage === index}
+                    className={`w-full flex items-center gap-3 rounded-[14px] px-4 py-3.5 text-left transition-all duration-300 border ${
+                      activeExpertiseStage === index
+                        ? 'bg-[#181715] text-white border-[#181715] shadow-[0_0_20px_rgba(200,93,47,0.25)] translate-x-2'
+                        : 'bg-[#f4f0e8]/40 text-[#625e57] border-transparent hover:bg-[#e7dfd2] hover:border-[#d9d2c6]'
+                    }`}
+                  >
+                    <span className={`shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-extrabold text-[11px] transition-all ${
+                      activeExpertiseStage === index ? 'bg-[#c85d2f] text-white' : 'bg-white text-[#c85d2f] border border-[#c85d2f]/30'
+                    }`}>{stage.num}</span>
+                    <span className="font-extrabold tracking-tight text-[13px]">{stage.title}</span>
+                    <span className="ml-auto w-1.5 h-1.5 rounded-full transition-all ${
+                      activeExpertiseStage === index ? 'bg-[#c85d2f] opacity-100' : 'bg-[#d9d2c6] opacity-0'
+                    }" />
+                  </button>
+                ))}
+              </div>
 
-                <div className="grid md:grid-cols-[0.78fr_1.22fr] min-h-[430px]">
-                  <div className="border-b md:border-b-0 md:border-r border-[#d9d2c6] p-3 md:flex md:flex-col md:justify-center">
-                    {expertiseStages.map((stage, index) => (
-                      <button key={stage.num} type="button" onClick={() => setActiveExpertiseStage(index)} aria-current={activeExpertiseStage === index} className={`w-full flex items-center gap-3 rounded-[12px] px-3 py-3.5 text-left transition-colors ${activeExpertiseStage === index ? 'bg-[#181715] text-white' : 'text-[#625e57] hover:bg-[#e7dfd2]'}`}>
-                        <span className={`text-[10px] font-extrabold tracking-[0.13em] ${activeExpertiseStage === index ? 'text-[#e37b4f]' : 'text-[#a39b90]'}`}>{stage.num}</span>
-                        <span className="text-[13px] font-extrabold tracking-[-0.02em]">{stage.title}</span>
-                      </button>
-                    ))}
+              {/* Active stage display */}
+              <div
+                className={`mt-8 rounded-[24px] border border-[#d9d2c6] bg-[#f4f0e8] p-6 md:p-8 shadow-[0_20px_60px_rgba(45,39,30,0.08)] relative overflow-hidden will-change-transform stage-slide tech-glow ${
+                  activeExpertiseStage % 2 === 0 ? '' : 'bg-[#f4f0e8]/80'
+                }`}
+              >
+                <div className="absolute inset-0 [background-image:linear-gradient(#d9d2c655_1px,transparent_1px),linear-gradient(90deg,#d9d2c655_1px,transparent_1px)] [background-size:20px_20px] opacity-30 pointer-events-none" />
+                <div className="absolute top-0 right-0 w-24 h-24 bg-[#c85d2f]/10 rounded-full blur-[60px] -translate-y-6 translate-x-6 transition-colors duration-500" />
+
+                <div className="relative z-10 flex flex-col lg:flex-row lg:items-start gap-8">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="w-3 h-3 rounded-full bg-[#c85d2f] animate-pulse" />
+                      <span className="text-[11px] uppercase tracking-[0.2em] font-extrabold text-[#c85d2f]">Stage {expertiseStage.num}</span>
+                    </div>
+                    <h3 className="text-[clamp(30px,4vw,48px)] leading-[1.05] tracking-[-0.05em] font-extrabold text-[#181715] mb-4">
+                      {expertiseStage.title}
+                    </h3>
+                    <p className="text-[16px] md:text-[17px] leading-relaxed text-[#6e6a63] max-w-[420px] mb-6">
+                      {expertiseStage.text}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {expertiseStage.tags.map((tag, tagIdx) => (
+                        <span key={tag} className={`rounded-full border border-[#c9c0b2] bg-white px-3 py-1.5 text-[10px] uppercase tracking-[0.1em] font-extrabold text-[#625e57] transition-all duration-300 stage-tag-reveal hover:bg-[#c85d2f]/10 hover:text-[#c85d2f] hover:border-[#c85d2f]`} style={{ animationDelay: `${0.1 + tagIdx * 0.08}s` }}>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
 
-                  <div key={activeExpertiseStage} className="p-6 md:p-8 md:h-[500px] flex flex-col justify-between bg-[radial-gradient(circle_at_88%_8%,#f1ddc955,transparent_38%)] animate-stage-fade-in">
-                    <div>
-                      <span className="stage-rise stage-delay-1 inline-block text-[11px] uppercase tracking-[0.16em] font-extrabold text-[#c85d2f]">Stage {expertiseStage.num}</span>
-                      <h3 className="stage-rise stage-delay-2 mt-4 min-h-[84px] text-[clamp(30px,3.2vw,42px)] leading-[0.98] tracking-[-0.055em] font-extrabold text-[#181715]">{expertiseStage.title}</h3>
-                      <p className="stage-rise stage-delay-3 mt-5 min-h-[100px] max-w-[390px] text-[15px] md:text-[16px] leading-relaxed text-[#6e6a63]">{expertiseStage.text}</p>
-                    </div>
-                    <div className="mt-9">
-                      <div className="h-px bg-[#d9d2c6] mb-4" />
-                      <div className="stage-rise stage-delay-4 flex flex-wrap content-start gap-2 min-h-[64px]">
-                        {expertiseStage.tags.map((tag) => <span key={tag} className="rounded-full border border-[#d9d2c6] bg-white px-3 py-1.5 text-[10px] uppercase tracking-[0.1em] font-extrabold text-[#625e57]">{tag}</span>)}
+                  <div className="hidden lg:flex flex-col items-end gap-4">
+                    <div className="relative w-20 h-20 shrink-0">
+                      <svg className="w-full h-full transform -rotate-90" viewBox="0 0 44 44">
+                        <circle cx="22" cy="22" r="18" className="fill-none stroke-[#e7dfd2] stroke-w-[2.5]" />
+                        <circle
+                          cx="22" cy="22" r="18"
+                          className="fill-none stroke-[#c85d2f] stroke-w-[2.5] transition-all duration-700 ease-out"
+                          style={{
+                            strokeDasharray: '113.1',
+                            strokeDashoffset: `${113.1 * (1 - (activeExpertiseStage + 1) / expertiseStages.length)}`,
+                          }}
+                        />
+                      </svg>
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-[10px] font-extrabold text-[#c85d2f] tracking-tighter">
+                          {Math.round(((activeExpertiseStage + 1) / expertiseStages.length) * 100)}%
+                        </span>
                       </div>
-                      <div className="stage-rise stage-delay-5 mt-7 flex items-center gap-3 text-[11px] uppercase tracking-[0.12em] font-extrabold text-[#625e57]"><span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#e37b4f] text-white">✓</span> Checked before production</div>
                     </div>
+                    <span className="text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#756d63] writing-mode-vertical-rl rotate-180">
+                      Technical Sequence
+                    </span>
                   </div>
                 </div>
+              </div>
 
-                {/* Auto-advance progress bar + stage indicator */}
-                <div className="px-6 md:px-8 py-4 border-t border-[#d9d2c6]">
-                  <div className="flex items-center gap-3">
-                    <div className="flex-1 h-1.5 rounded-full bg-[#e0d8ce] overflow-hidden">
-                      <div
-                        key={activeExpertiseStage}
-                        className="h-full w-0 bg-[#c85d2f] animate-bar-progress"
-                      />
-                    </div>
-                    <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.14em] font-extrabold text-[#756d63]">
-                      <span>{activeExpertiseStage + 1}</span>
-                      <span>/</span>
-                      <span>{expertiseStages.length}</span>
-                    </div>
-                  </div>
-                  <div className="mt-2.5 flex justify-center gap-1.5">
-                    {expertiseStages.map((s, i) => (
-                      <button
-                        key={s.num}
-                        onClick={() => setActiveExpertiseStage(i)}
-                        className={`h-1.5 rounded-full transition-all duration-300 ${
-                          i === activeExpertiseStage
-                            ? 'w-5 bg-[#c85d2f]'
-                            : 'w-1.5 bg-[#d9d2c6] hover:bg-[#c85d2f]'
-                        }`}
-                        aria-label={`Stage ${s.num}`}
-                      />
-                    ))}
-                  </div>
-                </div>
+              {/* Progress dots */}
+              <div className="mt-6 flex justify-center gap-1.5">
+                {expertiseStages.map((s, i) => (
+                  <button
+                    key={s.num}
+                    onClick={() => setActiveExpertiseStage(i)}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${
+                      i === activeExpertiseStage ? 'w-6 bg-[#c85d2f]' : i < activeExpertiseStage ? 'w-4 bg-[#c85d2f]/30' : 'w-1.5 bg-[#d9d2c6]'
+                    }`}
+                  />
+                ))}
               </div>
             </div>
           </div>
