@@ -209,20 +209,27 @@ export const Home: React.FC = () => {
               <h2 className="text-[clamp(34px,5.5vw,64px)] leading-[1.0] tracking-[-0.07em] font-extrabold text-[#181715]">
                 Engineering<span className="text-[#c85d2f]"> the</span> Print.
               </h2>
-              <p className="text-[16px] md:text-[18px] leading-relaxed text-[#6e6a63] max-w-[460px]">
-                Every garment passes through a controlled technical sequence — from ink selection to cure verification — engineered for consistency at any volume.
-              </p>
 
-              {/* Tech stats */}
-              <div className="grid grid-cols-2 gap-4 pt-6 border-t border-[#d9d2c6]/40">
-                <div className="bg-white/60 backdrop-blur rounded-[16px] p-5 border border-[#d9d2c6]/30">
-                  <span className="block text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#c85d2f]">Active Stages</span>
-                  <span className="block text-[24px] font-extrabold tracking-tight text-[#181715]">{expertiseStages.length}</span>
-                </div>
-                <div className="bg-white/60 backdrop-blur rounded-[16px] p-5 border border-[#d9d2c6]/30">
-                  <span className="block text-[10px] uppercase tracking-[0.16em] font-extrabold text-[#c85d2f]">Precision</span>
-                  <span className="block text-[24px] font-extrabold tracking-tight text-[#181715]">±0.01mm</span>
-                </div>
+              {/* 4-step production sequence */}
+              <div className="mt-6 flex flex-col sm:flex-row gap-3 sm:gap-4">
+                {expertiseStages.map((stage, idx) => (
+                  <div
+                    key={stage.num}
+                    className={`flex items-center gap-2 min-w-0 transition-all duration-300 ${
+                      activeExpertiseStage === idx
+                        ? 'text-[#181715] font-extrabold'
+                        : 'text-[#756d63] font-medium'
+                    }`}
+                  >
+                    <span className={`shrink-0 w-6 h-6 rounded-full flex items-center justify-center font-extrabold text-[10px] transition-all ${
+                      activeExpertiseStage === idx ? 'bg-[#c85d2f] text-white' : 'bg-white text-[#c85d2f] border border-[#c85d2f]/30'
+                    }`}>{stage.num}</span>
+                    <span className="text-[12px] sm:text-[13px] tracking-tight truncate">{stage.title}</span>
+                    {idx < expertiseStages.length - 1 && (
+                      <span className="w-px h-3 bg-[#d9d2c6] shrink-0" />
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
 
