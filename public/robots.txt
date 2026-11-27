@@ -1,0 +1,10 @@
+# DISCREN Robots.txt
+# Google Search Console verification content: m2_8DImluMngS1uUHXwBVOvNxTrRvnZYUsWjLVsOqB4
+
+User-agent: *
+Allow: /
+
+# Disallow admin/internal paths if any exist in the future
+# Disallow: /admin/
+
+Sitemap: https://discren.in/sitemap.xml
